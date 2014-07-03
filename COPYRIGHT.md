@@ -17,8 +17,8 @@ This program is licensed under the terms of the
 
 In addition to the common terms of the GNU AGPL v3 license, you are required to:
 
-*   preserve legal notices and author attributions in that material or in the
-    Appropriate Legal Notices displayed by works containing it.
+*   preserve legal notices and author attributions in that material<br />
+    or in the Appropriate Legal Notices displayed by works containing it.
 
 *   attribute the work as explained in the Usage and Attribution section of
     <[http://foxel.ch/license](http://foxel.ch/license)>.

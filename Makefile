@@ -49,7 +49,7 @@ ifeq ($(MAKE_CODE),cpp)
 	MAKE_SRCOPTN=-Wall -funsigned-char -std=c++11 -O3
 endif
 endif
-	MAKE_OBJOPTN=-lcsps -lm -lGL -lGLU -lglut
+	MAKE_OBJOPTN=
 
 #
 #   make - All

@@ -74,7 +74,7 @@
         gnomonic_Index_t gSY = 0;
 
         /* Rotation matrix */
-        gnomonic_Index_t gMatrix[3][3] = {
+        gnomonic_Real_t gMatrix[3][3] = {
 
             { 
                 + cos( gAngleZ ) * cos( gAngleY ), 

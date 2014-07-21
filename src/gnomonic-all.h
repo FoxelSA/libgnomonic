@@ -65,6 +65,7 @@
     # include "gnomonic-etg.h"
     # include "gnomonic-gte.h"
     # include "gnomonic-ttg.h"
+    # include "gnomonic-transform.h"
     # include "gnomonic-coord.h"
 
 /*

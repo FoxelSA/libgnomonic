@@ -29,3 +29,10 @@ The content is licensed under the terms of the
 
 Please read <[http://foxel.ch/license](http://foxel.ch/license)> for more
 information.
+
+## Dependencies
+
+This program depends on the following software and libraries.
+
+*   __libinter__ (provided as sub-module)<br />
+    <[https://github.com/FoxelSA/libinter](https://github.com/FoxelSA/libinter)>

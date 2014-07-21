@@ -1,0 +1,3 @@
+[submodule "lib/libinter"]
+	path = lib/libinter
+	url = git://github.com/FoxelSA/libinter.git

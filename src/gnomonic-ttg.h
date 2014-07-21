@@ -40,7 +40,7 @@
     //! @file   gnomonic-ttg.h
     //! @author Nils Hamel (n.hamel@foxel.ch)
     //!
-    //! Equirectangular tile to rectilinear transformation.
+    //! Equirectangular tile to rectilinear transformation
 
 /*
     Header - Include guard
@@ -62,7 +62,7 @@
  */
 
     # include "gnomonic.h"
-    # include "gnomonic-interp.h"
+    # include "inter-all.h"
 
 /*
     Header - Preprocessor definitions
@@ -121,7 +121,7 @@
         long int eqr_y,
         double sen_x,
         double sen_y,
-        interp int_m
+        inter_Method_t int_m
 
     );
 

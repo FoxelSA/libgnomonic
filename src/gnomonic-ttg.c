@@ -63,7 +63,7 @@
         long int eqr_y,
         double sen_x,
         double sen_y,
-        interp int_m
+        inter_Method_t int_m
 
     ) {
 

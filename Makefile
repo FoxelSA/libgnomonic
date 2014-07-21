@@ -13,6 +13,7 @@
 
 	MAKE_BINARY=bin
 	MAKE_DOCUME=doc
+	MAKE_LIBRAR=lib
 	MAKE_OBJECT=obj
 	MAKE_SOURCE=src
 
@@ -42,11 +43,12 @@ ifeq ($(MAKE_TYPE),libstatic)
 endif
 endif
 	MAKE_DOCCOMP=doxygen
+    MAKE_GENOPTN=-Wall -funsigned-char -I./$(MAKE_LIBRAR)/libinter/src -O3
 ifeq ($(MAKE_CODE),c)
-	MAKE_SRCOPTN=-Wall -funsigned-char -std=gnu99 -O3
+	MAKE_SRCOPTN=-std=gnu99 $(MAKE_GENOPTN)
 else
 ifeq ($(MAKE_CODE),cpp)
-	MAKE_SRCOPTN=-Wall -funsigned-char -std=c++11 -O3
+	MAKE_SRCOPTN=-std=c++11 $(MAKE_GENOPTN)
 endif
 endif
 	MAKE_OBJOPTN=
@@ -55,7 +57,7 @@ endif
 #   make - All
 #
 
-    all:directories $(MAKE_NAME)
+    all:libraries directories $(MAKE_NAME)
 
 #
 #   make - Binaries
@@ -76,6 +78,13 @@ endif
 
     $(MAKE_OBJECT)/%.o:$(MAKE_SOURCE)/%.$(MAKE_CODE)
 	$(MAKE_SRCCOMP) -c -o $@ $< $(MAKE_SRCOPTN)
+
+#
+#   make - Libraries
+#
+
+    libraries:
+	$(MAKE) -C $(MAKE_LIBRAR)/libinter clean && $(MAKE) -C $(MAKE_LIBRAR)/libinter all
 
 #
 #   make - Documentation

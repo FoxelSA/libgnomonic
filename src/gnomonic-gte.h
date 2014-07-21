@@ -40,7 +40,7 @@
     //! @file   gnomonic-gte.h
     //! @author Nils Hamel (n.hamel@foxel.ch)
     //!
-    //! Rectilinear to equirectangular transformation.
+    //! Rectilinear to equirectangular transformation
 
 /*
     Header - Include guard
@@ -62,7 +62,7 @@
  */
 
     # include "gnomonic.h"
-    # include "gnomonic-interp.h"
+    # include "inter-all.h"
 
 /*
     Header - Preprocessor definitions
@@ -116,7 +116,7 @@
         double nad_p,
         double app_t,
         double app_p,
-        interp  int_m
+        inter_Method_t int_m
 
     );
 
@@ -157,7 +157,7 @@
         double nad_p,
         double app_t,
         double app_p,
-        interp  int_m
+        inter_Method_t  int_m
 
     );
 

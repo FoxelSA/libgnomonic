@@ -40,7 +40,7 @@
     //! @file   gnomonic-all.h
     //! @author Nils Hamel (n.hamel@foxel.ch)
     //!
-    //! Library general includer.
+    //! Library general includer
 
 /*
     Header - Include guard
@@ -64,7 +64,6 @@
     # include "gnomonic.h"
     # include "gnomonic-etg.h"
     # include "gnomonic-gte.h"
-    # include "gnomonic-interp.h"
     # include "gnomonic-ttg.h"
     # include "gnomonic-coord.h"
 

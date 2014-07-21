@@ -40,7 +40,7 @@
     //! @file   gnomonic.h
     //! @author Nils Hamel (n.hamel@foxel.ch)
     //!
-    //! Library common header file.
+    //! Library common header file
 
 /*
     Header - Include guard

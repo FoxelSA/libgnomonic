@@ -61,7 +61,7 @@
         double nad_p,
         double app_t,
         double app_p,
-        interp int_m
+        inter_Method_t int_m
 
     ) {
 

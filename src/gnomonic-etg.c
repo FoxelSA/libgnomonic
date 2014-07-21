@@ -66,24 +66,24 @@
     ) {
 
         /* Projection Variables */
-        static gnomonic_Index_t rx = 0;
-        static gnomonic_Index_t ry = 0;
-        static gnomonic_Real_t dx = 0.0;
-        static gnomonic_Real_t dy = 0.0;
-        static gnomonic_Real_t ux = 0.0;
-        static gnomonic_Real_t uy = 0.0;
-        static gnomonic_Real_t pt = 0.0;
-        static gnomonic_Real_t pp = 0.0;
-        static gnomonic_Real_t at = 0.0;
-        static gnomonic_Real_t ap = 0.0;
+        gnomonic_Index_t rx = 0;
+        gnomonic_Index_t ry = 0;
+        gnomonic_Real_t  dx = 0.0;
+        gnomonic_Real_t  dy = 0.0;
+        gnomonic_Real_t  ux = 0.0;
+        gnomonic_Real_t  uy = 0.0;
+        gnomonic_Real_t  pt = 0.0;
+        gnomonic_Real_t  pp = 0.0;
+        gnomonic_Real_t  at = 0.0;
+        gnomonic_Real_t  ap = 0.0;
 
         /* Position vector */
-        static gnomonic_Real_t pv[3] = { 0.0, 0.0, 0.0 };
-        static gnomonic_Real_t kv[3] = { 0.0, 0.0, 0.0 };
+        gnomonic_Real_t pv[3] = { 0.0, 0.0, 0.0 };
+        gnomonic_Real_t kv[3] = { 0.0, 0.0, 0.0 };
 
         /* Rotation matrix */
-        static gnomonic_Real_t Ry[3][3] = { { 0.0, 0.0, 0.0 }, { 0.0, 1.0, 0.0 }, { 0.0, 0.0, 0.0 } };
-        static gnomonic_Real_t Rz[3][3] = { { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 1.0 } };
+        gnomonic_Real_t Ry[3][3] = { { 0.0, 0.0, 0.0 }, { 0.0, 1.0, 0.0 }, { 0.0, 0.0, 0.0 } };
+        gnomonic_Real_t Rz[3][3] = { { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 1.0 } };
 
         /* Rotation matrix - y */
         Ry[0][0] = + cos( + nad_p );
@@ -124,8 +124,38 @@
                 pv[1] = Rz[1][0] * kv[0] + Rz[1][1] * kv[1];
                 pv[2] = kv[2];
 
-                /* Retreive angular position */
-                pt = acos( pv[0] / sqrt( pv[0] * pv[0] + pv[1] * pv[1] ) ); pt = ( pv[1] < 0 ) ? ( 2.0 * GNOMONIC_PI - pt ) : pt;
+                /* Retrieve rotated position angles - horizontal */
+                pt = pv[0] / sqrt( pv[0] * pv[0] + pv[1] * pv[1] );
+
+                /* Case study */
+                if ( pt >= 1.0 ) {
+
+                    /* Assign horizontal angle */
+                    pt = 0.0;
+
+                } else if ( pt <= - 1.0 ) {
+
+                    /* Assign horizontal angle */
+                    pt = M_PI;
+
+                } else {
+
+                    /* Case study */
+                    if ( pv[1] < 0.0 ) {
+
+                        /* Assign horizontal angle */
+                        pt = 2.0 * GNOMONIC_PI - acos( pt );
+
+                    } else {
+
+                        /* Assign horizontal angle */
+                        pt = acos( pt );
+
+                    }
+
+                }
+
+                /* Retreive angular position - Vertical */
                 pp = asin( pv[2] );
 
                 /* Retrieve panoramic pixel coordinates */

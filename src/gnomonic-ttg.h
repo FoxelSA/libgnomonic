@@ -105,23 +105,23 @@
     //! @param sen_y Position y, in pixel, of the tile center in the entire equirectangular mapping
     //! @param int_m Pointer to interpolation method function
 
-    void gnomonic_ttg(
+    gnomonic_Void_t gnomonic_ttg(
 
-        unsigned char * eqr_img,
-        long int eqr_w,
-        long int eqr_h,
-        long int eqr_d,
-        unsigned char * rct_img,
-        long int rct_w,
-        long int rct_h,
-        long int rct_d,
-        long int pan_w,
-        long int pan_h,
-        long int eqr_x,
-        long int eqr_y,
-        double sen_x,
-        double sen_y,
-        inter_Method_t int_m
+        inter_C8_t *     eqr_img,
+        gnomonic_Index_t eqr_w,
+        gnomonic_Index_t eqr_h,
+        gnomonic_Index_t eqr_d,
+        inter_C8_t *     rct_img,
+        gnomonic_Index_t rct_w,
+        gnomonic_Index_t rct_h,
+        gnomonic_Index_t rct_d,
+        gnomonic_Index_t pan_w,
+        gnomonic_Index_t pan_h,
+        gnomonic_Index_t eqr_x,
+        gnomonic_Index_t eqr_y,
+        gnomonic_Real_t  sen_x,
+        gnomonic_Real_t  sen_y,
+        inter_Method_t   int_m
 
     );
 

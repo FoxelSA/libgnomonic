@@ -37,17 +37,17 @@
  */
 
 
-    //! @file   gnomonic.h
+    //! @file   gnomonic-transform.h
     //! @author Nils Hamel (n.hamel@foxel.ch)
     //!
-    //! Library common header file
+    //! Equirectangular projection transformations
 
 /*
     Header - Include guard
  */
 
-    # ifndef __LIBGNOMONIC_GNOMONIC__
-    # define __LIBGNOMONIC_GNOMONIC__
+    # ifndef __LIBGNOMONIC_TRANSFORM__
+    # define __LIBGNOMONIC_TRANSFORM__
 
 /*
     Header - C/C++ compatibility
@@ -61,16 +61,12 @@
     Header - Includes
  */
 
-    # include <stdio.h>
-    # include <math.h>
-    # include <stdint.h>
+    # include "gnomonic.h"
+    # include "inter-all.h"
 
 /*
     Header - Preprocessor definitions
  */
-
-    /* Declare mathematical constants */
-    # define GNOMONIC_PI 3.14159265358979323846264338327L
 
 /*
     Header - Preprocessor macros
@@ -80,15 +76,6 @@
     Header - Typedefs
  */
 
-    /* Define general void */
-    typedef void gnomonic_Void_t;
-
-    /* Define index type */
-    typedef int64_t gnomonic_Index_t;
-
-    /* Define floating type */
-    typedef float gnomonic_Real_t;
-
 /*
     Header - Structures
  */
@@ -96,6 +83,20 @@
 /*
     Header - Function prototypes
  */
+
+    gnomonic_Void_t gnomonic_transform_rotate( 
+
+        inter_C8_t *     gEqrIn,
+        inter_C8_t *     gEqrOut,
+        gnomonic_Index_t gEqrWidth,
+        gnomonic_Index_t gEqrHeight,
+        gnomonic_Index_t gEqrLayers,
+        gnomonic_Real_t  gAngleX,
+        gnomonic_Real_t  gAngleY,
+        gnomonic_Real_t  gAngleZ,
+        inter_Method_t   gInter
+
+    );
 
 /*
     Header - C/C++ compatibility

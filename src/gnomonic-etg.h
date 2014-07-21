@@ -103,21 +103,21 @@
     //! @param app_p Half vertical apperture, from center of view, of the gnomonic projection in radian
     //! @param int_m Pointer to interpolation method function
 
-    void gnomonic_etg(
+    gnomonic_Void_t gnomonic_etg(
 
-        unsigned char * pan_img,
-        long int pan_w,
-        long int pan_h,
-        long int pan_d,
-        unsigned char * rct_img,
-        long int rct_w,
-        long int rct_h,
-        long int rct_d,
-        double nad_t,
-        double nad_p,
-        double app_t,
-        double app_p,
-        inter_Method_t int_m
+        inter_C8_t *     pan_img,
+        gnomonic_Index_t pan_w,
+        gnomonic_Index_t pan_h,
+        gnomonic_Index_t pan_d,
+        inter_C8_t *     rct_img,
+        gnomonic_Index_t rct_w,
+        gnomonic_Index_t rct_h,
+        gnomonic_Index_t rct_d,
+        gnomonic_Real_t  nad_t,
+        gnomonic_Real_t  nad_p,
+        gnomonic_Real_t  app_t,
+        gnomonic_Real_t  app_p,
+        inter_Method_t   int_m
 
     );
 

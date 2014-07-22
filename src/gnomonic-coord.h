@@ -97,8 +97,8 @@
         long int pan_h,
         long int eqr_x,
         long int eqr_y,
-        double sen_x,
-        double sen_y
+        double   sen_x,
+        double   sen_y
 
     );
 
@@ -116,8 +116,8 @@
         long int pan_h,
         long int eqr_x,
         long int eqr_y,
-        double sen_x,
-        double sen_y
+        double   sen_x,
+        double   sen_y
 
     );
 

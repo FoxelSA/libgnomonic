@@ -49,117 +49,117 @@
 
     gnomonic_Void_t gnomonic_transform_rotate( 
 
-        inter_C8_t *     gEqrIn,
-        inter_C8_t *     gEqrOut,
-        gnomonic_Index_t gEqrWidth,
-        gnomonic_Index_t gEqrHeight,
-        gnomonic_Index_t gEqrLayers,
-        gnomonic_Real_t  gAngleX,
-        gnomonic_Real_t  gAngleY,
-        gnomonic_Real_t  gAngleZ,
-        inter_Method_t   gInter
+        inter_C8_t *     lgEqrIn,
+        inter_C8_t *     lgEqrOut,
+        gnomonic_Index_t lgEqrWidth,
+        gnomonic_Index_t lgEqrHeight,
+        gnomonic_Index_t lgEqrLayers,
+        gnomonic_Real_t  lgAngleX,
+        gnomonic_Real_t  lgAngleY,
+        gnomonic_Real_t  lgAngleZ,
+        inter_Method_t   lgInter
 
     ) {
 
         /* Position angles */
-        gnomonic_Real_t gAngleHor = 0.0;
-        gnomonic_Real_t gAngleVer = 0.0;
+        gnomonic_Real_t lgAngleHor = 0.0;
+        gnomonic_Real_t lgAngleVer = 0.0;
 
         /* Positionning variables */
-        gnomonic_Real_t gDX = 0;
-        gnomonic_Real_t gDY = 0;
+        gnomonic_Real_t lgDX = 0;
+        gnomonic_Real_t lgDY = 0;
 
         /* Parsing variable */
-        gnomonic_Index_t gSX = 0;
-        gnomonic_Index_t gSY = 0;
+        gnomonic_Index_t lgSX = 0;
+        gnomonic_Index_t lgSY = 0;
 
         /* Rotation matrix */
-        gnomonic_Real_t gMatrix[3][3] = {
+        gnomonic_Real_t lgMatrix[3][3] = {
 
             { 
-                + cos( gAngleZ ) * cos( gAngleY ), 
-                + sin( gAngleZ ) * cos( gAngleX ) + cos( gAngleZ ) * sin( gAngleY ) * sin( gAngleX ), 
-                + sin( gAngleZ ) * sin( gAngleX ) - cos( gAngleZ ) * sin( gAngleY ) * cos( gAngleX ) 
+                + cos( lgAngleZ ) * cos( lgAngleY ), 
+                + sin( lgAngleZ ) * cos( lgAngleX ) + cos( lgAngleZ ) * sin( lgAngleY ) * sin( lgAngleX ), 
+                + sin( lgAngleZ ) * sin( lgAngleX ) - cos( lgAngleZ ) * sin( lgAngleY ) * cos( lgAngleX ) 
             },
             { 
-                - sin( gAngleZ ) * cos( gAngleY ), 
-                + cos( gAngleZ ) * cos( gAngleX ) - sin( gAngleZ ) * sin( gAngleY ) * sin( gAngleX ), 
-                + cos( gAngleZ ) * sin( gAngleX ) + sin( gAngleZ ) * sin( gAngleY ) * cos( gAngleX ) 
+                - sin( lgAngleZ ) * cos( lgAngleY ), 
+                + cos( lgAngleZ ) * cos( lgAngleX ) - sin( lgAngleZ ) * sin( lgAngleY ) * sin( lgAngleX ), 
+                + cos( lgAngleZ ) * sin( lgAngleX ) + sin( lgAngleZ ) * sin( lgAngleY ) * cos( lgAngleX ) 
             },
             { 
-                + sin( gAngleY ), 
-                - cos( gAngleY ) * sin( gAngleX ), 
-                + cos( gAngleY ) * cos( gAngleX ) 
+                + sin( lgAngleY ), 
+                - cos( lgAngleY ) * sin( lgAngleX ), 
+                + cos( lgAngleY ) * cos( lgAngleX ) 
             }
 
         };
 
         /* Sphere point vectors */
-        gnomonic_Real_t gVectori[3] = { 0.0, 0.0, 0.0 };
-        gnomonic_Real_t gVectorf[3] = { 0.0, 0.0, 0.0 };
+        gnomonic_Real_t lgVectori[3] = { 0.0, 0.0, 0.0 };
+        gnomonic_Real_t lgVectorf[3] = { 0.0, 0.0, 0.0 };
 
         /* Processing loop on y */
-        for ( gSY = 0; gSY < gEqrHeight; gSY ++ ) {
+        for ( lgSY = 0; lgSY < lgEqrHeight; lgSY ++ ) {
 
             /* Processing loop on x */
-            for ( gSX = 0; gSX < gEqrWidth; gSX ++ ) {
+            for ( lgSX = 0; lgSX < lgEqrWidth; lgSX ++ ) {
 
                 /* Retrive position angles from pixels */
-                gAngleHor = ( ( ( gnomonic_Real_t ) gSX / ( gEqrWidth  - 1 ) ) * 2.0 ) * GNOMONIC_PI;
-                gAngleVer = ( ( ( gnomonic_Real_t ) gSY / ( gEqrHeight - 1 ) ) - 0.5 ) * GNOMONIC_PI;
+                lgAngleHor = ( ( ( gnomonic_Real_t ) lgSX / ( lgEqrWidth  - 1 ) ) * 2.0 ) * GNOMONIC_PI;
+                lgAngleVer = ( ( ( gnomonic_Real_t ) lgSY / ( lgEqrHeight - 1 ) ) - 0.5 ) * GNOMONIC_PI;
 
                 /* Retrieve initial vector on sphere */
-                gVectori[0] = cos( gAngleHor ) * cos( gAngleVer );
-                gVectori[1] = sin( gAngleHor ) * cos( gAngleVer );
-                gVectori[2] = sin( gAngleVer );
+                lgVectori[0] = cos( lgAngleHor ) * cos( lgAngleVer );
+                lgVectori[1] = sin( lgAngleHor ) * cos( lgAngleVer );
+                lgVectori[2] = sin( lgAngleVer );
 
                 /* Apply rotation transform */
-                gVectorf[0] = gMatrix[0][0] * gVectori[0] + gMatrix[0][1] * gVectori[1] + gMatrix[0][2] * gVectori[2];
-                gVectorf[1] = gMatrix[1][0] * gVectori[0] + gMatrix[1][1] * gVectori[1] + gMatrix[1][2] * gVectori[2];
-                gVectorf[2] = gMatrix[2][0] * gVectori[0] + gMatrix[2][1] * gVectori[1] + gMatrix[2][2] * gVectori[2];
+                lgVectorf[0] = lgMatrix[0][0] * lgVectori[0] + lgMatrix[0][1] * lgVectori[1] + lgMatrix[0][2] * lgVectori[2];
+                lgVectorf[1] = lgMatrix[1][0] * lgVectori[0] + lgMatrix[1][1] * lgVectori[1] + lgMatrix[1][2] * lgVectori[2];
+                lgVectorf[2] = lgMatrix[2][0] * lgVectori[0] + lgMatrix[2][1] * lgVectori[1] + lgMatrix[2][2] * lgVectori[2];
 
                 /* Retrieve rotated position angles - horizontal */
-                gAngleHor = gVectorf[0] / sqrt( gVectorf[0] * gVectorf[0] + gVectorf[1] * gVectorf[1] );
+                lgAngleHor = lgVectorf[0] / sqrt( lgVectorf[0] * lgVectorf[0] + lgVectorf[1] * lgVectorf[1] );
 
                 /* Case study */
-                if ( gAngleHor >= 1.0 ) {
+                if ( lgAngleHor >= 1.0 ) {
 
                     /* Assign horizontal angle */
-                    gAngleHor = 0.0;
+                    lgAngleHor = 0.0;
 
-                } else if ( gAngleHor <= - 1.0 ) {
+                } else if ( lgAngleHor <= - 1.0 ) {
 
                     /* Assign horizontal angle */
-                    gAngleHor = M_PI;
+                    lgAngleHor = M_PI;
 
                 } else {
 
                     /* Case study */
-                    if ( gVectorf[1] < 0.0 ) {
+                    if ( lgVectorf[1] < 0.0 ) {
 
                         /* Assign horizontal angle */
-                        gAngleHor = 2.0 * GNOMONIC_PI - acos( gAngleHor );
+                        lgAngleHor = 2.0 * GNOMONIC_PI - acos( lgAngleHor );
 
                     } else {
 
                         /* Assign horizontal angle */
-                        gAngleHor = acos( gAngleHor );
+                        lgAngleHor = acos( lgAngleHor );
 
                     }
 
                 }
 
                 /* Retrieve rotated position angles - vertical */
-                gAngleVer = asin( gVectorf[2] );
+                lgAngleVer = asin( lgVectorf[2] );
 
                 /* Retrieve pixel components */
-                gDX = ( gAngleHor / ( 2.0 * M_PI ) ) * ( gEqrWidth  - 1 );
-                gDY = ( ( gAngleVer / M_PI ) + 0.5 ) * ( gEqrHeight - 1 );
+                lgDX = ( lgAngleHor / ( 2.0 * M_PI ) ) * ( lgEqrWidth  - 1 );
+                lgDY = ( ( lgAngleVer / M_PI ) + 0.5 ) * ( lgEqrHeight - 1 );
 
                 /* Assign pixel value */
-                * ( gEqrOut + gEqrLayers * ( gEqrWidth * gSY + gSX )     ) = gInter( gEqrIn, gEqrWidth, gEqrHeight, gEqrLayers, 0, gDX, gDY );
-                * ( gEqrOut + gEqrLayers * ( gEqrWidth * gSY + gSX ) + 1 ) = gInter( gEqrIn, gEqrWidth, gEqrHeight, gEqrLayers, 1, gDX, gDY );
-                * ( gEqrOut + gEqrLayers * ( gEqrWidth * gSY + gSX ) + 2 ) = gInter( gEqrIn, gEqrWidth, gEqrHeight, gEqrLayers, 2, gDX, gDY );
+                * ( lgEqrOut + lgEqrLayers * ( lgEqrWidth * lgSY + lgSX )     ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayers, 0, lgDX, lgDY );
+                * ( lgEqrOut + lgEqrLayers * ( lgEqrWidth * lgSY + lgSX ) + 1 ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayers, 1, lgDX, lgDY );
+                * ( lgEqrOut + lgEqrLayers * ( lgEqrWidth * lgSY + lgSX ) + 2 ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayers, 2, lgDX, lgDY );
 
             }
 

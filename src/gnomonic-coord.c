@@ -49,8 +49,8 @@
 
     void gnomonic_ttg_coord(
 
-        double eqx,
-        double eqy,
+        double   eqx,
+        double   eqy,
         long int eqr_w,
         long int eqr_h,
         double * rcx,
@@ -61,8 +61,8 @@
         long int pan_h,
         long int eqr_x,
         long int eqr_y,
-        double sen_x,
-        double sen_y
+        double   sen_x,
+        double   sen_y
 
     ) {
 

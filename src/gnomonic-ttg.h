@@ -84,44 +84,46 @@
     Header - Function prototypes
  */
 
+    //! Equirectangular tile to rectilinear gnomonic projection
+
     //! This function performs an gnomonic projection considering a tile of an entire
     //! equirectangular panorama using the desired interpolation method. The results
-    //! are drawn in the rct_img bitmap. The rct_img has to be already allocated
+    //! are drawn in the lgRectOut bitmap. The lgRectOut has to be already allocated
     //! according to its parameters.
     //!
-    //! @param eqr_img Pointer to equirectangular tile bitmap
-    //! @param eqr_w Width, in pixels, of the equirectangular tile bitmap eqr_img
-    //! @param eqr_h Height, in pixels, of the equirectangular tile bitmap eqr_img
-    //! @param eqr_d Depth, in chromatic layer count, of the equirectangular tile bitmap eqr_img
-    //! @param rct_img Pointer to gnomonic bitmap
-    //! @param rct_w Width, in pixels, of the gnomonic bitmap rct_img
-    //! @param rct_h Height, in pixels, of the gnomonic bitmap rct_img
-    //! @param rct_d Depth, in chromatic layer count, of the gnomonic bitmap rct_img
-    //! @param pan_w Width, in pixel, of the entire equirectangular mapping
-    //! @param pan_h Height, in pixel, of the entire equirectangular mapping
-    //! @param eqr_x Position x, in pixel, of the tile in the entire equirectangular mapping
-    //! @param eqr_y Position y, in pixel, of the tile in the entire equirectangular mapping
-    //! @param sen_x Position x, in pixel, of the tile center in the entire equirectangular mapping
-    //! @param sen_y Position y, in pixel, of the tile center in the entire equirectangular mapping
-    //! @param int_m Pointer to interpolation method function
+    //! @param lgEqrIn Pointer to equirectangular tile bitmap
+    //! @param lgEqrWidth Width, in pixels, of the equirectangular tile bitmap eqr_img
+    //! @param lgEqrHeight Height, in pixels, of the equirectangular tile bitmap eqr_img
+    //! @param lgEqrLayer Depth, in chromatic layer count, of the equirectangular tile bitmap eqr_img
+    //! @param lgRectOut Pointer to gnomonic bitmap
+    //! @param lgRectWidth Width, in pixels, of the gnomonic bitmap rct_img
+    //! @param lgRectHeight Height, in pixels, of the gnomonic bitmap rct_img
+    //! @param lgRectLayer Depth, in chromatic layer count, of the gnomonic bitmap rct_img
+    //! @param lgPanWidth Width, in pixel, of the entire equirectangular mapping
+    //! @param lgPanHeight Height, in pixel, of the entire equirectangular mapping
+    //! @param lgEqrPosX Position x, in pixel, of the tile in the entire equirectangular mapping
+    //! @param lgEqrPosY Position y, in pixel, of the tile in the entire equirectangular mapping
+    //! @param lgEqrCenterX Position x, in pixel, of the tile center in the entire equirectangular mapping
+    //! @param lgEqrCenterY Position y, in pixel, of the tile center in the entire equirectangular mapping
+    //! @param lgInter Pointer to interpolation method function
 
     gnomonic_Void_t gnomonic_ttg(
 
-        inter_C8_t *     eqr_img,
-        gnomonic_Index_t eqr_w,
-        gnomonic_Index_t eqr_h,
-        gnomonic_Index_t eqr_d,
-        inter_C8_t *     rct_img,
-        gnomonic_Index_t rct_w,
-        gnomonic_Index_t rct_h,
-        gnomonic_Index_t rct_d,
-        gnomonic_Index_t pan_w,
-        gnomonic_Index_t pan_h,
-        gnomonic_Index_t eqr_x,
-        gnomonic_Index_t eqr_y,
-        gnomonic_Real_t  sen_x,
-        gnomonic_Real_t  sen_y,
-        inter_Method_t   int_m
+        inter_C8_t *     lgEqrIn,
+        gnomonic_Index_t lgEqrWidth,
+        gnomonic_Index_t lgEqrHeight,
+        gnomonic_Index_t lgEqrLayer,
+        inter_C8_t *     lgRectOut,
+        gnomonic_Index_t lgRectWidth,
+        gnomonic_Index_t lgRectHeight,
+        gnomonic_Index_t lgRectLayer,
+        gnomonic_Index_t lgPanWidth,
+        gnomonic_Index_t lgPanHeight,
+        gnomonic_Index_t lgEqrPosX,
+        gnomonic_Index_t lgEqrPosY,
+        gnomonic_Real_t  lgEqrCenterX,
+        gnomonic_Real_t  lgEqrCenterY,
+        inter_Method_t   lgInter
 
     );
 

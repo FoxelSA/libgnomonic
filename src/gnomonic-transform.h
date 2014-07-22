@@ -40,7 +40,7 @@
     //! @file   gnomonic-transform.h
     //! @author Nils Hamel (n.hamel@foxel.ch)
     //!
-    //! Equirectangular projection transformations
+    //! Equirectangular transformation
 
 /*
     Header - Include guard
@@ -84,17 +84,34 @@
     Header - Function prototypes
  */
 
+    //! Equirectangular mapping rotation
+
+    //! This function apply a rotation matrix to the sphere mapped by the gEqrIn equirectangular
+    //! mapping. The result is drawn in the gEqrOut bitmap that has to be already allocated.
+    //! The gEqrOut bitmap has to have the same size and chromatic layer count than gEqrIn
+    //! bitmap.
+    //!
+    //! @param gEqrIn Input equirectangular bitmap
+    //! @param gEqrOut Output equirectangular bitmap
+    //! @param gEqrWidth Width, in pixel, of input/output bitmaps
+    //! @param gEqrHeight Height, in pixel, of input/output bitmaps
+    //! @param gEqrLayer Chromatic layer count of input/output bitmaps
+    //! @param gAngleX Rotation angle, in radiant, along x-axis
+    //! @param gAngleY Rotation angle, in radiant, along y-axis
+    //! @param gAngleZ Rotation angle, in radiant, along z-axis
+    //! @param gInter Pointer to interpolation method function
+
     gnomonic_Void_t gnomonic_transform_rotate( 
 
-        inter_C8_t *     gEqrIn,
-        inter_C8_t *     gEqrOut,
-        gnomonic_Index_t gEqrWidth,
-        gnomonic_Index_t gEqrHeight,
-        gnomonic_Index_t gEqrLayers,
-        gnomonic_Real_t  gAngleX,
-        gnomonic_Real_t  gAngleY,
-        gnomonic_Real_t  gAngleZ,
-        inter_Method_t   gInter
+        inter_C8_t *     lgEqrIn,
+        inter_C8_t *     lgEqrOut,
+        gnomonic_Index_t lgEqrWidth,
+        gnomonic_Index_t lgEqrHeight,
+        gnomonic_Index_t lgEqrLayers,
+        gnomonic_Real_t  lgAngleX,
+        gnomonic_Real_t  lgAngleY,
+        gnomonic_Real_t  lgAngleZ,
+        inter_Method_t   lgInter
 
     );
 

@@ -15,7 +15,7 @@
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * (lgAppH your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -49,123 +49,127 @@
 
     gnomonic_Void_t gnomonic_etg(
 
-        inter_C8_t *     pan_img,
-        gnomonic_Index_t pan_w,
-        gnomonic_Index_t pan_h,
-        gnomonic_Index_t pan_d,
-        inter_C8_t *     rct_img,
-        gnomonic_Index_t rct_w,
-        gnomonic_Index_t rct_h,
-        gnomonic_Index_t rct_d,
-        gnomonic_Real_t  nad_t,
-        gnomonic_Real_t  nad_p,
-        gnomonic_Real_t  app_t,
-        gnomonic_Real_t  app_p,
-        inter_Method_t   int_m
+        inter_C8_t *     lgEqrIn,
+        gnomonic_Index_t lgEqrWidth,
+        gnomonic_Index_t lgEqrHeight,
+        gnomonic_Index_t lgEqrLayer,
+        inter_C8_t *     lgRectOut,
+        gnomonic_Index_t lgRectWidth,
+        gnomonic_Index_t lgRectHeight,
+        gnomonic_Index_t lgRectLayer,
+        gnomonic_Real_t  lgNadH,
+        gnomonic_Real_t  lgNadV,
+        gnomonic_Real_t  lgAppH,
+        gnomonic_Real_t  lgAppV,
+        inter_Method_t   lgInter
 
     ) {
 
+        /* Parsing Variables */
+        gnomonic_Index_t lgDX = 0;
+        gnomonic_Index_t lgDY = 0;
+
         /* Projection Variables */
-        gnomonic_Index_t rx = 0;
-        gnomonic_Index_t ry = 0;
-        gnomonic_Real_t  dx = 0.0;
-        gnomonic_Real_t  dy = 0.0;
-        gnomonic_Real_t  ux = 0.0;
-        gnomonic_Real_t  uy = 0.0;
-        gnomonic_Real_t  pt = 0.0;
-        gnomonic_Real_t  pp = 0.0;
-        gnomonic_Real_t  at = 0.0;
-        gnomonic_Real_t  ap = 0.0;
+        gnomonic_Real_t lgSX = 0.0;
+        gnomonic_Real_t lgSY = 0.0;
+        gnomonic_Real_t lgPX = 0.0;
+        gnomonic_Real_t lgPY = 0.0;
+        gnomonic_Real_t lgAH = 0.0;
+        gnomonic_Real_t lgAV = 0.0;
+
+        /* Mathematical Variables */
+        gnomonic_Real_t lgTanAppH = 0.0;
+        gnomonic_Real_t lgTanAppV = 0.0;
 
         /* Position vector */
-        gnomonic_Real_t pv[3] = { 0.0, 0.0, 0.0 };
-        gnomonic_Real_t kv[3] = { 0.0, 0.0, 0.0 };
+        gnomonic_Real_t lgVectori[3] = { 0.0, 0.0, 0.0 };
+        gnomonic_Real_t lgVectorf[3] = { 0.0, 0.0, 0.0 };
 
         /* Rotation matrix */
-        gnomonic_Real_t Ry[3][3] = { { 0.0, 0.0, 0.0 }, { 0.0, 1.0, 0.0 }, { 0.0, 0.0, 0.0 } };
-        gnomonic_Real_t Rz[3][3] = { { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 1.0 } };
+        gnomonic_Real_t lgMatrixY[3][3] = { { 0.0, 0.0, 0.0 }, { 0.0, 1.0, 0.0 }, { 0.0, 0.0, 0.0 } };
+        gnomonic_Real_t lgMatrixZ[3][3] = { { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 1.0 } };
 
         /* Rotation matrix - y */
-        Ry[0][0] = + cos( + nad_p );
-        Ry[0][2] = + sin( + nad_p );
-        Ry[2][0] = - Ry[0][2];
-        Ry[2][2] = + Ry[0][0];
+        lgMatrixY[0][0] = + cos( + lgNadV );
+        lgMatrixY[0][2] = + sin( + lgNadV );
+        lgMatrixY[2][0] = - lgMatrixY[0][2];
+        lgMatrixY[2][2] = + lgMatrixY[0][0];
 
         /* Rotation matrix - z */
-        Rz[0][0] = + cos( + nad_t );
-        Rz[0][1] = - sin( + nad_t );
-        Rz[1][0] = - Rz[0][1];
-        Rz[1][1] = + Rz[0][0];
+        lgMatrixZ[0][0] = + cos( + lgNadH );
+        lgMatrixZ[0][1] = - sin( + lgNadH );
+        lgMatrixZ[1][0] = - lgMatrixZ[0][1];
+        lgMatrixZ[1][1] = + lgMatrixZ[0][0];
 
         /* Angular apperture tangent computation */
-        at = tan( app_t );
-        ap = tan( app_p );
+        lgTanAppH = tan( lgAppH );
+        lgTanAppV = tan( lgAppV );
 
         /* Planar projection referential y-loop */
-        for ( ry = 0; ry < rct_h; ry++ ) {
+        for ( lgDY = 0; lgDY < lgRectHeight; lgDY++ ) {
 
             /* Planar projection referential x-loop */
-            for ( rx = 0; rx < rct_w; rx++ ) {
+            for ( lgDX = 0; lgDX < lgRectWidth; lgDX++ ) {
 
                 /* Normalized planar coordinates */
-                ux = ( ( 2.0 * ( gnomonic_Real_t ) rx / ( gnomonic_Real_t ) ( rct_w - 1 ) ) - 1.0 ) * at;
-                uy = ( ( 2.0 * ( gnomonic_Real_t ) ry / ( gnomonic_Real_t ) ( rct_h - 1 ) ) - 1.0 ) * ap;
+                lgPX = ( ( 2.0 * ( gnomonic_Real_t ) lgDX / ( gnomonic_Real_t ) ( lgRectWidth  - 1 ) ) - 1.0 ) * lgTanAppH;
+                lgPY = ( ( 2.0 * ( gnomonic_Real_t ) lgDY / ( gnomonic_Real_t ) ( lgRectHeight - 1 ) ) - 1.0 ) * lgTanAppV;
 
                 /* Rebuild position vector - x y z */
-                pv[0] = cos( atan( sqrt( ux * ux + uy * uy ) ) );
-                pv[1] = ux * pv[0];
-                pv[2] = uy * pv[0];
+                lgVectori[0] = cos( atan( sqrt( lgPX * lgPX + lgPY * lgPY ) ) );
+                lgVectori[1] = lgPX * lgVectori[0];
+                lgVectori[2] = lgPY * lgVectori[0];
 
                 /* Invert rotation due to t-nadir and p-nadir */
-                kv[0] = Ry[0][0] * pv[0] + Ry[0][2] * pv[2];
-                kv[1] = pv[1];
-                kv[2] = Ry[2][0] * pv[0] + Ry[2][2] * pv[2];
-                pv[0] = Rz[0][0] * kv[0] + Rz[0][1] * kv[1];
-                pv[1] = Rz[1][0] * kv[0] + Rz[1][1] * kv[1];
-                pv[2] = kv[2];
+                lgVectorf[0] = lgMatrixY[0][0] * lgVectori[0] + lgMatrixY[0][2] * lgVectori[2];
+                lgVectorf[1] = lgVectori[1];
+                lgVectorf[2] = lgMatrixY[2][0] * lgVectori[0] + lgMatrixY[2][2] * lgVectori[2];
+                lgVectori[0] = lgMatrixZ[0][0] * lgVectorf[0] + lgMatrixZ[0][1] * lgVectorf[1];
+                lgVectori[1] = lgMatrixZ[1][0] * lgVectorf[0] + lgMatrixZ[1][1] * lgVectorf[1];
+                lgVectori[2] = lgVectorf[2];
 
                 /* Retrieve rotated position angles - horizontal */
-                pt = pv[0] / sqrt( pv[0] * pv[0] + pv[1] * pv[1] );
+                lgAH = lgVectori[0] / sqrt( lgVectori[0] * lgVectori[0] + lgVectori[1] * lgVectori[1] );
 
                 /* Case study */
-                if ( pt >= 1.0 ) {
+                if ( lgAH >= 1.0 ) {
 
                     /* Assign horizontal angle */
-                    pt = 0.0;
+                    lgAH = 0.0;
 
-                } else if ( pt <= - 1.0 ) {
+                } else if ( lgAH <= - 1.0 ) {
 
                     /* Assign horizontal angle */
-                    pt = M_PI;
+                    lgAH = M_PI;
 
                 } else {
 
                     /* Case study */
-                    if ( pv[1] < 0.0 ) {
+                    if ( lgVectori[1] < 0.0 ) {
 
                         /* Assign horizontal angle */
-                        pt = 2.0 * GNOMONIC_PI - acos( pt );
+                        lgAH = 2.0 * GNOMONIC_PI - acos( lgAH );
 
                     } else {
 
                         /* Assign horizontal angle */
-                        pt = acos( pt );
+                        lgAH = acos( lgAH );
 
                     }
 
                 }
 
                 /* Retreive angular position - Vertical */
-                pp = asin( pv[2] );
+                lgAV = asin( lgVectori[2] );
 
                 /* Retrieve panoramic pixel coordinates */
-                dx = ( pt / ( 2.0 * GNOMONIC_PI ) ) * ( pan_w - 1 );
-                dy = ( ( pp / GNOMONIC_PI ) + 0.5 ) * ( pan_h - 1 );
+                lgSX = ( lgAH / ( 2.0 * GNOMONIC_PI ) ) * ( lgEqrWidth  - 1 );
+                lgSY = ( ( lgAV / GNOMONIC_PI ) + 0.5 ) * ( lgEqrHeight - 1 );
 
                 /* Interpolation process */
-                * ( rct_img + rct_d * ( rct_w * ry + rx )     ) = int_m( pan_img, pan_w, pan_h, pan_d, 0, dx, dy );
-                * ( rct_img + rct_d * ( rct_w * ry + rx ) + 1 ) = int_m( pan_img, pan_w, pan_h, pan_d, 1, dx, dy );
-                * ( rct_img + rct_d * ( rct_w * ry + rx ) + 2 ) = int_m( pan_img, pan_w, pan_h, pan_d, 2, dx, dy );
+                * ( lgRectOut + lgRectLayer * ( lgRectWidth * lgDY + lgDX )     ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, 0, lgSX, lgSY );
+                * ( lgRectOut + lgRectLayer * ( lgRectWidth * lgDY + lgDX ) + 1 ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, 1, lgSX, lgSY );
+                * ( lgRectOut + lgRectLayer * ( lgRectWidth * lgDY + lgDX ) + 2 ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, 2, lgSX, lgSY );
 
             }
 

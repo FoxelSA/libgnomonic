@@ -188,6 +188,12 @@
                     * ( lgRectOut + lgRectLayer * ( lgRectWidth * lgDY + lgDX ) + 1 ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, 1, lgSX, lgSY );
                     * ( lgRectOut + lgRectLayer * ( lgRectWidth * lgDY + lgDX ) + 2 ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, 2, lgSX, lgSY );
 
+                } else {
+
+                    /* Assign black pixel */
+                    * ( lgRectOut + lgRectLayer * ( lgRectWidth * lgDY + lgDX )     ) = 0;
+                    * ( lgRectOut + lgRectLayer * ( lgRectWidth * lgDY + lgDX ) + 1 ) = 0;
+                    * ( lgRectOut + lgRectLayer * ( lgRectWidth * lgDY + lgDX ) + 2 ) = 0;
                 }
 
             }

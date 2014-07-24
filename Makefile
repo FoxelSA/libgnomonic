@@ -42,6 +42,11 @@ ifeq ($(MAKE_CODE),cpp)
     MAKE_SRCCOMP:=g++
 endif
 endif
+ifeq ($(MAKE_TYPE),suite)
+    MAKE_LIBSWAP:=../../
+else
+    MAKE_LIBSWAP:=
+endif
 ifeq ($(MAKE_TYPE),application)
     MAKE_OBJCOMP:=$(MAKE_SRCCOMP)
 else
@@ -50,7 +55,7 @@ ifeq ($(MAKE_TYPE),libstatic)
 endif
 endif
     MAKE_DOCCOMP:=doxygen
-    MAKE_GENOPTN:=-Wall -funsigned-char -O3 $(addprefix -I./, $(addsuffix /src, $(MAKE_INCLUDE) ) )
+    MAKE_GENOPTN:=-Wall -funsigned-char -O3 $(addprefix -I./$(MAKE_LIBSWAP), $(addsuffix /src, $(MAKE_INCLUDE) ) )
 ifeq ($(MAKE_CODE),c)
     MAKE_SRCOPTN:=-std=gnu99 $(MAKE_GENOPTN)
 else

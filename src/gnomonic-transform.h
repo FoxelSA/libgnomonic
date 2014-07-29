@@ -91,15 +91,15 @@
     //! The gEqrOut bitmap has to have the same size and chromatic layer count than gEqrIn
     //! bitmap.
     //!
-    //! @param gEqrIn Input equirectangular bitmap
-    //! @param gEqrOut Output equirectangular bitmap
-    //! @param gEqrWidth Width, in pixel, of input/output bitmaps
-    //! @param gEqrHeight Height, in pixel, of input/output bitmaps
-    //! @param gEqrLayer Chromatic layer count of input/output bitmaps
-    //! @param gAngleX Rotation angle, in radiant, along x-axis
-    //! @param gAngleY Rotation angle, in radiant, along y-axis
-    //! @param gAngleZ Rotation angle, in radiant, along z-axis
-    //! @param gInter Pointer to interpolation method function
+    //! @param lgEqrIn Input equirectangular bitmap
+    //! @param lgEqrOut Output equirectangular bitmap
+    //! @param lgEqrWidth Width, in pixel, of input/output bitmaps
+    //! @param lgEqrHeight Height, in pixel, of input/output bitmaps
+    //! @param lgEqrLayers Chromatic layer count of input/output bitmaps
+    //! @param lgAngleX Rotation angle, in radiant, along x-axis
+    //! @param lgAngleY Rotation angle, in radiant, along y-axis
+    //! @param lgAngleZ Rotation angle, in radiant, along z-axis
+    //! @param lgInter Pointer to interpolation method function
 
     gnomonic_Void_t gnomonic_transform_rotate( 
 

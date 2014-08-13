@@ -47,34 +47,34 @@
     Source - 
  */
 
-    gnomonic_Void_t gnomonic_transform_rotate( 
+    lg_Void_t lg_transform_rotate( 
 
-        inter_C8_t *     lgEqrIn,
-        inter_C8_t *     lgEqrOut,
-        gnomonic_Index_t lgEqrWidth,
-        gnomonic_Index_t lgEqrHeight,
-        gnomonic_Index_t lgEqrLayers,
-        gnomonic_Real_t  lgAngleX,
-        gnomonic_Real_t  lgAngleY,
-        gnomonic_Real_t  lgAngleZ,
-        inter_Method_t   lgInter
+        li_C8_t *   lgEqrIn,
+        li_C8_t *   lgEqrOut,
+        lg_Size_t   lgEqrWidth,
+        lg_Size_t   lgEqrHeight,
+        lg_Size_t   lgEqrLayers,
+        lg_Real_t   lgAngleX,
+        lg_Real_t   lgAngleY,
+        lg_Real_t   lgAngleZ,
+        li_Method_t lgInter
 
     ) {
 
         /* Position angles */
-        gnomonic_Real_t lgAngleHor = 0.0;
-        gnomonic_Real_t lgAngleVer = 0.0;
+        lg_Real_t lgAngleHor = lg_Real_s( 0.0 );
+        lg_Real_t lgAngleVer = lg_Real_s( 0.0 );
 
         /* Positionning variables */
-        gnomonic_Real_t lgDX = 0;
-        gnomonic_Real_t lgDY = 0;
+        lg_Real_t lgDX = lg_Real_s( 0.0 );
+        lg_Real_t lgDY = lg_Real_s( 0.0 );
 
         /* Parsing variable */
-        gnomonic_Index_t lgSX = 0;
-        gnomonic_Index_t lgSY = 0;
+        lg_Size_t lgSX = lg_Real_s( 0.0 );
+        lg_Size_t lgSY = lg_Real_s( 0.0 );
 
         /* Rotation matrix */
-        gnomonic_Real_t lgMatrix[3][3] = {
+        lg_Real_t lgMatrix[3][3] = {
 
             { 
                 + cos( lgAngleZ ) * cos( lgAngleY ), 
@@ -95,18 +95,18 @@
         };
 
         /* Sphere point vectors */
-        gnomonic_Real_t lgVectori[3] = { 0.0, 0.0, 0.0 };
-        gnomonic_Real_t lgVectorf[3] = { 0.0, 0.0, 0.0 };
+        lg_Real_t lgVectori[3] = { 0.0, 0.0, 0.0 };
+        lg_Real_t lgVectorf[3] = { 0.0, 0.0, 0.0 };
 
         /* Processing loop on y */
-        for ( lgSY = 0; lgSY < lgEqrHeight; lgSY ++ ) {
+        for ( lgSY = lg_Size_s( 0 ); lgSY < lgEqrHeight; lgSY ++ ) {
 
             /* Processing loop on x */
-            for ( lgSX = 0; lgSX < lgEqrWidth; lgSX ++ ) {
+            for ( lgSX = lg_Size_s( 0 ); lgSX < lgEqrWidth; lgSX ++ ) {
 
                 /* Retrive position angles from pixels */
-                lgAngleHor = ( ( ( gnomonic_Real_t ) lgSX / ( lgEqrWidth  - 1 ) ) * 2.0 ) * LG_PI;
-                lgAngleVer = ( ( ( gnomonic_Real_t ) lgSY / ( lgEqrHeight - 1 ) ) - 0.5 ) * LG_PI;
+                lgAngleHor = ( ( ( lg_Real_t ) lgSX / ( lgEqrWidth  - lg_Size_s( 1 ) ) ) * lg_Real_s( 2.0 ) ) * LG_PI;
+                lgAngleVer = ( ( ( lg_Real_t ) lgSY / ( lgEqrHeight - lg_Size_s( 1 ) ) ) - lg_Real_s( 0.5 ) ) * LG_PI;
 
                 /* Retrieve initial vector on sphere */
                 lgVectori[0] = cos( lgAngleHor ) * cos( lgAngleVer );
@@ -122,12 +122,12 @@
                 lgAngleHor = lgVectorf[0] / sqrt( lgVectorf[0] * lgVectorf[0] + lgVectorf[1] * lgVectorf[1] );
 
                 /* Case study */
-                if ( lgAngleHor >= 1.0 ) {
+                if ( lgAngleHor >= lg_Real_s( 1.0 ) ) {
 
                     /* Assign horizontal angle */
-                    lgAngleHor = 0.0;
+                    lgAngleHor = lg_Real_s( 0.0 );
 
-                } else if ( lgAngleHor <= - 1.0 ) {
+                } else if ( lgAngleHor <= lg_Real_s( -1.0 ) ) {
 
                     /* Assign horizontal angle */
                     lgAngleHor = M_PI;
@@ -135,10 +135,10 @@
                 } else {
 
                     /* Case study */
-                    if ( lgVectorf[1] < 0.0 ) {
+                    if ( lgVectorf[1] < lg_Real_s( 0.0 ) ) {
 
                         /* Assign horizontal angle */
-                        lgAngleHor = 2.0 * LG_PI - acos( lgAngleHor );
+                        lgAngleHor = lg_Real_s( 2.0 ) * LG_PI - acos( lgAngleHor );
 
                     } else {
 
@@ -153,13 +153,13 @@
                 lgAngleVer = asin( lgVectorf[2] );
 
                 /* Retrieve pixel components */
-                lgDX = ( lgAngleHor / ( 2.0 * M_PI ) ) * ( lgEqrWidth  - 1 );
-                lgDY = ( ( lgAngleVer / M_PI ) + 0.5 ) * ( lgEqrHeight - 1 );
+                lgDX = ( lgAngleHor / ( lg_Real_s( 2.0 ) * M_PI ) ) * ( lgEqrWidth  - lg_Size_s( 1 ) );
+                lgDY = ( ( lgAngleVer / M_PI ) + lg_Real_s( 0.5 ) ) * ( lgEqrHeight - lg_Size_s( 1 ) );
 
                 /* Assign pixel value */
-                * ( lgEqrOut + lgEqrLayers * ( lgEqrWidth * lgSY + lgSX )     ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayers, 0, lgDX, lgDY );
-                * ( lgEqrOut + lgEqrLayers * ( lgEqrWidth * lgSY + lgSX ) + 1 ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayers, 1, lgDX, lgDY );
-                * ( lgEqrOut + lgEqrLayers * ( lgEqrWidth * lgSY + lgSX ) + 2 ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayers, 2, lgDX, lgDY );
+                * ( lgEqrOut + lgEqrLayers * ( lgEqrWidth * lgSY + lgSX )                  ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayers, lg_Size_s( 0 ), lgDX, lgDY );
+                * ( lgEqrOut + lgEqrLayers * ( lgEqrWidth * lgSY + lgSX ) + lg_Size_s( 1 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayers, lg_Size_s( 1 ), lgDX, lgDY );
+                * ( lgEqrOut + lgEqrLayers * ( lgEqrWidth * lgSY + lgSX ) + lg_Size_s( 2 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayers, lg_Size_s( 2 ), lgDX, lgDY );
 
             }
 

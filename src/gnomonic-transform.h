@@ -72,6 +72,9 @@
     Header - Preprocessor macros
  */
 
+    /* Ascending compatibility alias - Ensured until v1.0 */
+    # define gnomonic_transform_rotate lg_transform_rotate
+
 /*
     Header - Typedefs
  */
@@ -102,17 +105,17 @@
      *  \param lgInter Pointer to interpolation method function
      */
 
-    gnomonic_Void_t gnomonic_transform_rotate( 
+    lg_Void_t lg_transform_rotate( 
 
-        inter_C8_t *     lgEqrIn,
-        inter_C8_t *     lgEqrOut,
-        gnomonic_Index_t lgEqrWidth,
-        gnomonic_Index_t lgEqrHeight,
-        gnomonic_Index_t lgEqrLayers,
-        gnomonic_Real_t  lgAngleX,
-        gnomonic_Real_t  lgAngleY,
-        gnomonic_Real_t  lgAngleZ,
-        inter_Method_t   lgInter
+        li_C8_t *   lgEqrIn,
+        li_C8_t *   lgEqrOut,
+        lg_Size_t   lgEqrWidth,
+        lg_Size_t   lgEqrHeight,
+        lg_Size_t   lgEqrLayers,
+        lg_Real_t   lgAngleX,
+        lg_Real_t   lgAngleY,
+        lg_Real_t   lgAngleZ,
+        li_Method_t lgInter
 
     );
 

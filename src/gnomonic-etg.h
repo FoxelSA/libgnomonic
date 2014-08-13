@@ -72,6 +72,9 @@
     Header - Preprocessor macros
  */
 
+    /* Ascending compatibility alias - Ensured until v1.0 */
+    # define gnomonic_etg lg_etg
+
 /*
     Header - Typedefs
  */
@@ -106,21 +109,21 @@
      *  \param lgInter Pointer to interpolation method function
      */
 
-    gnomonic_Void_t gnomonic_etg(
+    lg_Void_t lg_etg(
 
-        inter_C8_t *     lgEqrIn,
-        gnomonic_Index_t lgEqrWidth,
-        gnomonic_Index_t lgEqrHeight,
-        gnomonic_Index_t lgEqrLayer,
-        inter_C8_t *     lgRectOut,
-        gnomonic_Index_t lgRectWidth,
-        gnomonic_Index_t lgRectHeight,
-        gnomonic_Index_t lgRectLayer,
-        gnomonic_Real_t  lgNadH,
-        gnomonic_Real_t  lgNadV,
-        gnomonic_Real_t  lgAppH,
-        gnomonic_Real_t  lgAppV,
-        inter_Method_t   lgInter
+        li_C8_t *   lgEqrIn,
+        lg_Size_t   lgEqrWidth,
+        lg_Size_t   lgEqrHeight,
+        lg_Size_t   lgEqrLayer,
+        li_C8_t *   lgRectOut,
+        lg_Size_t   lgRectWidth,
+        lg_Size_t   lgRectHeight,
+        lg_Size_t   lgRectLayer,
+        lg_Real_t   lgNadH,
+        lg_Real_t   lgNadV,
+        lg_Real_t   lgAppH,
+        lg_Real_t   lgAppV,
+        li_Method_t lgInter
 
     );
 

@@ -71,6 +71,10 @@
     Header - Preprocessor macros
  */
 
+    /* Ascending compatibility alias - Ensured until v1.0 */
+    # define gnomonic_ttg_coord lg_ttg_coord
+    # define gnomonic_gtt_coord lg_gtt_coord
+
 /*
     Header - Typedefs
  */
@@ -83,41 +87,84 @@
     Header - Function prototypes
  */
 
-    void gnomonic_ttg_coord(
+    /*! \brief Equirectangular tile to rectilinear coordinates transform
+     *  
+     *  Performs a conversion from the coordinates of a point in an
+     *  equirectangular tile to the coordinates of the corresponding point 
+     *  in the rectilinear projection of the tile.
+     *
+     * \param eqx Equirectangular point x-coordinate
+     * \param eqy Equirectangular point y-coordinate
+     * \param eqr_w Width, in pixels, of the equirectangular tile
+     * \param eqr_h Height, in pixels, of the equirectangular tile
+     * \param rcx Pointer to the rectilinear point x-coordinate (output)
+     * \param rcy Pointer to the rectilinear point y-coordinate (output)
+     * \param rct_w Width, in pixels, of the rectilinear image
+     * \param rct_h Height, in pixels, of the rectilinear image
+     * \param pan_w Width, in pixels, of the full equirectangular image
+     * \param pan_h Height, in pixels, of the full equirectangular image
+     * \param eqr_x X-Position, in pixels, of the top-left corner of the equirectangular tile in the full equirectangular image
+     * \param eqr_y Y-Position, in pixels, of the top-left corner of the equirectangular tile in the full equirectangular image
+     * \param sen_x X-Position, in pixels, of the rectilinear center in the full equirectangular image
+     * \param sen_x Y-Position, in pixels, of the rectilinear center in the full equirectangular image
+     */
 
-        double   eqx,
-        double   eqy,
-        long int eqr_w,
-        long int eqr_h,
-        double * rcx,
-        double * rcy,
-        long int rct_w,
-        long int rct_h,
-        long int pan_w,
-        long int pan_h,
-        long int eqr_x,
-        long int eqr_y,
-        double   sen_x,
-        double   sen_y
+    lg_Void_t lg_ttg_coord(
+
+        lg_Real_t   eqx,
+        lg_Real_t   eqy,
+        lg_Size_t   eqr_w,
+        lg_Size_t   eqr_h,
+        lg_Real_t * rcx,
+        lg_Real_t * rcy,
+        lg_Size_t   rct_w,
+        lg_Size_t   rct_h,
+        lg_Size_t   pan_w,
+        lg_Size_t   pan_h,
+        lg_Size_t   eqr_x,
+        lg_Size_t   eqr_y,
+        lg_Real_t   sen_x,
+        lg_Real_t   sen_y
 
     );
 
- void gnomonic_gtt_coord(
+    /*! \brief Rectilinear to equirectangular tile coordinates transform
+     *  
+     * Performs the conversion from the coordinates of a point in a rectilinear
+     * image to the corresponding point in a equirectangular tile image.
+     *
+     * \param eqx Pointer to quirectangular point x-coordinate (output)
+     * \param eqy Pointer to equirectangular point y-coordinate (output)
+     * \param eqr_w Width, in pixels, of the equirectangular tile
+     * \param eqr_h Height, in pixels, of the equirectangular tile
+     * \param rcx Rectilinear point x-coordinate
+     * \param rcy Rectilinear point y-coordinate
+     * \param rct_w Width, in pixels, of the rectilinear image
+     * \param rct_h Height, in pixels, of the rectilinear image
+     * \param pan_w Width, in pixels, of the full equirectangular image
+     * \param pan_h Height, in pixels, of the full equirectangular image
+     * \param eqr_x X-Position, in pixels, of the top-left corner of the equirectangular tile in the full equirectangular image
+     * \param eqr_y Y-Position, in pixels, of the top-left corner of the equirectangular tile in the full equirectangular image
+     * \param sen_x X-Position, in pixels, of the rectilinear center in the full equirectangular image
+     * \param sen_x Y-Position, in pixels, of the rectilinear center in the full equirectangular image
+     */
 
-        double * eqx,
-        double * eqy,
-        long int eqr_w,
-        long int eqr_h,
-        double   rcx,
-        double   rcy,
-        long int rct_w,
-        long int rct_h,
-        long int pan_w,
-        long int pan_h,
-        long int eqr_x,
-        long int eqr_y,
-        double   sen_x,
-        double   sen_y
+    lg_Void_t lg_gtt_coord(
+
+        lg_Real_t * eqx,
+        lg_Real_t * eqy,
+        lg_Size_t   eqr_w,
+        lg_Size_t   eqr_h,
+        lg_Real_t   rcx,
+        lg_Real_t   rcy,
+        lg_Size_t   rct_w,
+        lg_Size_t   rct_h,
+        lg_Size_t   pan_w,
+        lg_Size_t   pan_h,
+        lg_Size_t   eqr_x,
+        lg_Size_t   eqr_y,
+        lg_Real_t   sen_x,
+        lg_Real_t   sen_y
 
     );
 

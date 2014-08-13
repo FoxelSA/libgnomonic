@@ -47,57 +47,57 @@
     Source - Gnomonic projection from tile of equirectangular panoramic image
  */
 
-    gnomonic_Void_t gnomonic_ttg(
+    lg_Void_t lg_ttg(
 
-        inter_C8_t *     lgEqrIn,
-        gnomonic_Index_t lgEqrWidth,
-        gnomonic_Index_t lgEqrHeight,
-        gnomonic_Index_t lgEqrLayer,
-        inter_C8_t *     lgRectOut,
-        gnomonic_Index_t lgRectWidth,
-        gnomonic_Index_t lgRectHeight,
-        gnomonic_Index_t lgRectLayer,
-        gnomonic_Index_t lgPanWidth,
-        gnomonic_Index_t lgPanHeight,
-        gnomonic_Index_t lgEqrPosX,
-        gnomonic_Index_t lgEqrPosY,
-        gnomonic_Real_t  lgEqrCenterX,
-        gnomonic_Real_t  lgEqrCenterY,
-        inter_Method_t   lgInter
+        li_C8_t *   lgEqrIn,
+        lg_Size_t   lgEqrWidth,
+        lg_Size_t   lgEqrHeight,
+        lg_Size_t   lgEqrLayer,
+        li_C8_t *   lgRectOut,
+        lg_Size_t   lgRectWidth,
+        lg_Size_t   lgRectHeight,
+        lg_Size_t   lgRectLayer,
+        lg_Size_t   lgPanWidth,
+        lg_Size_t   lgPanHeight,
+        lg_Size_t   lgEqrPosX,
+        lg_Size_t   lgEqrPosY,
+        lg_Real_t   lgEqrCenterX,
+        lg_Real_t   lgEqrCenterY,
+        li_Method_t lgInter
 
     ) {
 
         /* Parsing variables */
-        gnomonic_Index_t lgDX = 0;
-        gnomonic_Index_t lgDY = 0;
+        lg_Size_t lgDX = lg_Size_s( 0 );
+        lg_Size_t lgDY = lg_Size_s( 0 );
 
         /* Projection variables */
-        gnomonic_Real_t lgSX   = 0.0;
-        gnomonic_Real_t lgSY   = 0.0;
-        gnomonic_Real_t lgPX   = 0.0;
-        gnomonic_Real_t lgPY   = 0.0;
-        gnomonic_Real_t lgAH   = 0.0;
-        gnomonic_Real_t lgAV   = 0.0;
-        gnomonic_Real_t lgNadH = 0.0;
-        gnomonic_Real_t lgNadV = 0.0;
-        gnomonic_Real_t lgAppH = 0.0;
-        gnomonic_Real_t lgAppV = 0.0;
+        lg_Real_t lgSX   = lg_Real_s( 0.0 );
+        lg_Real_t lgSY   = lg_Real_s( 0.0 );
+        lg_Real_t lgPX   = lg_Real_s( 0.0 );
+        lg_Real_t lgPY   = lg_Real_s( 0.0 );
+        lg_Real_t lgAH   = lg_Real_s( 0.0 );
+        lg_Real_t lgAV   = lg_Real_s( 0.0 );
+        lg_Real_t lgNadH = lg_Real_s( 0.0 );
+        lg_Real_t lgNadV = lg_Real_s( 0.0 );
+        lg_Real_t lgAppH = lg_Real_s( 0.0 );
+        lg_Real_t lgAppV = lg_Real_s( 0.0 );
 
         /* Mathematical variables */
-        gnomonic_Real_t lgTanAppH = 0.0;
-        gnomonic_Real_t lgTanAppV = 0.0;
+        lg_Real_t lgTanAppH = lg_Real_s( 0.0 );
+        lg_Real_t lgTanAppV = lg_Real_s( 0.0 );
 
         /* Position vector */
-        gnomonic_Real_t lgVectori[3] = { 0.0, 0.0, 0.0 };
-        gnomonic_Real_t lgVectorf[3] = { 0.0, 0.0, 0.0 };
+        lg_Real_t lgVectori[3] = { 0.0, 0.0, 0.0 };
+        lg_Real_t lgVectorf[3] = { 0.0, 0.0, 0.0 };
 
         /* Rotation matrix */
-        gnomonic_Real_t lgMatrixY[3][3] = { { 0.0, 0.0, 0.0 }, { 0.0, 1.0, 0.0 }, { 0.0, 0.0, 0.0 } };
-        gnomonic_Real_t lgMatrixZ[3][3] = { { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 1.0 } };
+        lg_Real_t lgMatrixY[3][3] = { { 0.0, 0.0, 0.0 }, { 0.0, 1.0, 0.0 }, { 0.0, 0.0, 0.0 } };
+        lg_Real_t lgMatrixZ[3][3] = { { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 1.0 } };
 
         /* Compute orientation variables */
-        lgNadH = ( lgEqrCenterX / ( gnomonic_Real_t ) lgPanWidth ) * 2.0 * LG_PI;
-        lgNadV = ( 0.5 - ( lgEqrCenterY / ( gnomonic_Real_t ) lgPanHeight ) ) * LG_PI;
+        lgNadH = ( lgEqrCenterX / ( lg_Real_t ) lgPanWidth ) * lg_Real_s( 2.0 ) * LG_PI;
+        lgNadV = ( lg_Real_s( 0.5 ) - ( lgEqrCenterY / ( lg_Real_t ) lgPanHeight ) ) * LG_PI;
 
         /* Rotation matrix - y */
         lgMatrixY[0][0] = + cos( + lgNadV );
@@ -112,22 +112,22 @@
         lgMatrixZ[1][1] = + lgMatrixZ[0][0];
 
         /* Compute angular appertures */
-        lgAppH = ( ( gnomonic_Real_t ) lgEqrWidth  / ( gnomonic_Real_t ) lgPanWidth  ) * LG_PI;
-        lgAppV = ( ( gnomonic_Real_t ) lgEqrHeight / ( gnomonic_Real_t ) lgPanHeight ) * LG_PI * 0.5;
+        lgAppH = ( ( lg_Real_t ) lgEqrWidth  / ( lg_Real_t ) lgPanWidth  ) * LG_PI;
+        lgAppV = ( ( lg_Real_t ) lgEqrHeight / ( lg_Real_t ) lgPanHeight ) * LG_PI * lg_Real_s( 0.5 );
 
         /* Compute angular apperture tangent */
         lgTanAppH = tan( lgAppH );
         lgTanAppV = tan( lgAppV );
 
         /* Planar projection referential y-loop */
-        for ( lgDY = 0; lgDY < lgRectHeight; lgDY++ ) {
+        for ( lgDY = lg_Size_s( 0 ); lgDY < lgRectHeight; lgDY++ ) {
 
             /* Planar projection referential x-loop */
-            for ( lgDX = 0; lgDX < lgRectWidth; lgDX++ ) {
+            for ( lgDX = lg_Size_s( 0 ); lgDX < lgRectWidth; lgDX++ ) {
 
                 /* Normalized planar coordinates */
-                lgPX = ( ( 2.0 * ( gnomonic_Real_t ) lgDX / ( gnomonic_Real_t ) ( lgRectWidth  - 1 ) ) - 1.0 ) * lgTanAppH;
-                lgPY = ( ( 2.0 * ( gnomonic_Real_t ) lgDY / ( gnomonic_Real_t ) ( lgRectHeight - 1 ) ) - 1.0 ) * lgTanAppV;
+                lgPX = ( ( lg_Real_s( 2.0 ) * ( lg_Real_t ) lgDX / ( lg_Real_t ) ( lgRectWidth  - lg_Size_s( 1 ) ) ) - lg_Real_s( 1.0 ) ) * lgTanAppH;
+                lgPY = ( ( lg_Real_s( 2.0 ) * ( lg_Real_t ) lgDY / ( lg_Real_t ) ( lgRectHeight - lg_Size_s( 1 ) ) ) - lg_Real_s( 1.0 ) ) * lgTanAppV;
 
                 /* Rebuild position vector - x y z */
                 lgVectori[0] = cos( atan( sqrt( lgPX * lgPX + lgPY * lgPY ) ) );
@@ -146,12 +146,12 @@
                 lgAH = lgVectori[0] / sqrt( lgVectori[0] * lgVectori[0] + lgVectori[1] * lgVectori[1] );
 
                 /* Case study */
-                if ( lgAH >= 1.0 ) {
+                if ( lgAH >= lg_Real_s( 1.0 ) ) {
 
                     /* Assign horizontal angle */
-                    lgAH = 0.0;
+                    lgAH = lg_Real_s( 1.0 );
 
-                } else if ( lgAH <= - 1.0 ) {
+                } else if ( lgAH <= lg_Real_s( -1.0 ) ) {
 
                     /* Assign horizontal angle */
                     lgAH = M_PI;
@@ -159,10 +159,10 @@
                 } else {
 
                     /* Case study */
-                    if ( lgVectori[1] < 0.0 ) {
+                    if ( lgVectori[1] < lg_Real_s( 0.0 ) ) {
 
                         /* Assign horizontal angle */
-                        lgAH = 2.0 * LG_PI - acos( lgAH );
+                        lgAH = lg_Real_s( 2.0 ) * LG_PI - acos( lgAH );
 
                     } else {
 
@@ -177,23 +177,23 @@
                 lgAV = asin( lgVectori[2] );
 
                 /* Retrieve panoramic pixel coordinates */
-                lgSX = ( lgAH / ( 2.0 * LG_PI ) ) * ( lgPanWidth  - 1 ) - lgEqrPosX;
-                lgSY = ( ( lgAV / LG_PI ) + 0.5 ) * ( lgPanHeight - 1 ) - lgEqrPosY;
+                lgSX = ( lgAH / ( lg_Real_s( 2.0 ) * LG_PI ) ) * ( lgPanWidth  - lg_Size_s( 1 ) ) - lgEqrPosX;
+                lgSY = ( ( lgAV / LG_PI ) + lg_Real_s( 0.5 ) ) * ( lgPanHeight - lg_Size_s( 1 ) ) - lgEqrPosY;
 
                 /* Verify tile panoramic range */
-                if ( ( lgSX > 0 ) && ( lgSX < ( lgEqrWidth - 1 ) ) && ( lgSY > 0 ) && ( lgSY < ( lgEqrHeight - 1 ) ) ) {
+                if ( ( lgSX > lg_Size_s( 0 ) ) && ( lgSX < ( lgEqrWidth - lg_Size_s( 1 ) ) ) && ( lgSY > lg_Size_s( 0 ) ) && ( lgSY < ( lgEqrHeight - lg_Size_s( 1 ) ) ) ) {
 
                     /* Interpolation process */
-                    * ( lgRectOut + lgRectLayer * ( lgRectWidth * lgDY + lgDX )     ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, 0, lgSX, lgSY );
-                    * ( lgRectOut + lgRectLayer * ( lgRectWidth * lgDY + lgDX ) + 1 ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, 1, lgSX, lgSY );
-                    * ( lgRectOut + lgRectLayer * ( lgRectWidth * lgDY + lgDX ) + 2 ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, 2, lgSX, lgSY );
+                    * ( lgRectOut + lgRectLayer * ( lgRectWidth * lgDY + lgDX )                  ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, 0, lgSX, lgSY );
+                    * ( lgRectOut + lgRectLayer * ( lgRectWidth * lgDY + lgDX ) + lg_Size_s( 1 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, 1, lgSX, lgSY );
+                    * ( lgRectOut + lgRectLayer * ( lgRectWidth * lgDY + lgDX ) + lg_Size_s( 2 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, 2, lgSX, lgSY );
 
                 } else {
 
                     /* Assign black pixel */
-                    * ( lgRectOut + lgRectLayer * ( lgRectWidth * lgDY + lgDX )     ) = 0;
-                    * ( lgRectOut + lgRectLayer * ( lgRectWidth * lgDY + lgDX ) + 1 ) = 0;
-                    * ( lgRectOut + lgRectLayer * ( lgRectWidth * lgDY + lgDX ) + 2 ) = 0;
+                    * ( lgRectOut + lgRectLayer * ( lgRectWidth * lgDY + lgDX )                  ) = li_C8_s( 0 );
+                    * ( lgRectOut + lgRectLayer * ( lgRectWidth * lgDY + lgDX ) + lg_Size_s( 1 ) ) = li_C8_s( 0 );
+                    * ( lgRectOut + lgRectLayer * ( lgRectWidth * lgDY + lgDX ) + lg_Size_s( 2 ) ) = li_C8_s( 0 );
                 }
 
             }

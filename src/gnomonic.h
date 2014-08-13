@@ -102,24 +102,42 @@
  */
 
     /* Declare mathematical constants */
-    # define LG_PI 3.14159265358979323846264338327L
+    # define LG_PI lg_Real_s( 3.14159265358979323846264338327 )
 
 /*
     Header - Preprocessor macros
  */
+
+    /* Ascending compatibility alias - Ensured until v1.0 */
+    # define gnomonic_Void_t    lg_Void_t
+    # define gnomonic_Index_t   lg_Size_t
+    # define gnomonic_Real_t    lg_Real_t
 
 /*
     Header - Typedefs
  */
 
     /* Define general void */
-    typedef void gnomonic_Void_t;
+    typedef void lg_Void_t;
 
     /* Define index type */
-    typedef int64_t gnomonic_Index_t;
+    typedef int64_t lg_Size_t;
 
     /* Define floating type */
-    typedef float gnomonic_Real_t;
+    typedef float lg_Real_t;
+
+    /* Define literal suffix */
+    # define lg_Size_s( x )  INT64_C( x )
+    # define lg_Real_s( x )  ( x ## f )
+
+    /* Define formated output specifiers */
+    # define lg_Size_p       PRId64
+    # define lg_Real_p       "lf"
+
+    /* Define formated input specifiers */
+    # define lg_Size_i       SCNu64
+    # define lg_Real_i       "lf"
+
 
 /*
     Header - Structures

@@ -72,6 +72,9 @@
     Header - Preprocessor macros
  */
 
+    /* Ascending compatibility alias - Ensured until v1.0 */
+    # define gnomonic_ttg lg_ttg
+
 /*
     Header - Typedefs
  */
@@ -108,23 +111,23 @@
      *  \param lgInter Pointer to interpolation method function
      */
 
-    gnomonic_Void_t gnomonic_ttg(
+    lg_Void_t lg_ttg(
 
-        inter_C8_t *     lgEqrIn,
-        gnomonic_Index_t lgEqrWidth,
-        gnomonic_Index_t lgEqrHeight,
-        gnomonic_Index_t lgEqrLayer,
-        inter_C8_t *     lgRectOut,
-        gnomonic_Index_t lgRectWidth,
-        gnomonic_Index_t lgRectHeight,
-        gnomonic_Index_t lgRectLayer,
-        gnomonic_Index_t lgPanWidth,
-        gnomonic_Index_t lgPanHeight,
-        gnomonic_Index_t lgEqrPosX,
-        gnomonic_Index_t lgEqrPosY,
-        gnomonic_Real_t  lgEqrCenterX,
-        gnomonic_Real_t  lgEqrCenterY,
-        inter_Method_t   lgInter
+        li_C8_t *   lgEqrIn,
+        lg_Size_t   lgEqrWidth,
+        lg_Size_t   lgEqrHeight,
+        lg_Size_t   lgEqrLayer,
+        li_C8_t *   lgRectOut,
+        lg_Size_t   lgRectWidth,
+        lg_Size_t   lgRectHeight,
+        lg_Size_t   lgRectLayer,
+        lg_Size_t   lgPanWidth,
+        lg_Size_t   lgPanHeight,
+        lg_Size_t   lgEqrPosX,
+        lg_Size_t   lgEqrPosY,
+        lg_Real_t   lgEqrCenterX,
+        lg_Real_t   lgEqrCenterY,
+        li_Method_t lgInter
 
     );
 

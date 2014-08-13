@@ -72,6 +72,10 @@
     Header - Preprocessor macros
  */
 
+    /* Ascending compatibility alias - Ensured until v1.0 */
+    # define gnomonic_gte       lg_gte
+    # define gnomonic_gte_blend lg_gte_blend
+
 /*
     Header - Typedefs
  */
@@ -105,21 +109,21 @@
      *  \param lgInter Pointer to interpolation method function
      */
 
-    gnomonic_Void_t gnomonic_gte(
+    lg_Void_t lg_gte(
 
-        inter_C8_t *     lgEqrIO,
-        gnomonic_Index_t lgEqrWidth,
-        gnomonic_Index_t lgEqrHeight,
-        gnomonic_Index_t lgEqrLayer,
-        inter_C8_t *     lgRectIn,
-        gnomonic_Index_t lgRectWidth,
-        gnomonic_Index_t lgRectHeight,
-        gnomonic_Index_t lgRectLayer,
-        gnomonic_Real_t  lgNadH,
-        gnomonic_Real_t  lgNadV,
-        gnomonic_Real_t  lgAppH,
-        gnomonic_Real_t  lgAppV,
-        inter_Method_t   lgInter
+        li_C8_t *   lgEqrIO,
+        lg_Size_t   lgEqrWidth,
+        lg_Size_t   lgEqrHeight,
+        lg_Size_t   lgEqrLayer,
+        li_C8_t *   lgRectIn,
+        lg_Size_t   lgRectWidth,
+        lg_Size_t   lgRectHeight,
+        lg_Size_t   lgRectLayer,
+        lg_Real_t   lgNadH,
+        lg_Real_t   lgNadV,
+        lg_Real_t   lgAppH,
+        lg_Real_t   lgAppV,
+        li_Method_t lgInter
 
     );
 
@@ -148,22 +152,22 @@
      *  \param lgInter Pointer to interpolation method function
      */
 
-    gnomonic_Void_t gnomonic_gte_blend(
+    lg_Void_t lg_gte_blend(
 
-        inter_C8_t *     lgEqrIO,
-        gnomonic_Index_t lgEqrWidth,
-        gnomonic_Index_t lgEqrHeight,
-        gnomonic_Index_t lgEqrLayer,
-        inter_C8_t *     lgRectIn,
-        inter_C8_t *     lgMaskIn,
-        gnomonic_Index_t lgRectWidth,
-        gnomonic_Index_t lgRectHeight,
-        gnomonic_Index_t lgRectLayer,
-        gnomonic_Real_t  lgNadH,
-        gnomonic_Real_t  lgNadV,
-        gnomonic_Real_t  lgAppH,
-        gnomonic_Real_t  lgAppV,
-        inter_Method_t   lgInter
+        li_C8_t *   lgEqrIO,
+        lg_Size_t   lgEqrWidth,
+        lg_Size_t   lgEqrHeight,
+        lg_Size_t   lgEqrLayer,
+        li_C8_t *   lgRectIn,
+        li_C8_t *   lgMaskIn,
+        lg_Size_t   lgRectWidth,
+        lg_Size_t   lgRectHeight,
+        lg_Size_t   lgRectLayer,
+        lg_Real_t   lgNadH,
+        lg_Real_t   lgNadV,
+        lg_Real_t   lgAppH,
+        lg_Real_t   lgAppV,
+        li_Method_t lgInter
 
     );
 

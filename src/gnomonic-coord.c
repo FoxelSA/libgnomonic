@@ -47,50 +47,50 @@
     Source - Coordinates conversion from equirectangular tile to gnomonic
  */
 
-    void gnomonic_ttg_coord(
+    lg_Void_t lg_ttg_coord(
 
-        double   eqx,
-        double   eqy,
-        long int eqr_w,
-        long int eqr_h,
-        double * rcx,
-        double * rcy,
-        long int rct_w,
-        long int rct_h,
-        long int pan_w,
-        long int pan_h,
-        long int eqr_x,
-        long int eqr_y,
-        double   sen_x,
-        double   sen_y
+        lg_Real_t   eqx,
+        lg_Real_t   eqy,
+        lg_Size_t   eqr_w,
+        lg_Size_t   eqr_h,
+        lg_Real_t * rcx,
+        lg_Real_t * rcy,
+        lg_Size_t   rct_w,
+        lg_Size_t   rct_h,
+        lg_Size_t   pan_w,
+        lg_Size_t   pan_h,
+        lg_Size_t   eqr_x,
+        lg_Size_t   eqr_y,
+        lg_Real_t   sen_x,
+        lg_Real_t   sen_y
 
     ) {
 
         /* Projection Variables */
-        static double rx = 0.0;
-        static double ry = 0.0;
-        static double ux = 0.0;
-        static double uy = 0.0;
-        static double pt = 0.0;
-        static double pp = 0.0;
-        static double at = 0.0;
-        static double ap = 0.0;
-        static double nad_t = 0.0;
-        static double nad_p = 0.0;
-        static double app_t = 0.0;
-        static double app_p = 0.0;
+        lg_Real_t rx = 0.0;
+        lg_Real_t ry = 0.0;
+        lg_Real_t ux = 0.0;
+        lg_Real_t uy = 0.0;
+        lg_Real_t pt = 0.0;
+        lg_Real_t pp = 0.0;
+        lg_Real_t at = 0.0;
+        lg_Real_t ap = 0.0;
+        lg_Real_t nad_t = 0.0;
+        lg_Real_t nad_p = 0.0;
+        lg_Real_t app_t = 0.0;
+        lg_Real_t app_p = 0.0;
 
         /* Position vector */
-        static double pv[3] = { 0.0, 0.0, 0.0 };
-        static double kv[3] = { 0.0, 0.0, 0.0 };
+        lg_Real_t pv[3] = { 0.0, 0.0, 0.0 };
+        lg_Real_t kv[3] = { 0.0, 0.0, 0.0 };
 
         /* Rotation matrix */
-        static double Ry[3][3] = { { 0.0, 0.0, 0.0 }, { 0.0, 1.0, 0.0 }, { 0.0, 0.0, 0.0 } };
-        static double Rz[3][3] = { { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 1.0 } };
+        lg_Real_t Ry[3][3] = { { 0.0, 0.0, 0.0 }, { 0.0, 1.0, 0.0 }, { 0.0, 0.0, 0.0 } };
+        lg_Real_t Rz[3][3] = { { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 1.0 } };
 
         /* Compute orientation variables */
-        nad_t = ( sen_x / ( double ) pan_w ) * 2.0 * LG_PI;
-        nad_p = ( 0.5 - ( sen_y / ( double ) pan_h ) ) * LG_PI;
+        nad_t = ( sen_x / ( lg_Real_t ) pan_w ) * 2.0 * LG_PI;
+        nad_p = ( 0.5 - ( sen_y / ( lg_Real_t ) pan_h ) ) * LG_PI;
 
         /* Rotation matrix - y */
         Ry[0][0] = + cos( - nad_p );
@@ -105,16 +105,16 @@
         Rz[1][1] = + Rz[0][0];
 
         /* Compute angular appertures */
-        app_t = ( ( double ) eqr_w / ( double ) pan_w ) * LG_PI;
-        app_p = ( ( double ) eqr_h / ( double ) pan_h ) * LG_PI * 0.5;
+        app_t = ( ( lg_Real_t ) eqr_w / ( lg_Real_t ) pan_w ) * LG_PI;
+        app_p = ( ( lg_Real_t ) eqr_h / ( lg_Real_t ) pan_h ) * LG_PI * 0.5;
 
         /* Compute angular apperture tangent */
         at = tan( app_t );
         ap = tan( app_p );
 
         /* Retreive angular position */
-        pt =  2.0 * LG_PI * ( eqx + eqr_x ) /  ( double ) (pan_w -1) ;
-        pp =  LG_PI * ( ( eqy + eqr_y ) / ( double ) ( pan_h - 1 ) - 0.5 );
+        pt =  2.0 * LG_PI * ( eqx + eqr_x ) /  ( lg_Real_t ) (pan_w -1) ;
+        pp =  LG_PI * ( ( eqy + eqr_y ) / ( lg_Real_t ) ( pan_h - 1 ) - 0.5 );
 
         /* Rebuild position vector - x y z */
         pv[0] = cos( pp ) * cos ( pt );
@@ -148,50 +148,50 @@
     Source - Coordinates conversion from gnomonic to equirectangular tile
  */
 
-   void gnomonic_gtt_coord(
+   lg_Void_t lg_gtt_coord(
 
-        double * eqx,
-        double * eqy,
-        long int eqr_w,
-        long int eqr_h,
-        double rcx,
-        double rcy,
-        long int rct_w,
-        long int rct_h,
-        long int pan_w,
-        long int pan_h,
-        long int eqr_x,
-        long int eqr_y,
-        double sen_x,
-        double sen_y
+        lg_Real_t * eqx,
+        lg_Real_t * eqy,
+        lg_Size_t   eqr_w,
+        lg_Size_t   eqr_h,
+        lg_Real_t   rcx,
+        lg_Real_t   rcy,
+        lg_Size_t   rct_w,
+        lg_Size_t   rct_h,
+        lg_Size_t   pan_w,
+        lg_Size_t   pan_h,
+        lg_Size_t   eqr_x,
+        lg_Size_t   eqr_y,
+        lg_Real_t   sen_x,
+        lg_Real_t   sen_y
 
     ) {
 
         /* Projection Variables */
-        static double dx = 0.0;
-        static double dy = 0.0;
-        static double ux = 0.0;
-        static double uy = 0.0;
-        static double pt = 0.0;
-        static double pp = 0.0;
-        static double at = 0.0;
-        static double ap = 0.0;
-        static double nad_t = 0.0;
-        static double nad_p = 0.0;
-        static double app_t = 0.0;
-        static double app_p = 0.0;
+        lg_Real_t dx = 0.0;
+        lg_Real_t dy = 0.0;
+        lg_Real_t ux = 0.0;
+        lg_Real_t uy = 0.0;
+        lg_Real_t pt = 0.0;
+        lg_Real_t pp = 0.0;
+        lg_Real_t at = 0.0;
+        lg_Real_t ap = 0.0;
+        lg_Real_t nad_t = 0.0;
+        lg_Real_t nad_p = 0.0;
+        lg_Real_t app_t = 0.0;
+        lg_Real_t app_p = 0.0;
 
         /* Position vector */
-        static double pv[3] = { 0.0, 0.0, 0.0 };
-        static double kv[3] = { 0.0, 0.0, 0.0 };
+        lg_Real_t pv[3] = { 0.0, 0.0, 0.0 };
+        lg_Real_t kv[3] = { 0.0, 0.0, 0.0 };
 
         /* Rotation matrix */
-        static double Ry[3][3] = { { 0.0, 0.0, 0.0 }, { 0.0, 1.0, 0.0 }, { 0.0, 0.0, 0.0 } };
-        static double Rz[3][3] = { { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 1.0 } };
+        lg_Real_t Ry[3][3] = { { 0.0, 0.0, 0.0 }, { 0.0, 1.0, 0.0 }, { 0.0, 0.0, 0.0 } };
+        lg_Real_t Rz[3][3] = { { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 1.0 } };
 
         /* Compute orientation variables */
-        nad_t = ( sen_x / ( double ) pan_w ) * 2.0 * LG_PI;
-        nad_p = ( 0.5 - ( sen_y / ( double ) pan_h ) ) * LG_PI;
+        nad_t = ( sen_x / ( lg_Real_t ) pan_w ) * 2.0 * LG_PI;
+        nad_p = ( 0.5 - ( sen_y / ( lg_Real_t ) pan_h ) ) * LG_PI;
 
         /* Rotation matrix - y */
         Ry[0][0] = + cos( + nad_p );
@@ -206,16 +206,16 @@
         Rz[1][1] = + Rz[0][0];
 
         /* Compute angular appertures */
-        app_t = ( ( double ) eqr_w / ( double ) pan_w ) * LG_PI;
-        app_p = ( ( double ) eqr_h / ( double ) pan_h ) * LG_PI * 0.5;
+        app_t = ( ( lg_Real_t ) eqr_w / ( lg_Real_t ) pan_w ) * LG_PI;
+        app_p = ( ( lg_Real_t ) eqr_h / ( lg_Real_t ) pan_h ) * LG_PI * 0.5;
 
         /* Compute angular apperture tangent */
         at = tan( app_t );
         ap = tan( app_p );
 
         /* Normalized planar coordinates */
-        ux = ( ( 2.0 * ( double ) rcx / ( double ) ( rct_w - 1 ) ) - 1.0 ) * at;
-        uy = ( ( 2.0 * ( double ) rcy / ( double ) ( rct_h - 1 ) ) - 1.0 ) * ap;
+        ux = ( ( 2.0 * ( lg_Real_t ) rcx / ( lg_Real_t ) ( rct_w - 1 ) ) - 1.0 ) * at;
+        uy = ( ( 2.0 * ( lg_Real_t ) rcy / ( lg_Real_t ) ( rct_h - 1 ) ) - 1.0 ) * ap;
 
         /* Rebuild position vector - x y z */
         pv[0] = cos( atan( sqrt( ux * ux + uy * uy ) ) );

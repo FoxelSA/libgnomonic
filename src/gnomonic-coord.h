@@ -36,18 +36,18 @@
  *      Attribution" section of <http://foxel.ch/license>.
  */
 
-
-    //! @file   gnomonic-coord.h
-    //! @author Stéphane Flotron (stephane.flotron@foxel.ch)
-    //!
-    //! Coordinates transformation
+    /*! \file   gnomonic-coord.h
+     *  \author Stéphane Flotron (stephane.flotron@foxel.ch)
+     *
+     *  Coordinates transformation
+     */
 
 /*
     Header - Include guard
  */
 
-    # ifndef __LIBGNOMONIC_COORD__
-    # define __LIBGNOMONIC_COORD__
+    # ifndef __LG_COORD__
+    # define __LG_COORD__
 
 /*
     Header - C/C++ compatibility

@@ -36,18 +36,50 @@
  *      Attribution" section of <http://foxel.ch/license>.
  */
 
+    /*! \file   gnomonic.h
+     *  \author Nils Hamel (n.hamel@foxel.ch)
+     *
+     *  Library common header file
+     */
 
-    //! @file   gnomonic.h
-    //! @author Nils Hamel (n.hamel@foxel.ch)
-    //!
-    //! Library common header file
+    /*! \mainpage libgnomonic
+     *
+     *  \section libgnomonic
+     *  \section _ Gnomonic projection algorithms library
+     *  
+     *  This library is made to perform gnomonic projections from a entire equirectangular
+     *  panorama mapping to extract rectlinear mappings and the inverted operation. It
+     *  also ensure gnomonic reprojection of specific tiles of the equirectangular mapping 
+     *  to retrieve rectilinear mapping of the desired tile.
+     *
+     *  \section Documentation
+     *
+     *  More documentation can be found on the wiki provided on the project github
+     *  repository (https://github.com/FoxelSA/libgnomonic/wiki).
+     *
+     *  \section Copyright
+     * 
+     *  Copyright (c) 2013-2014 FOXEL SA - http://foxel.ch \n
+     *  This program is part of the FOXEL project <http://foxel.ch>.
+     *  
+     *  Please read the COPYRIGHT.md file for more information.
+     *
+     *  \section License
+     *
+     *  This program is licensed under the terms of the GNU Affero General Public License
+     *  v3 (GNU AGPL), with two additional terms. The content is licensed under the terms 
+     *  of the Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA) license.
+     *
+     *  You must read <http://foxel.ch/license> for more information about our Licensing
+     *  terms and our Usage and Attribution guidelines.
+     */
 
 /*
     Header - Include guard
  */
 
-    # ifndef __LIBGNOMONIC_GNOMONIC__
-    # define __LIBGNOMONIC_GNOMONIC__
+    # ifndef __LG_GNOMONIC__
+    # define __LG_GNOMONIC__
 
 /*
     Header - C/C++ compatibility
@@ -70,7 +102,7 @@
  */
 
     /* Declare mathematical constants */
-    # define GNOMONIC_PI 3.14159265358979323846264338327L
+    # define LG_PI 3.14159265358979323846264338327L
 
 /*
     Header - Preprocessor macros

@@ -36,18 +36,18 @@
  *      Attribution" section of <http://foxel.ch/license>.
  */
 
-
-    //! @file   gnomonic-transform.h
-    //! @author Nils Hamel (n.hamel@foxel.ch)
-    //!
-    //! Equirectangular transformation
+    /*! \file   gnomonic-transform.h
+     *  \author Nils Hamel (n.hamel@foxel.ch)
+     *
+     *  Equirectangular transformation
+     */
 
 /*
     Header - Include guard
  */
 
-    # ifndef __LIBGNOMONIC_TRANSFORM__
-    # define __LIBGNOMONIC_TRANSFORM__
+    # ifndef __LG_TRANSFORM__
+    # define __LG_TRANSFORM__
 
 /*
     Header - C/C++ compatibility
@@ -84,22 +84,23 @@
     Header - Function prototypes
  */
 
-    //! Equirectangular mapping rotation
-
-    //! This function apply a rotation matrix to the sphere mapped by the gEqrIn equirectangular
-    //! mapping. The result is drawn in the gEqrOut bitmap that has to be already allocated.
-    //! The gEqrOut bitmap has to have the same size and chromatic layer count than gEqrIn
-    //! bitmap.
-    //!
-    //! @param lgEqrIn Input equirectangular bitmap
-    //! @param lgEqrOut Output equirectangular bitmap
-    //! @param lgEqrWidth Width, in pixel, of input/output bitmaps
-    //! @param lgEqrHeight Height, in pixel, of input/output bitmaps
-    //! @param lgEqrLayers Chromatic layer count of input/output bitmaps
-    //! @param lgAngleX Rotation angle, in radiant, along x-axis
-    //! @param lgAngleY Rotation angle, in radiant, along y-axis
-    //! @param lgAngleZ Rotation angle, in radiant, along z-axis
-    //! @param lgInter Pointer to interpolation method function
+    /*! \brief Equirectangular mapping rotation
+     *  
+     *  This function apply a rotation matrix to the sphere mapped by the gEqrIn equirectangular
+     *  mapping. The result is drawn in the gEqrOut bitmap that has to be already allocated.
+     *  The gEqrOut bitmap has to have the same size and chromatic layer count than gEqrIn
+     *  bitmap.
+     *  
+     *  \param lgEqrIn Input equirectangular bitmap
+     *  \param lgEqrOut Output equirectangular bitmap
+     *  \param lgEqrWidth Width, in pixel, of input/output bitmaps
+     *  \param lgEqrHeight Height, in pixel, of input/output bitmaps
+     *  \param lgEqrLayers Chromatic layer count of input/output bitmaps
+     *  \param lgAngleX Rotation angle, in radiant, along x-axis
+     *  \param lgAngleY Rotation angle, in radiant, along y-axis
+     *  \param lgAngleZ Rotation angle, in radiant, along z-axis
+     *  \param lgInter Pointer to interpolation method function
+     */
 
     gnomonic_Void_t gnomonic_transform_rotate( 
 

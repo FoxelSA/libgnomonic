@@ -36,18 +36,18 @@
  *      Attribution" section of <http://foxel.ch/license>.
  */
 
-
-    //! @file   gnomonic-ttg.h
-    //! @author Nils Hamel (n.hamel@foxel.ch)
-    //!
-    //! Equirectangular tile to rectilinear transformation
+    /*! \file   gnomonic-ttg.h
+     *  \author Nils Hamel (n.hamel@foxel.ch)
+     *
+     *  Equirectangular tile to rectilinear transformation
+     */
 
 /*
     Header - Include guard
  */
 
-    # ifndef __LIBGNOMONIC_TTG__
-    # define __LIBGNOMONIC_TTG__
+    # ifndef __LG_TTG__
+    # define __LG_TTG__
 
 /*
     Header - C/C++ compatibility
@@ -84,28 +84,29 @@
     Header - Function prototypes
  */
 
-    //! Equirectangular tile to rectilinear gnomonic projection
-
-    //! This function performs an gnomonic projection considering a tile of an entire
-    //! equirectangular panorama using the desired interpolation method. The results
-    //! are drawn in the lgRectOut bitmap. The lgRectOut has to be already allocated
-    //! according to its parameters.
-    //!
-    //! @param lgEqrIn Pointer to equirectangular tile bitmap
-    //! @param lgEqrWidth Width, in pixels, of the equirectangular tile bitmap eqr_img
-    //! @param lgEqrHeight Height, in pixels, of the equirectangular tile bitmap eqr_img
-    //! @param lgEqrLayer Depth, in chromatic layer count, of the equirectangular tile bitmap eqr_img
-    //! @param lgRectOut Pointer to gnomonic bitmap
-    //! @param lgRectWidth Width, in pixels, of the gnomonic bitmap rct_img
-    //! @param lgRectHeight Height, in pixels, of the gnomonic bitmap rct_img
-    //! @param lgRectLayer Depth, in chromatic layer count, of the gnomonic bitmap rct_img
-    //! @param lgPanWidth Width, in pixel, of the entire equirectangular mapping
-    //! @param lgPanHeight Height, in pixel, of the entire equirectangular mapping
-    //! @param lgEqrPosX Position x, in pixel, of the tile in the entire equirectangular mapping
-    //! @param lgEqrPosY Position y, in pixel, of the tile in the entire equirectangular mapping
-    //! @param lgEqrCenterX Position x, in pixel, of the tile center in the entire equirectangular mapping
-    //! @param lgEqrCenterY Position y, in pixel, of the tile center in the entire equirectangular mapping
-    //! @param lgInter Pointer to interpolation method function
+    /*! \brief Equirectangular tile to rectilinear gnomonic projection
+     *  
+     *  This function performs an gnomonic projection considering a tile of an entire
+     *  equirectangular panorama using the desired interpolation method. The results
+     *  are drawn in the lgRectOut bitmap. The lgRectOut has to be already allocated
+     *  according to its parameters.
+     *  
+     *  \param lgEqrIn Pointer to equirectangular tile bitmap
+     *  \param lgEqrWidth Width, in pixels, of the equirectangular tile bitmap eqr_img
+     *  \param lgEqrHeight Height, in pixels, of the equirectangular tile bitmap eqr_img
+     *  \param lgEqrLayer Depth, in chromatic layer count, of the equirectangular tile bitmap eqr_img
+     *  \param lgRectOut Pointer to gnomonic bitmap
+     *  \param lgRectWidth Width, in pixels, of the gnomonic bitmap rct_img
+     *  \param lgRectHeight Height, in pixels, of the gnomonic bitmap rct_img
+     *  \param lgRectLayer Depth, in chromatic layer count, of the gnomonic bitmap rct_img
+     *  \param lgPanWidth Width, in pixel, of the entire equirectangular mapping
+     *  \param lgPanHeight Height, in pixel, of the entire equirectangular mapping
+     *  \param lgEqrPosX Position x, in pixel, of the tile in the entire equirectangular mapping
+     *  \param lgEqrPosY Position y, in pixel, of the tile in the entire equirectangular mapping
+     *  \param lgEqrCenterX Position x, in pixel, of the tile center in the entire equirectangular mapping
+     *  \param lgEqrCenterY Position y, in pixel, of the tile center in the entire equirectangular mapping
+     *  \param lgInter Pointer to interpolation method function
+     */
 
     gnomonic_Void_t gnomonic_ttg(
 

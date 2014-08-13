@@ -110,8 +110,8 @@
             for ( lgDX = 0; lgDX < lgEqrWidth; lgDX++ ) {
 
                 /* Build angular position */
-                lgAH = ( ( ( gnomonic_Real_t ) lgDX / ( gnomonic_Real_t ) ( lgEqrWidth  - 1 ) ) * 2.0 ) * GNOMONIC_PI;
-                lgAV = ( ( ( gnomonic_Real_t ) lgDY / ( gnomonic_Real_t ) ( lgEqrHeight - 1 ) ) - 0.5 ) * GNOMONIC_PI;
+                lgAH = ( ( ( gnomonic_Real_t ) lgDX / ( gnomonic_Real_t ) ( lgEqrWidth  - 1 ) ) * 2.0 ) * LG_PI;
+                lgAV = ( ( ( gnomonic_Real_t ) lgDY / ( gnomonic_Real_t ) ( lgEqrHeight - 1 ) ) - 0.5 ) * LG_PI;
 
                 /* Build position vector */
                 lgVectori[0] = cos( lgAH ) * cos( lgAV );
@@ -220,8 +220,8 @@
             for ( lgDX = 0; lgDX < lgEqrWidth; lgDX++ ) {
 
                 /* Build angular position */
-                lgAH = ( ( ( gnomonic_Real_t ) lgDX / ( gnomonic_Real_t ) ( lgEqrWidth  - 1 ) ) * 2.0 ) * GNOMONIC_PI;
-                lgAV = ( ( ( gnomonic_Real_t ) lgDY / ( gnomonic_Real_t ) ( lgEqrHeight - 1 ) ) - 0.5 ) * GNOMONIC_PI;
+                lgAH = ( ( ( gnomonic_Real_t ) lgDX / ( gnomonic_Real_t ) ( lgEqrWidth  - 1 ) ) * 2.0 ) * LG_PI;
+                lgAV = ( ( ( gnomonic_Real_t ) lgDY / ( gnomonic_Real_t ) ( lgEqrHeight - 1 ) ) - 0.5 ) * LG_PI;
 
                 /* Build position vector */
                 lgVectori[0] = cos( lgAH ) * cos( lgAV );

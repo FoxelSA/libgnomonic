@@ -148,7 +148,7 @@
                     if ( lgVectori[1] < 0.0 ) {
 
                         /* Assign horizontal angle */
-                        lgAH = 2.0 * GNOMONIC_PI - acos( lgAH );
+                        lgAH = 2.0 * LG_PI - acos( lgAH );
 
                     } else {
 
@@ -163,8 +163,8 @@
                 lgAV = asin( lgVectori[2] );
 
                 /* Retrieve panoramic pixel coordinates */
-                lgSX = ( lgAH / ( 2.0 * GNOMONIC_PI ) ) * ( lgEqrWidth  - 1 );
-                lgSY = ( ( lgAV / GNOMONIC_PI ) + 0.5 ) * ( lgEqrHeight - 1 );
+                lgSX = ( lgAH / ( 2.0 * LG_PI ) ) * ( lgEqrWidth  - 1 );
+                lgSY = ( ( lgAV / LG_PI ) + 0.5 ) * ( lgEqrHeight - 1 );
 
                 /* Interpolation process */
                 * ( lgRectOut + lgRectLayer * ( lgRectWidth * lgDY + lgDX )     ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, 0, lgSX, lgSY );

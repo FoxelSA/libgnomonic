@@ -96,8 +96,8 @@
         gnomonic_Real_t lgMatrixZ[3][3] = { { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 1.0 } };
 
         /* Compute orientation variables */
-        lgNadH = ( lgEqrCenterX / ( gnomonic_Real_t ) lgPanWidth ) * 2.0 * GNOMONIC_PI;
-        lgNadV = ( 0.5 - ( lgEqrCenterY / ( gnomonic_Real_t ) lgPanHeight ) ) * GNOMONIC_PI;
+        lgNadH = ( lgEqrCenterX / ( gnomonic_Real_t ) lgPanWidth ) * 2.0 * LG_PI;
+        lgNadV = ( 0.5 - ( lgEqrCenterY / ( gnomonic_Real_t ) lgPanHeight ) ) * LG_PI;
 
         /* Rotation matrix - y */
         lgMatrixY[0][0] = + cos( + lgNadV );
@@ -112,8 +112,8 @@
         lgMatrixZ[1][1] = + lgMatrixZ[0][0];
 
         /* Compute angular appertures */
-        lgAppH = ( ( gnomonic_Real_t ) lgEqrWidth  / ( gnomonic_Real_t ) lgPanWidth  ) * GNOMONIC_PI;
-        lgAppV = ( ( gnomonic_Real_t ) lgEqrHeight / ( gnomonic_Real_t ) lgPanHeight ) * GNOMONIC_PI * 0.5;
+        lgAppH = ( ( gnomonic_Real_t ) lgEqrWidth  / ( gnomonic_Real_t ) lgPanWidth  ) * LG_PI;
+        lgAppV = ( ( gnomonic_Real_t ) lgEqrHeight / ( gnomonic_Real_t ) lgPanHeight ) * LG_PI * 0.5;
 
         /* Compute angular apperture tangent */
         lgTanAppH = tan( lgAppH );
@@ -162,7 +162,7 @@
                     if ( lgVectori[1] < 0.0 ) {
 
                         /* Assign horizontal angle */
-                        lgAH = 2.0 * GNOMONIC_PI - acos( lgAH );
+                        lgAH = 2.0 * LG_PI - acos( lgAH );
 
                     } else {
 
@@ -177,8 +177,8 @@
                 lgAV = asin( lgVectori[2] );
 
                 /* Retrieve panoramic pixel coordinates */
-                lgSX = ( lgAH / ( 2.0 * GNOMONIC_PI ) ) * ( lgPanWidth  - 1 ) - lgEqrPosX;
-                lgSY = ( ( lgAV / GNOMONIC_PI ) + 0.5 ) * ( lgPanHeight - 1 ) - lgEqrPosY;
+                lgSX = ( lgAH / ( 2.0 * LG_PI ) ) * ( lgPanWidth  - 1 ) - lgEqrPosX;
+                lgSY = ( ( lgAV / LG_PI ) + 0.5 ) * ( lgPanHeight - 1 ) - lgEqrPosY;
 
                 /* Verify tile panoramic range */
                 if ( ( lgSX > 0 ) && ( lgSX < ( lgEqrWidth - 1 ) ) && ( lgSY > 0 ) && ( lgSY < ( lgEqrHeight - 1 ) ) ) {

@@ -89,8 +89,8 @@
         static double Rz[3][3] = { { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 1.0 } };
 
         /* Compute orientation variables */
-        nad_t = ( sen_x / ( double ) pan_w ) * 2.0 * GNOMONIC_PI;
-        nad_p = ( 0.5 - ( sen_y / ( double ) pan_h ) ) * GNOMONIC_PI;
+        nad_t = ( sen_x / ( double ) pan_w ) * 2.0 * LG_PI;
+        nad_p = ( 0.5 - ( sen_y / ( double ) pan_h ) ) * LG_PI;
 
         /* Rotation matrix - y */
         Ry[0][0] = + cos( - nad_p );
@@ -105,16 +105,16 @@
         Rz[1][1] = + Rz[0][0];
 
         /* Compute angular appertures */
-        app_t = ( ( double ) eqr_w / ( double ) pan_w ) * GNOMONIC_PI;
-        app_p = ( ( double ) eqr_h / ( double ) pan_h ) * GNOMONIC_PI * 0.5;
+        app_t = ( ( double ) eqr_w / ( double ) pan_w ) * LG_PI;
+        app_p = ( ( double ) eqr_h / ( double ) pan_h ) * LG_PI * 0.5;
 
         /* Compute angular apperture tangent */
         at = tan( app_t );
         ap = tan( app_p );
 
         /* Retreive angular position */
-        pt =  2.0 * GNOMONIC_PI * ( eqx + eqr_x ) /  ( double ) (pan_w -1) ;
-        pp =  GNOMONIC_PI * ( ( eqy + eqr_y ) / ( double ) ( pan_h - 1 ) - 0.5 );
+        pt =  2.0 * LG_PI * ( eqx + eqr_x ) /  ( double ) (pan_w -1) ;
+        pp =  LG_PI * ( ( eqy + eqr_y ) / ( double ) ( pan_h - 1 ) - 0.5 );
 
         /* Rebuild position vector - x y z */
         pv[0] = cos( pp ) * cos ( pt );
@@ -190,8 +190,8 @@
         static double Rz[3][3] = { { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 0.0 }, { 0.0, 0.0, 1.0 } };
 
         /* Compute orientation variables */
-        nad_t = ( sen_x / ( double ) pan_w ) * 2.0 * GNOMONIC_PI;
-        nad_p = ( 0.5 - ( sen_y / ( double ) pan_h ) ) * GNOMONIC_PI;
+        nad_t = ( sen_x / ( double ) pan_w ) * 2.0 * LG_PI;
+        nad_p = ( 0.5 - ( sen_y / ( double ) pan_h ) ) * LG_PI;
 
         /* Rotation matrix - y */
         Ry[0][0] = + cos( + nad_p );
@@ -206,8 +206,8 @@
         Rz[1][1] = + Rz[0][0];
 
         /* Compute angular appertures */
-        app_t = ( ( double ) eqr_w / ( double ) pan_w ) * GNOMONIC_PI;
-        app_p = ( ( double ) eqr_h / ( double ) pan_h ) * GNOMONIC_PI * 0.5;
+        app_t = ( ( double ) eqr_w / ( double ) pan_w ) * LG_PI;
+        app_p = ( ( double ) eqr_h / ( double ) pan_h ) * LG_PI * 0.5;
 
         /* Compute angular apperture tangent */
         at = tan( app_t );
@@ -231,12 +231,12 @@
         pv[2] = kv[2];
 
         /* Retreive angular position */
-        pt = acos( pv[0] / sqrt( pv[0] * pv[0] + pv[1] * pv[1] ) ); pt = ( pv[1] < 0 ) ? ( 2.0 * GNOMONIC_PI - pt ) : pt;
+        pt = acos( pv[0] / sqrt( pv[0] * pv[0] + pv[1] * pv[1] ) ); pt = ( pv[1] < 0 ) ? ( 2.0 * LG_PI - pt ) : pt;
         pp = asin( pv[2] );
 
         /* Retrieve panoramic pixel coordinates */
-        dx = ( pt / ( 2.0 * GNOMONIC_PI ) ) * ( pan_w - 1 ) - eqr_x;
-        dy = ( ( pp / GNOMONIC_PI ) + 0.5 ) * ( pan_h - 1 ) - eqr_y;
+        dx = ( pt / ( 2.0 * LG_PI ) ) * ( pan_w - 1 ) - eqr_x;
+        dy = ( ( pp / LG_PI ) + 0.5 ) * ( pan_h - 1 ) - eqr_y;
 
         /* export coordinates */
         *eqx = dx;

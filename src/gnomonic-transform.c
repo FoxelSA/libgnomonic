@@ -105,8 +105,8 @@
             for ( lgSX = 0; lgSX < lgEqrWidth; lgSX ++ ) {
 
                 /* Retrive position angles from pixels */
-                lgAngleHor = ( ( ( gnomonic_Real_t ) lgSX / ( lgEqrWidth  - 1 ) ) * 2.0 ) * GNOMONIC_PI;
-                lgAngleVer = ( ( ( gnomonic_Real_t ) lgSY / ( lgEqrHeight - 1 ) ) - 0.5 ) * GNOMONIC_PI;
+                lgAngleHor = ( ( ( gnomonic_Real_t ) lgSX / ( lgEqrWidth  - 1 ) ) * 2.0 ) * LG_PI;
+                lgAngleVer = ( ( ( gnomonic_Real_t ) lgSY / ( lgEqrHeight - 1 ) ) - 0.5 ) * LG_PI;
 
                 /* Retrieve initial vector on sphere */
                 lgVectori[0] = cos( lgAngleHor ) * cos( lgAngleVer );
@@ -138,7 +138,7 @@
                     if ( lgVectorf[1] < 0.0 ) {
 
                         /* Assign horizontal angle */
-                        lgAngleHor = 2.0 * GNOMONIC_PI - acos( lgAngleHor );
+                        lgAngleHor = 2.0 * LG_PI - acos( lgAngleHor );
 
                     } else {
 

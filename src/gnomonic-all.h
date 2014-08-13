@@ -36,18 +36,18 @@
  *      Attribution" section of <http://foxel.ch/license>.
  */
 
-
-    //! @file   gnomonic-all.h
-    //! @author Nils Hamel (n.hamel@foxel.ch)
-    //!
-    //! Library general includer
+    /*! \file   gnomonic-all.h
+     *  \author Nils Hamel (n.hamel@foxel.ch)
+     *
+     *  Library general includer
+     */
 
 /*
     Header - Include guard
  */
 
-    # ifndef __LIBGNOMONIC_ALL__
-    # define __LIBGNOMONIC_ALL__
+    # ifndef __LG_ALL__
+    # define __LG_ALL__
 
 /*
     Header - C/C++ compatibility

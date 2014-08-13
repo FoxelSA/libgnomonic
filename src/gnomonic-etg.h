@@ -36,18 +36,18 @@
  *      Attribution" section of <http://foxel.ch/license>.
  */
 
-
-    //! @file   gnomonic-etg.h
-    //! @author Nils Hamel (n.hamel@foxel.ch)
-    //!
-    //! Equirectangular to rectilinear transformation
+    /*! \file   gnomonic-etg.h
+     *  \author Nils Hamel (n.hamel@foxel.ch)
+     *
+     *  Equirectangular to rectilinear transformation
+     */
 
 /*
     Header - Include guard
  */
 
-    # ifndef __LIBGNOMONIC_ETG__
-    # define __LIBGNOMONIC_ETG__
+    # ifndef __LG_ETG__
+    # define __LG_ETG__
 
 /*
     Header - C/C++ compatibility
@@ -84,26 +84,27 @@
     Header - Function prototypes
  */
 
-    //! Equirectangular to rectilinear gnomonic projection
-
-    //! This function performs a gnomonic reprojection on the base of an equirectangular
-    //! projection of a entire panorama using desired interpolation method. The results is
-    //! drawn in the lgRectOut bitmap. The lgRectOut has to be already allocated accroding to
-    //! its parameters.
-    //!
-    //! @param lgEqrIn Pointer to equirectangular bitmap
-    //! @param lgEqrWidth Width, in pixels, of the equirectangular bitmap pan_img
-    //! @param lgEqrHeight Height, in pixels, of the equirectangular bitmap pan_img
-    //! @param lgEqrLayer Depth, in chromatic layer count, of the equirectangular bitmap pan_img
-    //! @param lgRectOut Pointer to gnomonic bitmap
-    //! @param lgRectWidth Width, in pixels, of the gnomonic bitmap rct_img
-    //! @param lgRectHeight Height, in pixels, of the gnomonic bitmap rct_img
-    //! @param lgRectLayer Depth, in chromatic layer count, of the gnomonic bitmap rct_img
-    //! @param lgNadH Horizontal angle, in radian, of the center of view of the gnomonic projection, in [0,2PI[
-    //! @param lgNadV Vertical angle, in radian, of the center of view of the gnomonic projection, in [-PI/2,+PI/2[
-    //! @param lgAppH Half horizontal apperture, from center of view, of the gnomonic projection in radian
-    //! @param lgAppV Half vertical apperture, from center of view, of the gnomonic projection in radian
-    //! @param lgInter Pointer to interpolation method function
+    /*! \brief Equirectangular to rectilinear gnomonic projection
+     *  
+     *  This function performs a gnomonic reprojection on the base of an equirectangular
+     *  projection of a entire panorama using desired interpolation method. The results is
+     *  drawn in the lgRectOut bitmap. The lgRectOut has to be already allocated accroding to
+     *  its parameters.
+     *  
+     *  \param lgEqrIn Pointer to equirectangular bitmap
+     *  \param lgEqrWidth Width, in pixels, of the equirectangular bitmap pan_img
+     *  \param lgEqrHeight Height, in pixels, of the equirectangular bitmap pan_img
+     *  \param lgEqrLayer Depth, in chromatic layer count, of the equirectangular bitmap pan_img
+     *  \param lgRectOut Pointer to gnomonic bitmap
+     *  \param lgRectWidth Width, in pixels, of the gnomonic bitmap rct_img
+     *  \param lgRectHeight Height, in pixels, of the gnomonic bitmap rct_img
+     *  \param lgRectLayer Depth, in chromatic layer count, of the gnomonic bitmap rct_img
+     *  \param lgNadH Horizontal angle, in radian, of the center of view of the gnomonic projection, in [0,2PI[
+     *  \param lgNadV Vertical angle, in radian, of the center of view of the gnomonic projection, in [-PI/2,+PI/2[
+     *  \param lgAppH Half horizontal apperture, from center of view, of the gnomonic projection in radian
+     *  \param lgAppV Half vertical apperture, from center of view, of the gnomonic projection in radian
+     *  \param lgInter Pointer to interpolation method function
+     */
 
     gnomonic_Void_t gnomonic_etg(
 

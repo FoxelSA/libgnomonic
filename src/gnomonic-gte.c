@@ -117,12 +117,19 @@
                     lgPY = ( ( ( lgVectorf[2] / lgVectorf[0] / lgTanAppV ) + lg_Real_s( 1.0 ) ) / lg_Real_s( 2.0 ) ) * ( lgRectHeight - lg_Size_s( 1 ) );
 
                     /* Verify gnomonic domain */
-                    if ( ( lgPX >= lg_Real_s( 0.0 ) ) && ( lgPX < lg_Real_c( lgRectWidth - lg_Size_s( 1 ) ) ) && ( lgPY >= lg_Real_s( 0.0 ) ) && ( lgPY < lg_Real_c( lgRectHeight - lg_Size_s( 1 ) ) ) ) {
+                    if ( 
+
+                        ( lgPX >= lg_Real_s( 0.0 ) ) && 
+                        ( lgPY >= lg_Real_s( 0.0 ) ) && 
+                        ( lgPX <  lg_Real_c( lgRectWidth  - lg_Size_s( 1 ) ) ) && 
+                        ( lgPY <  lg_Real_c( lgRectHeight - lg_Size_s( 1 ) ) ) 
+
+                    ) {
 
                         /* Interpolation process */
-                        * ( lgEqrIO + lgEqrLayer * ( lgEqrWidth * lgDY + lgDX )                  ) = lgInter( lgRectIn, lgRectWidth, lgRectHeight, lgRectLayer, lg_Size_s( 0 ), lgPX, lgPY );
-                        * ( lgEqrIO + lgEqrLayer * ( lgEqrWidth * lgDY + lgDX ) + lg_Size_s( 1 ) ) = lgInter( lgRectIn, lgRectWidth, lgRectHeight, lgRectLayer, lg_Size_s( 1 ), lgPX, lgPY );
-                        * ( lgEqrIO + lgEqrLayer * ( lgEqrWidth * lgDY + lgDX ) + lg_Size_s( 2 ) ) = lgInter( lgRectIn, lgRectWidth, lgRectHeight, lgRectLayer, lg_Size_s( 2 ), lgPX, lgPY );
+                        LG_BM( lgEqrIO, lgEqrWidth, lgEqrLayer, lgDX, lgDY, lg_Size_s( 0 ) ) = lgInter( lgRectIn, lgRectWidth, lgRectHeight, lgRectLayer, lg_Size_s( 0 ), lgPX, lgPY );
+                        LG_BM( lgEqrIO, lgEqrWidth, lgEqrLayer, lgDX, lgDY, lg_Size_s( 1 ) ) = lgInter( lgRectIn, lgRectWidth, lgRectHeight, lgRectLayer, lg_Size_s( 1 ), lgPX, lgPY );
+                        LG_BM( lgEqrIO, lgEqrWidth, lgEqrLayer, lgDX, lgDY, lg_Size_s( 2 ) ) = lgInter( lgRectIn, lgRectWidth, lgRectHeight, lgRectLayer, lg_Size_s( 2 ), lgPX, lgPY );
 
                     }
 
@@ -210,15 +217,25 @@
                     lgPY = ( ( ( lgVectorf[2] / lgVectorf[0] / lgTanAppV ) + lg_Real_s( 1.0 ) ) / lg_Real_s( 2.0 ) ) * ( lgRectHeight - lg_Size_s( 1 ) );
 
                     /* Verify gnomonic domain */
-                    if ( ( lgPX >= lg_Real_s( 0.0 ) ) && ( lgPX < lg_Real_c( lgRectWidth - lg_Size_s( 1 ) ) ) && ( lgPY >= lg_Real_s( 0.0 ) ) && ( lgPY < lg_Real_c( lgRectHeight - lg_Size_s( 1 ) ) ) ) {
+                    if ( 
+
+                        ( lgPX >= lg_Real_s( 0.0 ) ) && 
+                        ( lgPY >= lg_Real_s( 0.0 ) ) && 
+                        ( lgPX <  lg_Real_c( lgRectWidth  - lg_Size_s( 1 ) ) ) && 
+                        ( lgPY <  lg_Real_c( lgRectHeight - lg_Size_s( 1 ) ) ) 
+
+                    ) {
 
                         /* Compute the blending factor */
                         lgBF = lg_Real_c( * ( lgMaskIn + lgRectWidth * lg_Size_c( lgPY ) + lg_Size_c( lgPX ) ) ) / lg_Real_s( 255.0 );
 
                         /* Interpolation process */
-                        * ( lgEqrIO + lgEqrLayer * ( lgEqrWidth * lgDY + lgDX )                  ) = * ( lgEqrIO + lgEqrLayer * ( lgEqrWidth * lgDY + lgDX )                  ) * ( lg_Real_s( 1.0 ) - lgBF ) + lgInter( lgRectIn, lgRectWidth, lgRectHeight, lgRectLayer, lg_Size_s( 0 ), lgPX, lgPY ) * lgBF;
-                        * ( lgEqrIO + lgEqrLayer * ( lgEqrWidth * lgDY + lgDX ) + lg_Size_s( 1 ) ) = * ( lgEqrIO + lgEqrLayer * ( lgEqrWidth * lgDY + lgDX ) + lg_Size_s( 1 ) ) * ( lg_Real_s( 1.0 ) - lgBF ) + lgInter( lgRectIn, lgRectWidth, lgRectHeight, lgRectLayer, lg_Size_s( 1 ), lgPX, lgPY ) * lgBF;
-                        * ( lgEqrIO + lgEqrLayer * ( lgEqrWidth * lgDY + lgDX ) + lg_Size_s( 2 ) ) = * ( lgEqrIO + lgEqrLayer * ( lgEqrWidth * lgDY + lgDX ) + lg_Size_s( 2 ) ) * ( lg_Real_s( 1.0 ) - lgBF ) + lgInter( lgRectIn, lgRectWidth, lgRectHeight, lgRectLayer, lg_Size_s( 2 ), lgPX, lgPY ) * lgBF;
+                        LG_BM( lgEqrIO, lgEqrWidth, lgEqrLayer, lgDX, lgDY, lg_Size_s( 0 ) ) =
+                        LG_BM( lgEqrIO, lgEqrWidth, lgEqrLayer, lgDX, lgDY, lg_Size_s( 0 ) ) * ( lg_Real_s( 1.0 ) - lgBF ) + lgInter( lgRectIn, lgRectWidth, lgRectHeight, lgRectLayer, lg_Size_s( 0 ), lgPX, lgPY ) * lgBF;
+                        LG_BM( lgEqrIO, lgEqrWidth, lgEqrLayer, lgDX, lgDY, lg_Size_s( 1 ) ) =
+                        LG_BM( lgEqrIO, lgEqrWidth, lgEqrLayer, lgDX, lgDY, lg_Size_s( 1 ) ) * ( lg_Real_s( 1.0 ) - lgBF ) + lgInter( lgRectIn, lgRectWidth, lgRectHeight, lgRectLayer, lg_Size_s( 1 ), lgPX, lgPY ) * lgBF;
+                        LG_BM( lgEqrIO, lgEqrWidth, lgEqrLayer, lgDX, lgDY, lg_Size_s( 2 ) ) =
+                        LG_BM( lgEqrIO, lgEqrWidth, lgEqrLayer, lgDX, lgDY, lg_Size_s( 2 ) ) * ( lg_Real_s( 1.0 ) - lgBF ) + lgInter( lgRectIn, lgRectWidth, lgRectHeight, lgRectLayer, lg_Size_s( 2 ), lgPX, lgPY ) * lgBF;
 
                     }
 

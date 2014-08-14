@@ -71,10 +71,6 @@
     Header - Preprocessor macros
  */
 
-    /* Ascending compatibility alias - Ensured until v1.0 */
-    # define gnomonic_ttg_coord lg_ttg_coord
-    # define gnomonic_gtt_coord lg_gtt_coord
-
 /*
     Header - Typedefs
  */

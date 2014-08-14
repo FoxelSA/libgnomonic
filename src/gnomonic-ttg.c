@@ -126,19 +126,27 @@
                 lgSY = ( lgPanHeight - lg_Size_s( 1 ) ) * ( ( lgAV / LG_PI ) + lg_Real_s( 0.5 ) ) - lgEqrPosY;
 
                 /* Verify tile panoramic range */
-                if ( ( lgSX > lg_Size_s( 0 ) ) && ( lgSX < ( lgEqrWidth - lg_Size_s( 1 ) ) ) && ( lgSY > lg_Size_s( 0 ) ) && ( lgSY < ( lgEqrHeight - lg_Size_s( 1 ) ) ) ) {
+                if ( 
+
+                    ( lgSX > lg_Size_s( 0 ) ) && 
+                    ( lgSY > lg_Size_s( 0 ) ) && 
+                    ( lgSX < ( lgEqrWidth  - lg_Size_s( 1 ) ) ) && 
+                    ( lgSY < ( lgEqrHeight - lg_Size_s( 1 ) ) )
+
+                ) {
 
                     /* Interpolation process */
-                    * ( lgRectOut + lgRectLayer * ( lgRectWidth * lgDY + lgDX )                  ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, 0, lgSX, lgSY );
-                    * ( lgRectOut + lgRectLayer * ( lgRectWidth * lgDY + lgDX ) + lg_Size_s( 1 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, 1, lgSX, lgSY );
-                    * ( lgRectOut + lgRectLayer * ( lgRectWidth * lgDY + lgDX ) + lg_Size_s( 2 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, 2, lgSX, lgSY );
+                    LG_BM( lgRectOut, lgRectWidth, lgRectLayer, lgDX, lgDY, lg_Size_s( 0 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, 0, lgSX, lgSY );
+                    LG_BM( lgRectOut, lgRectWidth, lgRectLayer, lgDX, lgDY, lg_Size_s( 1 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, 1, lgSX, lgSY );
+                    LG_BM( lgRectOut, lgRectWidth, lgRectLayer, lgDX, lgDY, lg_Size_s( 2 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, 2, lgSX, lgSY );
 
                 } else {
 
                     /* Assign black pixel */
-                    * ( lgRectOut + lgRectLayer * ( lgRectWidth * lgDY + lgDX )                  ) = li_C8_s( 0 );
-                    * ( lgRectOut + lgRectLayer * ( lgRectWidth * lgDY + lgDX ) + lg_Size_s( 1 ) ) = li_C8_s( 0 );
-                    * ( lgRectOut + lgRectLayer * ( lgRectWidth * lgDY + lgDX ) + lg_Size_s( 2 ) ) = li_C8_s( 0 );
+                    LG_BM( lgRectOut, lgRectWidth, lgRectLayer, lgDX, lgDY, lg_Size_s( 0 ) ) = li_C8_s( 0 );
+                    LG_BM( lgRectOut, lgRectWidth, lgRectLayer, lgDX, lgDY, lg_Size_s( 1 ) ) = li_C8_s( 0 );
+                    LG_BM( lgRectOut, lgRectWidth, lgRectLayer, lgDX, lgDY, lg_Size_s( 2 ) ) = li_C8_s( 0 );
+
                 }
 
             }

@@ -122,10 +122,10 @@
                 lgDX = ( lgEqrWidth  - lg_Size_s( 1 ) ) * ( lgAH / LG_PI2 );
                 lgDY = ( lgEqrHeight - lg_Size_s( 1 ) ) * ( ( lgAV / LG_PI ) + lg_Real_s( 0.5 ) );
 
-                /* Assign pixel value */
-                * ( lgEqrOut + lgEqrLayers * ( lgEqrWidth * lgSY + lgSX )                  ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayers, lg_Size_s( 0 ), lgDX, lgDY );
-                * ( lgEqrOut + lgEqrLayers * ( lgEqrWidth * lgSY + lgSX ) + lg_Size_s( 1 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayers, lg_Size_s( 1 ), lgDX, lgDY );
-                * ( lgEqrOut + lgEqrLayers * ( lgEqrWidth * lgSY + lgSX ) + lg_Size_s( 2 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayers, lg_Size_s( 2 ), lgDX, lgDY );
+                /* Interpolation process */
+                LG_BM( lgEqrOut, lgEqrWidth, lgEqrLayers, lgSX, lgSY, lg_Size_s( 0 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayers, lg_Size_s( 0 ), lgDX, lgDY );
+                LG_BM( lgEqrOut, lgEqrWidth, lgEqrLayers, lgSX, lgSY, lg_Size_s( 1 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayers, lg_Size_s( 1 ), lgDX, lgDY );
+                LG_BM( lgEqrOut, lgEqrWidth, lgEqrLayers, lgSX, lgSY, lg_Size_s( 2 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayers, lg_Size_s( 2 ), lgDX, lgDY );
 
             }
 

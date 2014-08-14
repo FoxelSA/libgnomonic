@@ -72,10 +72,6 @@
     Header - Preprocessor macros
  */
 
-    /* Ascending compatibility alias - Ensured until v1.0 */
-    # define gnomonic_gte       lg_gte
-    # define gnomonic_gte_blend lg_gte_blend
-
 /*
     Header - Typedefs
  */

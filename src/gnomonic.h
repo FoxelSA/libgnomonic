@@ -125,27 +125,25 @@
     # define lg_Size_i          SCNu64
     # define lg_Real_i          "lf"
 
-    /* Ascending compatibility alias - Ensured until v1.0 */
-    # define gnomonic_Void_t    lg_Void_t
-    # define gnomonic_Index_t   lg_Size_t
-    # define gnomonic_Real_t    lg_Real_t
-
     /* Define mathematical function */
     # define LG_ATN(x,y)        ( ( x >= 0 ) ? ( ( y >= 0 ) ? atan( y / x ) : LG_PI2 + atan( y / x ) ) : LG_PI + atan( y / x ) )
     # define LG_ASN(x)          ( asin( x ) )
+
+    /* Define bitmap element accessing macro */
+    # define LG_BM(b,w,l,x,y,c)   ( * ( b + l * ( w * y + x ) + c ) )
 
 /*
     Header - Typedefs
  */
 
     /* Define general void */
-    typedef void lg_Void_t;
+    typedef void    lg_Void_t;
 
     /* Define index type */
     typedef int64_t lg_Size_t;
 
     /* Define floating type */
-    typedef float lg_Real_t;
+    typedef double  lg_Real_t;
 
 /*
     Header - Structures

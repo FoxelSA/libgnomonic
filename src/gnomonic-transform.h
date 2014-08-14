@@ -72,9 +72,6 @@
     Header - Preprocessor macros
  */
 
-    /* Ascending compatibility alias - Ensured until v1.0 */
-    # define gnomonic_transform_rotate lg_transform_rotate
-
 /*
     Header - Typedefs
  */

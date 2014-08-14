@@ -120,9 +120,9 @@
                 lgSY = ( lgEqrHeight - lg_Size_s( 1 ) ) * ( ( lgAV / LG_PI ) + lg_Real_s( 0.5 ) );
 
                 /* Interpolation process */
-                * ( lgRectOut + lgRectLayer * ( lgRectWidth * lgDY + lgDX )                  ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, lg_Size_s( 0 ), lgSX, lgSY );
-                * ( lgRectOut + lgRectLayer * ( lgRectWidth * lgDY + lgDX ) + lg_Size_s( 1 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, lg_Size_s( 1 ), lgSX, lgSY );
-                * ( lgRectOut + lgRectLayer * ( lgRectWidth * lgDY + lgDX ) + lg_Size_s( 2 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, lg_Size_s( 2 ), lgSX, lgSY );
+                LG_BM( lgRectOut, lgRectWidth, lgRectLayer, lgDX, lgDY, lg_Size_s( 0 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, lg_Size_s( 0 ), lgSX, lgSY );
+                LG_BM( lgRectOut, lgRectWidth, lgRectLayer, lgDX, lgDY, lg_Size_s( 1 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, lg_Size_s( 1 ), lgSX, lgSY );
+                LG_BM( lgRectOut, lgRectWidth, lgRectLayer, lgDX, lgDY, lg_Size_s( 2 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, lg_Size_s( 2 ), lgSX, lgSY );
 
             }
 

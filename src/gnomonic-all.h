@@ -72,6 +72,20 @@
     Header - Preprocessor definitions
  */
 
+    /* Ascending compatibility - Functions */
+    # define gnomonic_ttg_coord         lg_ttg_coord        /* Beta 0.2 */
+    # define gnomonic_gtt_coord         lg_gtt_coord        /* Beta 0.2 */
+    # define gnomonic_etg               lg_etg              /* Beta 0.2 */
+    # define gnomonic_gte               lg_gte              /* Beta 0.2 */
+    # define gnomonic_gte_blend         lg_gte_blend        /* Beta 0.2 */
+    # define gnomonic_transform_rotate  lg_transform_rotate /* Beta 0.2 */
+    # define gnomonic_ttg               lg_ttg              /* Beta 0.2 */
+
+    /* Ascending compatibility - Types */
+    # define gnomonic_Void_t            lg_Void_t           /* Beta 0.2 */
+    # define gnomonic_Index_t           lg_Size_t           /* Beta 0.2 */
+    # define gnomonic_Real_t            lg_Real_t           /* Beta 0.2 */
+
 /*
     Header - Preprocessor macros
  */

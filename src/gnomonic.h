@@ -101,17 +101,38 @@
     Header - Preprocessor definitions
  */
 
-    /* Declare mathematical constants */
-    # define LG_PI lg_Real_s( 3.14159265358979323846264338327 )
+    /* Define mathematical constants */
+    # define LG_PI              lg_Real_s( 3.14159265358979323846264338327950 )
+    # define LG_PI2             lg_Real_s( 6.28318530717958647692528676655901 )
 
 /*
     Header - Preprocessor macros
  */
 
+    /* Define casting macro */
+    # define lg_Size_c( x )     ( ( lg_Size_t ) x )
+    # define lg_Real_c( x )     ( ( lg_Real_t ) x )
+
+    /* Define litteral suffix */
+    # define lg_Size_s( x )     INT64_C( x )
+    # define lg_Real_s( x )     ( x ## f )
+
+    /* Define formated output specifiers */
+    # define lg_Size_p          PRId64
+    # define lg_Real_p          "lf"
+
+    /* Define formated input specifiers */
+    # define lg_Size_i          SCNu64
+    # define lg_Real_i          "lf"
+
     /* Ascending compatibility alias - Ensured until v1.0 */
     # define gnomonic_Void_t    lg_Void_t
     # define gnomonic_Index_t   lg_Size_t
     # define gnomonic_Real_t    lg_Real_t
+
+    /* Define mathematical function */
+    # define LG_ATN(x,y)        ( ( x >= 0 ) ? ( ( y >= 0 ) ? atan( y / x ) : LG_PI2 + atan( y / x ) ) : LG_PI + atan( y / x ) )
+    # define LG_ASN(x)          ( asin( x ) )
 
 /*
     Header - Typedefs
@@ -125,19 +146,6 @@
 
     /* Define floating type */
     typedef float lg_Real_t;
-
-    /* Define literal suffix */
-    # define lg_Size_s( x )  INT64_C( x )
-    # define lg_Real_s( x )  ( x ## f )
-
-    /* Define formated output specifiers */
-    # define lg_Size_p       PRId64
-    # define lg_Real_p       "lf"
-
-    /* Define formated input specifiers */
-    # define lg_Size_i       SCNu64
-    # define lg_Real_i       "lf"
-
 
 /*
     Header - Structures

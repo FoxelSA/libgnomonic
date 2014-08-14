@@ -88,8 +88,8 @@
         lg_Real_t lgSinZ = sin( + lgNadH );
 
         /* Position vector */
-        lg_Real_t lgVectori[3] = { 0.0, 0.0, 0.0 };
-        lg_Real_t lgVectorf[3] = { 0.0, 0.0, 0.0 };
+        lg_Real_t lgVectori[3] = { lg_Real_s( 0.0 ) };
+        lg_Real_t lgVectorf[3] = { lg_Real_s( 0.0 ) };
 
         /* Angular apperture tangent computation */
         lgTanAppH = tan( lgAppH );
@@ -102,8 +102,8 @@
             for ( lgDX = lg_Size_s( 0 ); lgDX < lgRectWidth; lgDX++ ) {
 
                 /* Normalized planar coordinates */
-                lgPX = ( ( lg_Real_s( 2.0 ) * ( lg_Real_t ) lgDX / ( lg_Real_t ) ( lgRectWidth  - lg_Size_s( 1 ) ) ) - lg_Real_s( 1.0 ) ) * lgTanAppH;
-                lgPY = ( ( lg_Real_s( 2.0 ) * ( lg_Real_t ) lgDY / ( lg_Real_t ) ( lgRectHeight - lg_Size_s( 1 ) ) ) - lg_Real_s( 1.0 ) ) * lgTanAppV;
+                lgPX = ( ( lg_Real_s( 2.0 ) * lg_Real_c( lgDX ) / lg_Real_c( lgRectWidth  - lg_Size_s( 1 ) ) ) - lg_Real_s( 1.0 ) ) * lgTanAppH;
+                lgPY = ( ( lg_Real_s( 2.0 ) * lg_Real_c( lgDY ) / lg_Real_c( lgRectHeight - lg_Size_s( 1 ) ) ) - lg_Real_s( 1.0 ) ) * lgTanAppV;
 
                 /* Rebuild position vector - x y z */
                 lgVectori[0] = cos( atan( sqrt( lgPX * lgPX + lgPY * lgPY ) ) );
@@ -115,43 +115,12 @@
                 lgVectorf[1] = + lgSinZ * lgCosY * lgVectori[0] + lgCosZ * lgVectori[1] + lgSinZ * lgSinY * lgVectori[2];
                 lgVectorf[2] = - lgSinY          * lgVectori[0] + lg_Real_s( 0.0 )      + lgCosY          * lgVectori[2];
 
-                /* Retrieve rotated position angles - horizontal */
-                //lgAH = atan( lgVectorf[1] / lgVectorf[0] ); lgAH = lgAH < 0.0 ? lgAH + 2.0 * LG_PI : lgAH;
-                lgAH = lgVectorf[0] / sqrt( lgVectorf[0] * lgVectorf[0] + lgVectorf[1] * lgVectorf[1] );
-
-                /* Case study */
-                if ( lgAH >= lg_Real_s( 1.0 ) ) {
-
-                    /* Assign horizontal angle */
-                    lgAH = lg_Real_s( 0.0 );
-
-                } else if ( lgAH <= lg_Real_s( -1.0 ) ) {
-
-                    /* Assign horizontal angle */
-                    lgAH = M_PI;
-
-                } else {
-
-                    /* Case study */
-                    if ( lgVectorf[1] < lg_Real_s( 0.0 ) ) {
-
-                        /* Assign horizontal angle */
-                        lgAH = lg_Real_s( 2.0 ) * LG_PI - acos( lgAH );
-
-                    } else {
-
-                        /* Assign horizontal angle */
-                        lgAH = acos( lgAH );
-
-                    }
-
-                }
-
-                /* Retreive angular position - Vertical */
-                lgAV = asin( lgVectorf[2] );
+                /* Retreive angular position */
+                lgAH = LG_ATN( lgVectorf[0] , lgVectorf[1] );
+                lgAV = LG_ASN( lgVectorf[2] );
 
                 /* Retrieve panoramic pixel coordinates */
-                lgSX = ( lgAH / ( lg_Real_s( 2.0 ) * LG_PI ) ) * ( lgEqrWidth  - lg_Size_s( 1 ) );
+                lgSX = ( lgAH / LG_PI2 ) * ( lgEqrWidth  - lg_Size_s( 1 ) );
                 lgSY = ( ( lgAV / LG_PI ) + lg_Real_s( 0.5 ) ) * ( lgEqrHeight - lg_Size_s( 1 ) );
 
                 /* Interpolation process */

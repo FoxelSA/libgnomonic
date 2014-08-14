@@ -77,9 +77,9 @@
         lg_Real_t lgAH = lg_Real_s( 0.0 );
         lg_Real_t lgAV = lg_Real_s( 0.0 );
 
-        /* Mathematical Variables */
-        lg_Real_t lgTanAppH = lg_Real_s( 0.0 );
-        lg_Real_t lgTanAppV = lg_Real_s( 0.0 );
+        /* Compute gnomonic apperture tangants */
+        lg_Real_t lgTanAppH = tan( lgAppH );
+        lg_Real_t lgTanAppV = tan( lgAppV );
 
         /* Rotation matrix coefficients */
         lg_Real_t lgCosY = cos( + lgNadV );
@@ -90,10 +90,6 @@
         /* Position vector */
         lg_Real_t lgVectori[3] = { lg_Real_s( 0.0 ) };
         lg_Real_t lgVectorf[3] = { lg_Real_s( 0.0 ) };
-
-        /* Angular apperture tangent computation */
-        lgTanAppH = tan( lgAppH );
-        lgTanAppV = tan( lgAppV );
 
         /* Planar projection referential y-loop */
         for ( lgDY = lg_Size_s( 0 ); lgDY < lgRectHeight; lgDY++ ) {
@@ -120,8 +116,8 @@
                 lgAV = LG_ASN( lgVectorf[2] );
 
                 /* Retrieve panoramic pixel coordinates */
-                lgSX = ( lgAH / LG_PI2 ) * ( lgEqrWidth  - lg_Size_s( 1 ) );
-                lgSY = ( ( lgAV / LG_PI ) + lg_Real_s( 0.5 ) ) * ( lgEqrHeight - lg_Size_s( 1 ) );
+                lgSX = ( lgEqrWidth  - lg_Size_s( 1 ) ) * ( lgAH / LG_PI2 );
+                lgSY = ( lgEqrHeight - lg_Size_s( 1 ) ) * ( ( lgAV / LG_PI ) + lg_Real_s( 0.5 ) );
 
                 /* Interpolation process */
                 * ( lgRectOut + lgRectLayer * ( lgRectWidth * lgDY + lgDX )                  ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, lg_Size_s( 0 ), lgSX, lgSY );

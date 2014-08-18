@@ -72,6 +72,9 @@
     Header - Preprocessor definitions
  */
 
+    /* Ascending compatibility - Macros */
+    # define GNOMONIC_PI                LG_PI
+
     /* Ascending compatibility - Functions */
     # define gnomonic_ttg_coord         lg_ttg_coord        /* Beta 0.2 */
     # define gnomonic_gtt_coord         lg_gtt_coord        /* Beta 0.2 */

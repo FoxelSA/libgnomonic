@@ -94,6 +94,9 @@
             }
         };
 
+        /* Padding variable */
+        lg_Size_t lgEqrPad = lgEqrWidth * lgEqrLayers; if ( lgEqrPad % lg_Size_s( 4 ) ) lgEqrPad += lg_Size_s( 4 ) - lgEqrPad % lg_Size_s( 4 );
+
         /* Processing loop on y */
         for ( lgSY = lg_Size_s( 0 ); lgSY < lgEqrHeight; lgSY ++ ) {
 
@@ -123,9 +126,9 @@
                 lgDY = ( lgEqrHeight - lg_Size_s( 1 ) ) * ( ( lgAV / LG_PI ) + lg_Real_s( 0.5 ) );
 
                 /* Interpolation process */
-                LG_BM( lgEqrOut, lgEqrWidth, lgEqrLayers, lgSX, lgSY, lg_Size_s( 0 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayers, lg_Size_s( 0 ), lgDX, lgDY );
-                LG_BM( lgEqrOut, lgEqrWidth, lgEqrLayers, lgSX, lgSY, lg_Size_s( 1 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayers, lg_Size_s( 1 ), lgDX, lgDY );
-                LG_BM( lgEqrOut, lgEqrWidth, lgEqrLayers, lgSX, lgSY, lg_Size_s( 2 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayers, lg_Size_s( 2 ), lgDX, lgDY );
+                LG_B4( lgEqrOut, lgEqrPad, lgEqrLayers, lgSX, lgSY, lg_Size_s( 0 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayers, lg_Size_s( 0 ), lgDX, lgDY );
+                LG_B4( lgEqrOut, lgEqrPad, lgEqrLayers, lgSX, lgSY, lg_Size_s( 1 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayers, lg_Size_s( 1 ), lgDX, lgDY );
+                LG_B4( lgEqrOut, lgEqrPad, lgEqrLayers, lgSX, lgSY, lg_Size_s( 2 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayers, lg_Size_s( 2 ), lgDX, lgDY );
 
             }
 

@@ -130,7 +130,7 @@
     # define LG_ASN(x)          ( asin( x ) )
 
     /* Define bitmap element accessing macro */
-    # define LG_BM(b,w,l,x,y,c)   ( * ( b + l * ( w * y + x ) + c ) )
+    # define LG_B4(b,p,l,x,y,c)   ( * ( b + p * y + l * x + c ) )
 
 /*
     Header - Typedefs

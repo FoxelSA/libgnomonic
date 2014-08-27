@@ -9,7 +9,12 @@
  *
  *      Nils Hamel <n.hamel@foxel.ch>
  *
+ * 
+ * Contributor(s) :
+ * 
+ *     Stephane Flotron <s.flotron@foxel.ch>
  *
+ * 
  * This file is part of the FOXEL project <http://foxel.ch>.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -128,6 +133,68 @@
 
     );
 
+
+    /*! \brief Equirectangular tile to uncentered rectilinear using elphel data
+     *  
+     *  This function performs an gnomonic projection considering a tile of an entire
+     *  equirectangular panorama using the desired interpolation method. The results
+     *  are drawn in the lgRectOut bitmap. The lgRectOut has to be already allocated
+     *  according to its parameters.
+     *  
+     *  \param lgEqrIn Pointer to equirectangular tile bitmap
+     *  \param lgEqrWidth Width, in pixels, of the equirectangular tile bitmap eqr_img
+     *  \param lgEqrHeight Height, in pixels, of the equirectangular tile bitmap eqr_img
+     *  \param lgEqrLayer Depth, in chromatic layer count, of the equirectangular tile bitmap eqr_img
+     *  \param lgRectOut Pointer to gnomonic bitmap
+     *  \param lgRectWidth Width, in pixels, of the gnomonic bitmap rct_img
+     *  \param lgRectHeight Height, in pixels, of the gnomonic bitmap rct_img
+     *  \param lgRectLayer Depth, in chromatic layer count, of the gnomonic bitmap rct_img
+     *  \param lgPx0 X coordinate of principal point of the gnomonic bitmap rct_img
+     *  \param lgPy0 Y coordinate of principal point of the gnomonic bitmap rct_img
+     *  \param lgPanWidth Width, in pixel, of the entire equirectangular mapping
+     *  \param lgPanHeight Height, in pixel, of the entire equirectangular mapping
+     *  \param lgEqrPosX Position x, in pixel, of the tile in the entire equirectangular mapping
+     *  \param lgEqrPosY Position y, in pixel, of the tile in the entire equirectangular mapping
+     *  \param lgEqrCenterX Position x, in pixel, of the tile center in the entire equirectangular mapping
+     *  \param lgEqrCenterY Position y, in pixel, of the tile center in the entire equirectangular mapping
+     *  \param lgRoll Angle roll of elphel's camera
+     *  \param lgAzi Azimuth angle of elphel's camera
+     *  \param lgEle Elevation angle of elphel's camera
+     *  \param lgHea Heading angle of elphel's camera
+     *  \param lgPixelSize Pixel size in mm
+     *  \param lgFocalLength Focal length in mm
+     *  \param lgInter Pointer to interpolation method function
+     */
+
+    lg_Void_t lg_ttg_uc(
+
+        li_C8_t *   lgEqrIn,
+        lg_Size_t   lgEqrWidth,
+        lg_Size_t   lgEqrHeight,
+        lg_Size_t   lgEqrLayer,
+        li_C8_t *   lgRectOut,
+        lg_Size_t   lgRectWidth,
+        lg_Size_t   lgRectHeight,
+        lg_Size_t   lgRectLayer,
+        lg_Real_t   lgPx0,
+        lg_Real_t   lgPy0,
+        lg_Size_t   lgPanWidth,
+        lg_Size_t   lgPanHeight,
+        lg_Size_t   lgEqrPosX,
+        lg_Size_t   lgEqrPosY,
+        lg_Real_t   lgEqrCenterX,
+        lg_Real_t   lgEqrCenterY,
+        lg_Real_t   lgRoll,
+        lg_Real_t   lgAzi,
+        lg_Real_t   lgEle,
+        lg_Real_t   lgHea,
+        lg_Real_t   lgPixSize,
+        lg_Real_t   lgFocalLength,
+        li_Method_t lgInter
+
+    );
+    
+    
 /*
     Header - C/C++ compatibility
  */

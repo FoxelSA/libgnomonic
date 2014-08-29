@@ -250,7 +250,7 @@
                 /* Rebuild position vector - x y z */
                 lgVectori[0] = + lgPX ;
                 lgVectori[1] = + lgPY ;
-                lgVectori[2] = + 1.0  ;
+                lgVectori[2] =   1.0  ;
                 
                 /* invert rotation */
                 double tmp[3] = { 0.0 };
@@ -274,8 +274,9 @@
                 /* normalize final vector */
                 lg_Real_t  dist = sqrt( lgVectorf[0] * lgVectorf[0] + lgVectorf[1] * lgVectorf[1] + lgVectorf[2] * lgVectorf[2]) ;
                 
-                for(int i=0 ; i < 3 ; ++i) 
-                  lgVectorf[i] /= dist ; 
+                lgVectorf[0] /= dist ; 
+                lgVectorf[1] /= dist ; 
+                lgVectorf[2] /= dist ; 
                 
                 lg_Real_t  r = sqrt( lgVectorf[0] * lgVectorf[0] + lgVectorf[2] * lgVectorf[2]  );
                 
@@ -292,8 +293,12 @@
                 }
                 
                 /* Retrieve panoramic pixel coordinates */
-                lgSX = lgPanWidth * ( (lgAH - phi) / LG_PI2 ) - lgEqrPosX + lgEqrCenterX ;
-                lgSY = lgPanHeight * ( ( lgAV -theta)  / LG_PI )  - lgEqrPosY + lgEqrCenterY;
+                if( fabs(lgAH-phi) > 1.5 * LG_PI )
+                   lgSX = ( lgPanWidth - 1.0 )  * ( ( lgAH - LG_PI2 - phi) / LG_PI2 ) - lgEqrPosX + lgEqrCenterX ;
+                else
+                   lgSX = ( lgPanWidth - 1.0) * ( (lgAH - phi) / LG_PI2 ) - lgEqrPosX + lgEqrCenterX ;
+                
+                lgSY = ( lgPanWidth - 1.0 ) * ( ( lgAV -theta)  / LG_PI2 )  - lgEqrPosY + lgEqrCenterY;
                 
                 /* Verify tile panoramic range */
                 if ( 

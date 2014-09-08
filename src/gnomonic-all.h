@@ -66,7 +66,6 @@
     # include "gnomonic-gte.h"
     # include "gnomonic-ttg.h"
     # include "gnomonic-transform.h"
-    # include "gnomonic-coord.h"
 
 /*
     Header - Preprocessor definitions
@@ -76,8 +75,6 @@
     # define GNOMONIC_PI                LG_PI
 
     /* Ascending compatibility - Functions */
-    # define gnomonic_ttg_coord         lg_ttg_coord        /* Beta 0.2 */
-    # define gnomonic_gtt_coord         lg_gtt_coord        /* Beta 0.2 */
     # define gnomonic_etg               lg_etg              /* Beta 0.2 */
     # define gnomonic_gte               lg_gte              /* Beta 0.2 */
     # define gnomonic_gte_blend         lg_gte_blend        /* Beta 0.2 */

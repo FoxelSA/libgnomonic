@@ -9,7 +9,6 @@
  *
  *      Nils Hamel <n.hamel@foxel.ch>
  *
- * 
  * Contributor(s) :
  * 
  *     Stephane Flotron <s.flotron@foxel.ch>

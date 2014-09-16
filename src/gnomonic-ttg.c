@@ -9,6 +9,10 @@
  *
  *      Nils Hamel <n.hamel@foxel.ch>
  *
+ * Contributor(s) :
+ * 
+ *     Stephane Flotron <s.flotron@foxel.ch>
+ *
  *
  * This file is part of the FOXEL project <http://foxel.ch>.
  *
@@ -201,11 +205,12 @@
         lg_Real_t lgPY   = lg_Real_s( 0.0 );
         lg_Real_t lgAH   = lg_Real_s( 0.0 );
         lg_Real_t lgAV   = lg_Real_s( 0.0 );
+        lg_Real_t lgNorm = lg_Real_s( 0.0 );
         
         /* compute rotations */
-        lg_Real_t theta = lgEle ; 
-        lg_Real_t psi =  lgRoll ; 
-        lg_Real_t phi = lgAzi + lgHea ;
+        lg_Real_t lgTheta = lgEle ; 
+        lg_Real_t lgPsi   = lgRoll ; 
+        lg_Real_t lgPhi   = lgAzi + lgHea ;
         
         /* initialize rotation matrices */
         lg_Real_t Rx[3][3] = { {1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0} };
@@ -213,22 +218,22 @@
         lg_Real_t Rz[3][3] = { {1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0} };
         
         /* Rx rotation matrix */
-        Rx[1][1] = + cos(theta) ; 
-        Rx[1][2] = - sin(theta) ;
+        Rx[1][1] = + cos( lgTheta ); 
+        Rx[1][2] = - sin( lgTheta );
         Rx[2][1] = - Rx[1][2];
         Rx[2][2] = + Rx[1][1];
         
         /* Ry rotation matrix */
-        Ry[0][0] = + cos(phi) ;
-        Ry[0][2] = - sin(phi) ; 
-        Ry[2][0] = - Ry[0][2] ;
-        Ry[2][2] = + Ry[0][0] ;
+        Ry[0][0] = + cos( lgPhi );
+        Ry[0][2] = - sin( lgPhi ); 
+        Ry[2][0] = - Ry[0][2];
+        Ry[2][2] = + Ry[0][0];
         
         /* Rz rotation matrix */
-        Rz[0][0] = + cos(psi) ;
-        Rz[0][1] = - sin(psi) ;
-        Rz[1][0] = - Rz[0][1] ; 
-        Rz[1][1] = + Rz[0][0] ;
+        Rz[0][0] = + cos( lgPsi );
+        Rz[0][1] = - sin( lgPsi );
+        Rz[1][0] = - Rz[0][1]; 
+        Rz[1][1] = + Rz[0][0];
 
         /* Position vector */
         lg_Real_t lgVectori[3] = { lg_Real_s( 0.0 ) };
@@ -248,62 +253,73 @@
                 lgPY = ( lgPixSize * ( lg_Real_c( lgDY ) - lgPy0 ) ) ;
               
                 /* Rebuild position vector - x y z */
-                lgVectori[0] = + lgPX ;
-                lgVectori[1] = + lgPY ;
-                lgVectori[2] = + lgFocalLength  ;
-                
-                /* invert rotation */
-                lg_Real_t tmp[3] = { 0.0 };
-                lg_Real_t Tmp[3] = { 0.0 };
+                lgVectori[0] = lgPX ;
+                lgVectori[1] = lgPY ;
+                lgVectori[2] = lgFocalLength;
                 
                 /* apply z rotation */
-                tmp[0] = Rz[0][0] * lgVectori[0] + Rz[0][1] * lgVectori[1] + Rz[0][2] * lgVectori[2] ;
-                tmp[1] = Rz[1][0] * lgVectori[0] + Rz[1][1] * lgVectori[1] + Rz[1][2] * lgVectori[2] ;
-                tmp[2] = Rz[2][0] * lgVectori[0] + Rz[2][1] * lgVectori[1] + Rz[2][2] * lgVectori[2] ;
+                lgVectorf[0] = Rz[0][0] * lgVectori[0] + Rz[0][1] * lgVectori[1] + Rz[0][2] * lgVectori[2] ;
+                lgVectorf[1] = Rz[1][0] * lgVectori[0] + Rz[1][1] * lgVectori[1] + Rz[1][2] * lgVectori[2] ;
+                lgVectorf[2] = Rz[2][0] * lgVectori[0] + Rz[2][1] * lgVectori[1] + Rz[2][2] * lgVectori[2] ;
                 
                 /* apply x rotation */
-                Tmp[0] = Rx[0][0] * tmp[0] + Rx[0][1] * tmp[1] + Rx[0][2] * tmp[2] ;
-                Tmp[1] = Rx[1][0] * tmp[0] + Rx[1][1] * tmp[1] + Rx[1][2] * tmp[2] ;
-                Tmp[2] = Rx[2][0] * tmp[0] + Rx[2][1] * tmp[1] + Rx[2][2] * tmp[2] ;
+                lgVectori[0] = Rx[0][0] * lgVectorf[0] + Rx[0][1] * lgVectorf[1] + Rx[0][2] * lgVectorf[2] ;
+                lgVectori[1] = Rx[1][0] * lgVectorf[0] + Rx[1][1] * lgVectorf[1] + Rx[1][2] * lgVectorf[2] ;
+                lgVectori[2] = Rx[2][0] * lgVectorf[0] + Rx[2][1] * lgVectorf[1] + Rx[2][2] * lgVectorf[2] ;
                 
-                /* apply y rotation */
-                lgVectorf[0] = Ry[0][0] * Tmp[0] + Ry[0][1] * Tmp[1] + Ry[0][2] * Tmp[2];
-                lgVectorf[1] = Ry[1][0] * Tmp[0] + Ry[1][1] * Tmp[1] + Ry[1][2] * Tmp[2];
-                lgVectorf[2] = Ry[2][0] * Tmp[0] + Ry[2][1] * Tmp[1] + Ry[2][2] * Tmp[2];
+                /* Apply y rotation */
+                lgVectorf[0] = Ry[0][0] * lgVectori[0] + Ry[0][1] * lgVectori[1] + Ry[0][2] * lgVectori[2];
+                lgVectorf[1] = Ry[1][0] * lgVectori[0] + Ry[1][1] * lgVectori[1] + Ry[1][2] * lgVectori[2];
+                lgVectorf[2] = Ry[2][0] * lgVectori[0] + Ry[2][1] * lgVectori[1] + Ry[2][2] * lgVectori[2];
                 
-                /* normalize final vector */
-                lg_Real_t  dist = sqrt( lgVectorf[0] * lgVectorf[0] + lgVectorf[1] * lgVectorf[1] + lgVectorf[2] * lgVectorf[2]) ;
+                /* Compute final vector norm */
+                lgNorm = sqrt( lgVectorf[0] * lgVectorf[0] + lgVectorf[1] * lgVectorf[1] + lgVectorf[2] * lgVectorf[2]) ;
                 
-                lgVectorf[0] /=  dist ; 
-                lgVectorf[1] /=  dist ; 
-                lgVectorf[2] /=  dist ; 
+                /* Normalize final vector */
+                lgVectorf[0] /= lgNorm; 
+                lgVectorf[1] /= lgNorm; 
+                lgVectorf[2] /= lgNorm; 
                 
-                lg_Real_t  r = sqrt( lgVectorf[0] * lgVectorf[0] + lgVectorf[2] * lgVectorf[2]  );
-                
-                /* compute azimuth-elevation */
-                if( r > 0 ) 
-                {
-                  lgAH = atan2 ( lgVectorf[0] , lgVectorf[2]  ) ;
-                  lgAV = atan2 ( lgVectorf[1] , r );
+                /* Compute azimuth-elevation */
+                if( sqrt( lgVectorf[0] * lgVectorf[0] + lgVectorf[2] * lgVectorf[2]  ) > lg_Real_s( 0.0 ) ) {
+
+                    /* Retrieve azimuth and elevation angles */
+                    lgAH = atan2 ( lgVectorf[0] , lgVectorf[2]  ) ;
+                    lgAV = atan2 ( lgVectorf[1] , sqrt( lgVectorf[0] * lgVectorf[0] + lgVectorf[2] * lgVectorf[2] ) );
+
+                } else {
+
+                    /* Retrieve azimuth and elevation angles */
+                    lgAH = lg_Real_s( 0.0 );
+                    lgAV = ( lgVectorf[1] > lg_Real_s( 0.0 ) ) ? LG_PI / lg_Real_s( 2.0 ): - LG_PI / lg_Real_s( 2.0 );
+
                 }
-                else
-                {
-                  lgAH = 0;
-                  lgAV = (lgVectorf[1] > 0) ? LG_PI / 2.0 : - LG_PI / 2.0;
+                
+                /* Retrieve panoramic x-pixel coordinates */
+                if( fabs(lgAH+lgPhi) > lg_Real_s( 1.5 ) * LG_PI ) {
+
+                    /* Compute x-coordinates */
+                    lgSX = lg_Real_c( lgPanWidth - 1 ) * ( ( lgAH - LG_PI2 + lgPhi) / LG_PI2 ) - lgEqrPosX + lgEqrCenterX ;
+
+                } else {
+
+                    /* Compute x-coordinates */
+                    lgSX = lg_Real_c( lgPanWidth - 1 ) * ( ( lgAH + lgPhi ) / LG_PI2 ) - lgEqrPosX + lgEqrCenterX ;
+
                 }
                 
-                /* Retrieve panoramic pixel coordinates */
-                if( fabs(lgAH + phi) > 1.5 * LG_PI )
-                   lgSX = ( lgPanWidth - 1.0 )  * ( ( lgAH - LG_PI2 + phi) / LG_PI2 ) - lgEqrPosX + lgEqrCenterX ;
-                else
-                   lgSX = ( lgPanWidth - 1.0) * ( (lgAH + phi) / LG_PI2 ) - lgEqrPosX + lgEqrCenterX ;
-               
-                
-                if( fabs(lgAV + theta) > 1.5 * LG_PI )
-                  lgSY = ( lgPanWidth - 1.0 ) * ( ( lgAV + theta - LG_PI2)  / LG_PI2 )  - lgEqrPosY + lgEqrCenterY;
-                else
-                  lgSY = ( lgPanWidth - 1.0 ) * ( ( lgAV + theta)  / LG_PI2 )  - lgEqrPosY + lgEqrCenterY;
-                
+                /* Retrieve panoramic y-pixel coordinates */
+                if( fabs(lgAH+lgTheta) > lg_Real_s( 1.5 ) * LG_PI ) {
+
+                    /* Compute y-coordinates */
+                    lgSY = lg_Real_c( lgPanWidth - 1 ) * ( ( lgAV - LG_PI2 + lgTheta) / LG_PI2 ) - lgEqrPosY + lgEqrCenterY ;
+
+                } else {
+
+                    /* Compute y-coordinates */
+                    lgSY = lg_Real_c( lgPanWidth - 1 ) * ( ( lgAV + lgTheta ) / LG_PI2 ) - lgEqrPosY + lgEqrCenterY ;
+
+                }
                 
                 /* Verify tile panoramic range */
                 if ( 

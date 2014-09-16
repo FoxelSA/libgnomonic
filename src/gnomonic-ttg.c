@@ -219,19 +219,19 @@
         
         /* Rx rotation matrix */
         Rx[1][1] = + cos( lgTheta ); 
-        Rx[1][2] = - sin( lgTheta );
+        Rx[1][2] = + sin( lgTheta );
         Rx[2][1] = - Rx[1][2];
         Rx[2][2] = + Rx[1][1];
         
         /* Ry rotation matrix */
         Ry[0][0] = + cos( lgPhi );
-        Ry[0][2] = - sin( lgPhi ); 
+        Ry[0][2] = + sin( lgPhi ); 
         Ry[2][0] = - Ry[0][2];
         Ry[2][2] = + Ry[0][0];
         
         /* Rz rotation matrix */
         Rz[0][0] = + cos( lgPsi );
-        Rz[0][1] = - sin( lgPsi );
+        Rz[0][1] = + sin( lgPsi );
         Rz[1][0] = - Rz[0][1]; 
         Rz[1][1] = + Rz[0][0];
 
@@ -253,9 +253,9 @@
                 lgPY = ( lgPixSize * ( lg_Real_c( lgDY ) - lgPy0 ) ) ;
               
                 /* Rebuild position vector - x y z */
-                lgVectori[0] = lgPX ;
-                lgVectori[1] = lgPY ;
-                lgVectori[2] = lgFocalLength;
+                lgVectori[0] =  lgPX ;
+                lgVectori[1] = -lgPY ;
+                lgVectori[2] =  lgFocalLength;
                 
                 /* apply z rotation */
                 lgVectorf[0] = Rz[0][0] * lgVectori[0] + Rz[0][1] * lgVectori[1] + Rz[0][2] * lgVectori[2] ;
@@ -296,28 +296,31 @@
                 }
                 
                 /* Retrieve panoramic x-pixel coordinates */
-                if( fabs(lgAH+lgPhi) > lg_Real_s( 1.5 ) * LG_PI ) {
+                if(lgAH < 0.0)
+                    lgAH += LG_PI2;
+                    
+                if( fabs(lgAH -lgPhi) > lg_Real_s( 1.5 ) * LG_PI ) {
 
                     /* Compute x-coordinates */
-                    lgSX = lg_Real_c( lgPanWidth - 1 ) * ( ( lgAH - LG_PI2 + lgPhi) / LG_PI2 ) - lgEqrPosX + lgEqrCenterX ;
+                    lgSX = lg_Real_c( lgPanWidth - 1 ) * ( ( lgAH - LG_PI2 - lgPhi) / LG_PI2 ) - lgEqrPosX + lgEqrCenterX ;
 
                 } else {
 
                     /* Compute x-coordinates */
-                    lgSX = lg_Real_c( lgPanWidth - 1 ) * ( ( lgAH + lgPhi ) / LG_PI2 ) - lgEqrPosX + lgEqrCenterX ;
+                    lgSX = lg_Real_c( lgPanWidth - 1 ) * ( ( lgAH - lgPhi ) / LG_PI2 ) - lgEqrPosX + lgEqrCenterX ;
 
                 }
                 
                 /* Retrieve panoramic y-pixel coordinates */
-                if( fabs(lgAH+lgTheta) > lg_Real_s( 1.5 ) * LG_PI ) {
+                if( fabs(lgAV-lgTheta) > lg_Real_s( 1.5 ) * LG_PI ) {
 
                     /* Compute y-coordinates */
-                    lgSY = lg_Real_c( lgPanWidth - 1 ) * ( ( lgAV - LG_PI2 + lgTheta) / LG_PI2 ) - lgEqrPosY + lgEqrCenterY ;
+                    lgSY = lg_Real_c( lgPanWidth - 1 ) * ( ( -lgAV - LG_PI2 + lgTheta) / LG_PI2 ) - lgEqrPosY + lgEqrCenterY ;
 
                 } else {
 
                     /* Compute y-coordinates */
-                    lgSY = lg_Real_c( lgPanWidth - 1 ) * ( ( lgAV + lgTheta ) / LG_PI2 ) - lgEqrPosY + lgEqrCenterY ;
+                    lgSY = lg_Real_c( lgPanWidth - 1 ) * ( ( -lgAV + lgTheta ) / LG_PI2 ) - lgEqrPosY + lgEqrCenterY ;
 
                 }
                 

@@ -214,19 +214,19 @@
         
         /* Rx rotation matrix */
         Rx[1][1] = + cos(theta) ; 
-        Rx[1][2] = + sin(theta) ;
+        Rx[1][2] = - sin(theta) ;
         Rx[2][1] = - Rx[1][2];
         Rx[2][2] = + Rx[1][1];
         
         /* Ry rotation matrix */
         Ry[0][0] = + cos(phi) ;
-        Ry[0][2] = + sin(phi) ; 
+        Ry[0][2] = - sin(phi) ; 
         Ry[2][0] = - Ry[0][2] ;
         Ry[2][2] = + Ry[0][0] ;
         
         /* Rz rotation matrix */
         Rz[0][0] = + cos(psi) ;
-        Rz[0][1] = + sin(psi) ;
+        Rz[0][1] = - sin(psi) ;
         Rz[1][0] = - Rz[0][1] ; 
         Rz[1][1] = + Rz[0][0] ;
 
@@ -244,17 +244,17 @@
             for ( lgDX = lg_Size_s( 0 ); lgDX < lgRectWidth; lgDX++ ) {
 
                 /* Normalized planar coordinates */
-                lgPX = ( lgPixSize * ( lg_Real_c( lgDX ) - lgPx0 ) ) / lgFocalLength ;
-                lgPY = ( lgPixSize * ( lg_Real_c( lgDY ) - lgPy0 ) ) / lgFocalLength ;
+                lgPX = ( lgPixSize * ( lg_Real_c( lgDX ) - lgPx0 ) ) ;
+                lgPY = ( lgPixSize * ( lg_Real_c( lgDY ) - lgPy0 ) ) ;
               
                 /* Rebuild position vector - x y z */
                 lgVectori[0] = + lgPX ;
                 lgVectori[1] = + lgPY ;
-                lgVectori[2] =   1.0  ;
+                lgVectori[2] = + lgFocalLength  ;
                 
                 /* invert rotation */
-                double tmp[3] = { 0.0 };
-                double Tmp[3] = { 0.0 };
+                lg_Real_t tmp[3] = { 0.0 };
+                lg_Real_t Tmp[3] = { 0.0 };
                 
                 /* apply z rotation */
                 tmp[0] = Rz[0][0] * lgVectori[0] + Rz[0][1] * lgVectori[1] + Rz[0][2] * lgVectori[2] ;
@@ -274,17 +274,17 @@
                 /* normalize final vector */
                 lg_Real_t  dist = sqrt( lgVectorf[0] * lgVectorf[0] + lgVectorf[1] * lgVectorf[1] + lgVectorf[2] * lgVectorf[2]) ;
                 
-                lgVectorf[0] /= dist ; 
-                lgVectorf[1] /= dist ; 
-                lgVectorf[2] /= dist ; 
+                lgVectorf[0] /=  dist ; 
+                lgVectorf[1] /=  dist ; 
+                lgVectorf[2] /=  dist ; 
                 
                 lg_Real_t  r = sqrt( lgVectorf[0] * lgVectorf[0] + lgVectorf[2] * lgVectorf[2]  );
                 
                 /* compute azimuth-elevation */
                 if( r > 0 ) 
                 {
-                  lgAH = LG_ATN ( lgVectorf[2] , lgVectorf[0]  ) ;
-                  lgAV = LG_ASN ( lgVectorf[1] );
+                  lgAH = atan2 ( lgVectorf[0] , lgVectorf[2]  ) ;
+                  lgAV = atan2 ( lgVectorf[1] , r );
                 }
                 else
                 {
@@ -293,12 +293,17 @@
                 }
                 
                 /* Retrieve panoramic pixel coordinates */
-                if( fabs(lgAH-phi) > 1.5 * LG_PI )
-                   lgSX = ( lgPanWidth - 1.0 )  * ( ( lgAH - LG_PI2 - phi) / LG_PI2 ) - lgEqrPosX + lgEqrCenterX ;
+                if( fabs(lgAH + phi) > 1.5 * LG_PI )
+                   lgSX = ( lgPanWidth - 1.0 )  * ( ( lgAH - LG_PI2 + phi) / LG_PI2 ) - lgEqrPosX + lgEqrCenterX ;
                 else
-                   lgSX = ( lgPanWidth - 1.0) * ( (lgAH - phi) / LG_PI2 ) - lgEqrPosX + lgEqrCenterX ;
+                   lgSX = ( lgPanWidth - 1.0) * ( (lgAH + phi) / LG_PI2 ) - lgEqrPosX + lgEqrCenterX ;
+               
                 
-                lgSY = ( lgPanWidth - 1.0 ) * ( ( lgAV -theta)  / LG_PI2 )  - lgEqrPosY + lgEqrCenterY;
+                if( fabs(lgAV + theta) > 1.5 * LG_PI )
+                  lgSY = ( lgPanWidth - 1.0 ) * ( ( lgAV + theta - LG_PI2)  / LG_PI2 )  - lgEqrPosY + lgEqrCenterY;
+                else
+                  lgSY = ( lgPanWidth - 1.0 ) * ( ( lgAV + theta)  / LG_PI2 )  - lgEqrPosY + lgEqrCenterY;
+                
                 
                 /* Verify tile panoramic range */
                 if ( 

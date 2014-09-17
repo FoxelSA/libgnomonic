@@ -295,11 +295,11 @@
 
                 }
                 
-                /* Retrieve panoramic x-pixel coordinates */
-                if(lgAH < lg_Real_s(0.0)  )
-                    lgAH += LG_PI2;
-                    
-                if( fabs(lgAH -lgPhi) > lg_Real_s( 1.5 ) * LG_PI ) {
+                /* Angle domain normalization */
+                if ( lgAH < lg_Real_s( 0.0 ) ) lgAH += LG_PI2;
+                
+                /* Retrieve panoramic x-pixel coordinates */    
+                if ( fabs(lgAH -lgPhi) > lg_Real_s( 1.5 ) * LG_PI ) {
 
                     /* Compute x-coordinates */
                     lgSX = lg_Real_c( lgPanWidth - 1 ) * ( ( lgAH - LG_PI2 - lgPhi) / LG_PI2 ) - lgEqrPosX + lgEqrCenterX ;
@@ -312,7 +312,7 @@
                 }
                 
                 /* Retrieve panoramic y-pixel coordinates */
-                if( fabs(lgAV-lgTheta) > lg_Real_s( 1.5 ) * LG_PI ) {
+                if ( fabs(lgAV-lgTheta) > lg_Real_s( 1.5 ) * LG_PI ) {
 
                     /* Compute y-coordinates */
                     lgSY = lg_Real_c( lgPanWidth - 1 ) * ( ( -lgAV - LG_PI2 + lgTheta) / LG_PI2 ) - lgEqrPosY + lgEqrCenterY ;

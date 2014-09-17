@@ -249,13 +249,13 @@
             for ( lgDX = lg_Size_s( 0 ); lgDX < lgRectWidth; lgDX++ ) {
 
                 /* Normalized planar coordinates */
-                lgPX = ( lgPixSize * ( lg_Real_c( lgDX ) - lgPx0 ) ) / lgFocalLength ;
-                lgPY = ( lgPixSize * ( lg_Real_c( lgDY ) - lgPy0 ) ) / lgFocalLength ;
+                lgPX = ( lgPixSize * ( lg_Real_c( lgDX ) - lgPx0 ) ) ;
+                lgPY = ( lgPixSize * ( lg_Real_c( lgDY ) - lgPy0 ) ) ;
               
                 /* Rebuild position vector - x y z */
-                lgVectori[0] = lgPX ;
-                lgVectori[1] = lgPY ;
-                lgVectori[2] = lg_Real_s( 1.0 );
+                lgVectori[0] =  lgPX ;
+                lgVectori[1] = -lgPY ;
+                lgVectori[2] =  lgFocalLength;
                 
                 /* apply z rotation */
                 lgVectorf[0] = Rz[0][0] * lgVectori[0] + Rz[0][1] * lgVectori[1] + Rz[0][2] * lgVectori[2] ;
@@ -284,8 +284,8 @@
                 if( sqrt( lgVectorf[0] * lgVectorf[0] + lgVectorf[2] * lgVectorf[2]  ) > lg_Real_s( 0.0 ) ) {
 
                     /* Retrieve azimuth and elevation angles */
-                    lgAH = LG_ATN ( lgVectorf[2] , lgVectorf[0]  ) ;
-                    lgAV = LG_ASN ( lgVectorf[1] );
+                    lgAH = atan2 ( lgVectorf[0] , lgVectorf[2]  ) ;
+                    lgAV = atan2 ( lgVectorf[1] , sqrt( lgVectorf[0] * lgVectorf[0] + lgVectorf[2] * lgVectorf[2] ) );
 
                 } else {
 
@@ -296,7 +296,10 @@
                 }
                 
                 /* Retrieve panoramic x-pixel coordinates */
-                if( fabs(lgAH-lgPhi) > lg_Real_s( 1.5 ) * LG_PI ) {
+                if(lgAH < lg_Real_s(0.0)  )
+                    lgAH += LG_PI2;
+                    
+                if( fabs(lgAH -lgPhi) > lg_Real_s( 1.5 ) * LG_PI ) {
 
                     /* Compute x-coordinates */
                     lgSX = lg_Real_c( lgPanWidth - 1 ) * ( ( lgAH - LG_PI2 - lgPhi) / LG_PI2 ) - lgEqrPosX + lgEqrCenterX ;
@@ -309,7 +312,17 @@
                 }
                 
                 /* Retrieve panoramic y-pixel coordinates */
-                lgSY = ( lgPanWidth - 1.0 ) * ( ( lgAV -lgTheta)  / LG_PI2 )  - lgEqrPosY + lgEqrCenterY;
+                if( fabs(lgAV-lgTheta) > lg_Real_s( 1.5 ) * LG_PI ) {
+
+                    /* Compute y-coordinates */
+                    lgSY = lg_Real_c( lgPanWidth - 1 ) * ( ( -lgAV - LG_PI2 + lgTheta) / LG_PI2 ) - lgEqrPosY + lgEqrCenterY ;
+
+                } else {
+
+                    /* Compute y-coordinates */
+                    lgSY = lg_Real_c( lgPanWidth - 1 ) * ( ( -lgAV + lgTheta ) / LG_PI2 ) - lgEqrPosY + lgEqrCenterY ;
+
+                }
                 
                 /* Verify tile panoramic range */
                 if ( 

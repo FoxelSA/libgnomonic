@@ -296,7 +296,7 @@
                 }
                 
                 /* Retrieve panoramic x-pixel coordinates */
-                if(lgAH < 0.0)
+                if(lgAH < lg_Real_s(0.0)  )
                     lgAH += LG_PI2;
                     
                 if( fabs(lgAH -lgPhi) > lg_Real_s( 1.5 ) * LG_PI ) {

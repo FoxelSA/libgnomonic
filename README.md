@@ -6,8 +6,7 @@ This library is made to perform gnomonic projections from a entire equirectangul
 
 ### Documentation
 
-Find more documentation on the [wiki](https://github.com/FoxelSA/libgnomonic/wiki).
-
+A detailed documentation can be generated through doxygen. A more general documentation can be consulted on the [wiki](https://github.com/FoxelSA/libgnomonic/wiki).
 
 ### Copyright
 

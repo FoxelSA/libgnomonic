@@ -54,8 +54,8 @@
      *
      *  \section Documentation
      *
-     *  More documentation can be found on the wiki provided on the project github
-     *  repository (https://github.com/FoxelSA/libgnomonic/wiki).
+     *  A detailed documentation can be generated through doxygen. A more general documentation 
+     *  can be consulted at https://github.com/FoxelSA/libgnomonic/wiki.
      *
      *  \section Copyright
      * 

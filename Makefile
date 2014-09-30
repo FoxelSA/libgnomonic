@@ -71,6 +71,8 @@ endif
 #
 
     all:directories libraries $(MAKE_NAME)
+    build:directories $(MAKE_NAME)
+    modules:libraries
 
 #
 #   make - Build - Binaries

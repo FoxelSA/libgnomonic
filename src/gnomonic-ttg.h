@@ -135,66 +135,68 @@
     /*! \brief Equirectangular tile to rectilinear fixed focal gnomonic projection
      * 
      *  This function performs a gnomonic reprojection of an equirectangular tile extracted
-     *  from an entire equirectangular mapping. The obtained rectilinear can have an arbitrary
-     *  size taking into account that scaling of pixel are computed through focal and pixel
-     *  size. 
+     *  from an entire equirectangular mapping. The obtained rectilinear image can have an
+     *  arbitrary size taking into account that scaling of pixels is set through focal length
+     *  and pixel length, assumed to be identical in both direction.
      *  
-     *  The input equirectangular tile has to be at least a three chromatic layer image and
+     *  The input equirectangular tile has to be at least a three chromatic layers image and
      *  the output rectilinear image has to be already allocated according to its parameters
-     *  and has to come with at least three chromatic layers.
+     *  and has to come with at least three chromatic layers. The bitmaps are standard bitmaps
+     *  that consider byte padding in memory.
      *
      *  In order to perform the desired projection, the following 3d-frame is attached to the
      *  entire equirectangular mapping from which the tile is extracted : the x-axis points
      *  the left edge of the mapping at half height. The y-axis points at third fourth of the
-     *  mapping width and half of its height. The z-axis is obtained using a cross-product.
+     *  mapping width and at half of its height. The z-axis is obtained using a cross-product,
+     *  inducing a direct frame.
      *
-     *  The rectilinear image has it center attached to the x-axis and the image plane is
-     *  orthogonal to the same x-axis. The rotation matrix is built as follow : 
+     *  The rectilinear image has its center attached to the x-axis and the image plane is
+     *  orthogonal to this same x-axis. The rotation matrix is built as follows : 
      * 
      *      M = Rz(Azimut)Ry(Elevation)Rx(Roll)
      *
      *  and corresponds to the rotation that brings the rectilinear image pixels on the
      *  equirectangular mapping.
      *
-     *  \param lgEqrIn Pointer to equirectangular tile bitmap
-     *  \param lgEqrWidth Width, in pixels, of the equirectangular tile bitmap eqr_img
-     *  \param lgEqrHeight Height, in pixels, of the equirectangular tile bitmap eqr_img
-     *  \param lgEqrLayer Depth, in chromatic layer count, of the equirectangular tile bitmap eqr_img
-     *  \param lgRectOut Pointer to gnomonic bitmap
-     *  \param lgRectWidth Width, in pixels, of the gnomonic bitmap rct_img
-     *  \param lgRectHeight Height, in pixels, of the gnomonic bitmap rct_img
-     *  \param lgRectLayer Depth, in chromatic layer count, of the gnomonic bitmap rct_img
-     *  \param lgPanWidth Width, in pixels, of the entire equirectangular mapping
-     *  \param lgPanHeight Height, in pixels, of the entire equirectangular mapping
+     *  \param lgEQRBitmap Pointer to equirectangular tile bitmap
+     *  \param lgEQRWidth Width, in pixels, of the equirectangular tile bitmap
+     *  \param lgEQRHeight Height, in pixels, of the equirectangular tile bitmap
+     *  \param lgEQRLayer Depth, in chromatic layer count, of the equirectangular tile bitmap
+     *  \param lgRECBitmap Pointer to rectilinear bitmap that recieve the gnomonic projection
+     *  \param lgRECWidth Width, in pixels, of the rectilinear bitmap
+     *  \param lgRECHeight Height, in pixels, of the rectilinear bitmap
+     *  \param lgRECLayer Depth, in chromatic layer count, of the rectilinear bitmap
+     *  \param lgEQRMapWidth Width, in pixels, of the entire equirectangular mapping
+     *  \param lgEQRMapHeight Height, in pixels, of the entire equirectangular mapping
+     *  \param lgEQRTopLeftX Position x, in pixels, of the equirectangular tile top-left corner in the entire mapping
+     *  \param lgEQRTopLeftY Position y, in pixels, of the equirectangular tile top-left corner in the entire mapping
      *  \param lgAzimut Azimut angle, in radians
-     *  \param lgElevation Elevation angle, in radians
+     *  \param lgElevat Elevation angle, in radians
      *  \param lgRoll Roll angle, in radians
-     *  \param lgEqrPosX Position x, in pixels, of the tile top-left in the entire equirectangular mapping
-     *  \param lgEqrPosY Position y, in pixels, of the tile top-left in the entire equirectangular mapping
-     *  \param lgFocal Focal, in mm, of the rectilinear image
-     *  \param lgPixelSize Size, in mm, of the pixel size on the camera sensor for rectilinear image
+     *  \param lgFocalLength Focal length, in mm, of the rectilinear image
+     *  \param lgPixelLength Length, in mm, of the pixels on the rectilinear image virtual camera
      *  \param lgInter Pointer to interpolation method function
      */
 
     lg_Void_t lg_ttg_ff(
 
-        li_C8_t *   lgEqrIn,
-        lg_Size_t   lgEqrWidth,
-        lg_Size_t   lgEqrHeight,
-        lg_Size_t   lgEqrLayer,
-        li_C8_t *   lgRectOut,
-        lg_Size_t   lgRectWidth,
-        lg_Size_t   lgRectHeight,
-        lg_Size_t   lgRectLayer,
-        lg_Size_t   lgPanWidth,
-        lg_Size_t   lgPanHeight,
+        li_C8_t *   lgEQRBitmap,
+        lg_Size_t   lgEQRWidth,
+        lg_Size_t   lgEQRHeight,
+        lg_Size_t   lgEQRLayer,
+        li_C8_t *   lgRECBitmap,
+        lg_Size_t   lgRECWidth,
+        lg_Size_t   lgRECHeight,
+        lg_Size_t   lgRECLayer,
+        lg_Size_t   lgEQRMapWidth,
+        lg_Size_t   lgEQRMapHeight,
+        lg_Size_t   lgEQRTopLeftX,
+        lg_Size_t   lgEQRTopLeftY,
         lg_Real_t   lgAzimut,
-        lg_Real_t   lgElevation,
+        lg_Real_t   lgElevat,
         lg_Real_t   lgRoll,
-        lg_Size_t   lgEqrPosX,
-        lg_Size_t   lgEqrPosY,
-        lg_Real_t   lgFocal,
-        lg_Real_t   lgPixelSize,
+        lg_Real_t   lgFocalLength,
+        lg_Real_t   lgPixelLength,
         li_Method_t lgInter
 
     );

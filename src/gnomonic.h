@@ -129,6 +129,7 @@
     /* Define mathematical function */
     # define LG_ATN(x,y)        ( ( ( x ) >= 0 ) ? ( ( ( y ) >= 0 ) ? atan( ( y ) / ( x ) ) : LG_PI2 + atan( ( y ) / ( x ) ) ) : LG_PI + atan( ( y ) / ( x ) ) )
     # define LG_ASN(x)          ( asin( x ) )
+    # define LG_EUCLR3(v)       ( sqrt( v[0] * v[0] + v[1] * v[1] + v[2] * v[2] ) )
 
     /* Define bitmap padding computation macro */
     # define LG_B4PAD( l )      ( ( ( l ) % lg_Size_s( 4 ) ) != lg_Size_s( 0 ) ? ( l + lg_Size_s( 4 ) - ( ( l ) % lg_Size_s( 4 ) ) ) : ( l ) )

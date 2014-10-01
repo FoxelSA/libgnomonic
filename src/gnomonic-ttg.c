@@ -183,8 +183,7 @@
         lg_Real_t   lgRoll,
         lg_Size_t   lgEqrPosX,
         lg_Size_t   lgEqrPosY,
-        lg_Real_t   lgPhysicalFocal,
-        lg_Real_t   lgVirtualFocal,
+        lg_Real_t   lgFocal,
         lg_Real_t   lgPixelSize,
         li_Method_t lgInter
 
@@ -211,9 +210,6 @@
         /* Optimization variables */
         lg_Size_t lgShiftedEqrWidth  = lgEqrWidth  - lg_Size_s( 1 );
         lg_Size_t lgShiftedEqrHeight = lgEqrHeight - lg_Size_s( 1 );
-
-        /* Optimization variables */
-        lg_Real_t lgFocalFactor = ( lgPhysicalFocal / lgVirtualFocal ) * lgPixelSize;
 
         /* Position vector variables */
         lg_Real_t lgVectori[3] = { lg_Real_s( 0.0 ) };
@@ -243,9 +239,9 @@
             for ( lgDX = lg_Size_s( 0 ); lgDX < lgRectWidth; lgDX++ ) {
 
                 /* Compute virtual sensor pixel position in 3D-frame */
-                lgVectori[0] = lgVirtualFocal;
-                lgVectori[1] = lgFocalFactor * ( lg_Real_c( lgDX ) - lgHalfRectWidth  );
-                lgVectori[2] = lgFocalFactor * ( lg_Real_c( lgDY ) - lgHalfRectHeight );
+                lgVectori[0] = lgFocal;
+                lgVectori[1] = lgPixelSize * ( lg_Real_c( lgDX ) - lgHalfRectWidth  );
+                lgVectori[2] = lgPixelSize * ( lg_Real_c( lgDY ) - lgHalfRectHeight );
 
                 /* Compute rotated vector based on rotation matrix */
                 lgVectorf[0] = lgMatrix[0][0] * lgVectori[0] + lgMatrix[0][1] * lgVectori[1] + lgMatrix[0][2] * lgVectori[2];

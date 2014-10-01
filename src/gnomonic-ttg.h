@@ -171,9 +171,8 @@
      *  \param lgRoll Roll angle, in radians
      *  \param lgEqrPosX Position x, in pixels, of the tile top-left in the entire equirectangular mapping
      *  \param lgEqrPosY Position y, in pixels, of the tile top-left in the entire equirectangular mapping
-     *  \param lgPhysicalFocal Physical focal of the image
-     *  \param lgVirtualFocal Virtual focal of the image
-     *  \param lgPixelSize Size, in mm, of the pixel size on the camera sensor
+     *  \param lgFocal Focal, in mm, of the rectilinear image
+     *  \param lgPixelSize Size, in mm, of the pixel size on the camera sensor for rectilinear image
      *  \param lgInter Pointer to interpolation method function
      */
 
@@ -194,8 +193,7 @@
         lg_Real_t   lgRoll,
         lg_Size_t   lgEqrPosX,
         lg_Size_t   lgEqrPosY,
-        lg_Real_t   lgPhysicalFocal,
-        lg_Real_t   lgVirtualFocal,
+        lg_Real_t   lgFocal,
         lg_Real_t   lgPixelSize,
         li_Method_t lgInter
 

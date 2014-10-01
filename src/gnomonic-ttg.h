@@ -132,6 +132,34 @@
 
     );
 
+    /*! \brief Equirectangular tile to rectilinear fixed focal gnomonic projection
+     * 
+     *  More to come ...
+     */
+
+    lg_Void_t lg_ttg_ff(
+
+        li_C8_t *   lgEqrIn,
+        lg_Size_t   lgEqrWidth,
+        lg_Size_t   lgEqrHeight,
+        lg_Size_t   lgEqrLayer,
+        li_C8_t *   lgRectOut,
+        lg_Size_t   lgRectWidth,
+        lg_Size_t   lgRectHeight,
+        lg_Size_t   lgRectLayer,
+        lg_Size_t   lgPanWidth,
+        lg_Size_t   lgPanHeight,
+        lg_Real_t   lgAzimut,
+        lg_Real_t   lgElevation,
+        lg_Real_t   lgRoll,
+        lg_Size_t   lgEqrPosX,
+        lg_Size_t   lgEqrPosY,
+        lg_Real_t   lgPhysicalFocal,
+        lg_Real_t   lgVirtualFocal,
+        lg_Real_t   lgPixelSize,
+        li_Method_t lgInter
+
+    );
 
     /*! \brief Equirectangular tile to uncentered rectilinear using elphel data
      *  

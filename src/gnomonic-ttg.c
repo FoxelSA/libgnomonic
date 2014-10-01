@@ -48,7 +48,7 @@
     # include "gnomonic-ttg.h"
 
 /*
-    Source - Gnomonic projection from tile of equirectangular panoramic image
+    Source - Equirectangular tile to rectilinear gnomonic projection
  */
 
     lg_Void_t lg_ttg(
@@ -141,6 +141,126 @@
                     ( lgSY < ( lgEqrHeight - lg_Size_s( 1 ) ) )
 
                 ) {
+
+                    /* Interpolation process */
+                    LG_B4( lgRectOut, lgRectPad, lgRectLayer, lgDX, lgDY, lg_Size_s( 0 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, 0, lgSX, lgSY );
+                    LG_B4( lgRectOut, lgRectPad, lgRectLayer, lgDX, lgDY, lg_Size_s( 1 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, 1, lgSX, lgSY );
+                    LG_B4( lgRectOut, lgRectPad, lgRectLayer, lgDX, lgDY, lg_Size_s( 2 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, 2, lgSX, lgSY );
+
+                } else {
+
+                    /* Assign black pixel */
+                    LG_B4( lgRectOut, lgRectPad, lgRectLayer, lgDX, lgDY, lg_Size_s( 0 ) ) = li_C8_s( 0 );
+                    LG_B4( lgRectOut, lgRectPad, lgRectLayer, lgDX, lgDY, lg_Size_s( 1 ) ) = li_C8_s( 0 );
+                    LG_B4( lgRectOut, lgRectPad, lgRectLayer, lgDX, lgDY, lg_Size_s( 2 ) ) = li_C8_s( 0 );
+
+                }
+
+            }
+
+        }
+
+    }
+
+/*
+    Source - Focal fixed gnomonic projection from tile of equirectangular panoramic image
+ */
+
+    lg_Void_t lg_ttg_ff(
+
+        li_C8_t *   lgEqrIn,
+        lg_Size_t   lgEqrWidth,
+        lg_Size_t   lgEqrHeight,
+        lg_Size_t   lgEqrLayer,
+        li_C8_t *   lgRectOut,
+        lg_Size_t   lgRectWidth,
+        lg_Size_t   lgRectHeight,
+        lg_Size_t   lgRectLayer,
+        lg_Size_t   lgPanWidth,
+        lg_Size_t   lgPanHeight,
+        lg_Real_t   lgAzimut,
+        lg_Real_t   lgElevation,
+        lg_Real_t   lgRoll,
+        lg_Size_t   lgEqrPosX,
+        lg_Size_t   lgEqrPosY,
+        lg_Real_t   lgPhysicalFocal,
+        lg_Real_t   lgVirtualFocal,
+        lg_Real_t   lgPixelSize,
+        li_Method_t lgInter
+
+    ) {
+
+        /* Parsing variables */
+        lg_Size_t lgDX = lg_Size_s( 0 );
+        lg_Size_t lgDY = lg_Size_s( 0 );
+
+        /* Projection variables */
+        lg_Real_t lgSX = lg_Real_s( 0.0 );
+        lg_Real_t lgSY = lg_Real_s( 0.0 );
+
+        /* Vector norm variables */
+        lg_Real_t lsNorm = lg_Real_s( 0.0 );
+
+        /* Bitmap padding variable */
+        lg_Size_t lgRectPad = LG_B4PAD( lgRectWidth * lgRectLayer );
+
+        /* Optimization variables */
+        lg_Real_t lgHalfRectWidth  = lg_Real_c( lgRectWidth  ) / lg_Real_s( 2.0 );
+        lg_Real_t lgHalfRectHeight = lg_Real_c( lgRectHeight ) / lg_Real_s( 2.0 );
+
+        /* Optimization variables */
+        lg_Size_t lgShiftedEqrWidth  = lgEqrWidth  - lg_Size_s( 1 );
+        lg_Size_t lgShiftedEqrHeight = lgEqrHeight - lg_Size_s( 1 );
+
+        /* Optimization variables */
+        lg_Real_t lgFocalFactor = ( lgPhysicalFocal / lgVirtualFocal ) * lgPixelSize;
+
+        /* Position vector variables */
+        lg_Real_t lgVectori[3] = { lg_Real_s( 0.0 ) };
+        lg_Real_t lgVectorf[3] = { lg_Real_s( 0.0 ) };
+
+        /* Angle trigonometric variables */
+        lg_Real_t lgCosAz = cos( + lgAzimut    );
+        lg_Real_t lgSinAz = sin( + lgAzimut    );
+        lg_Real_t lgCosEl = cos( + lgElevation );
+        lg_Real_t lgSinEl = sin( + lgElevation );
+        lg_Real_t lgCosRl = cos( + lgRoll      );
+        lg_Real_t lgSinRl = sin( + lgRoll      );
+
+        /* Rotation matrix variables - M = Rz(Azimut)Ry(Elevation)Rx(Roll) */
+        lg_Real_t lgMatrix[3][3] = {
+
+            { + lgCosAz * lgCosEl, + lgCosAz * lgSinEl * lgSinRl - lgSinAz * lgCosRl, + lgCosAz * lgSinEl * lgCosRl + lgSinAz * lgSinRl },
+            { + lgSinAz * lgCosEl, + lgSinAz * lgSinEl * lgSinRl + lgCosAz * lgCosRl, + lgSinAz * lgSinEl * lgCosRl - lgCosAz * lgSinRl },
+            { - lgSinEl          , + lgCosEl * lgSinRl                              , + lgCosEl * lgCosRl                               },
+
+        };
+
+        /* Planar projection referential y-loop */
+        for ( lgDY = lg_Size_s( 0 ); lgDY < lgRectHeight; lgDY++ ) {
+
+            /* Planar projection referential x-loop */
+            for ( lgDX = lg_Size_s( 0 ); lgDX < lgRectWidth; lgDX++ ) {
+
+                /* Compute virtual sensor pixel position in 3D-frame */
+                lgVectori[0] = lgVirtualFocal;
+                lgVectori[1] = lgFocalFactor * ( lg_Real_c( lgDX ) - lgHalfRectWidth  );
+                lgVectori[2] = lgFocalFactor * ( lg_Real_c( lgDY ) - lgHalfRectHeight );
+
+                /* Compute rotated vector based on rotation matrix */
+                lgVectorf[0] = lgMatrix[0][0] * lgVectori[0] + lgMatrix[0][1] * lgVectori[1] + lgMatrix[0][2] * lgVectori[2];
+                lgVectorf[1] = lgMatrix[1][0] * lgVectori[0] + lgMatrix[1][1] * lgVectori[1] + lgMatrix[1][2] * lgVectori[2];
+                lgVectorf[2] = lgMatrix[2][0] * lgVectori[0] + lgMatrix[2][1] * lgVectori[1] + lgMatrix[2][2] * lgVectori[2];
+
+                /* Compute rotated vector norm */
+                lsNorm = sqrt( lgVectorf[0] * lgVectorf[0] + lgVectorf[1] * lgVectorf[1] + lgVectorf[2] * lgVectorf[2] );
+
+                /* Retrieve panoramic pixel x,y-coordinates */
+                lgSX = - lgEqrPosX + ( lgPanWidth  - lg_Size_s( 1 ) ) * ( LG_ATN( lgVectorf[0] / lsNorm , lgVectorf[1] / lsNorm ) / LG_PI2 ) ;
+                lgSY = - lgEqrPosY + ( lgPanHeight - lg_Size_s( 1 ) ) * ( LG_ASN( lgVectorf[2] / lsNorm ) / LG_PI + lg_Real_s( 0.5 ) );
+
+                /* Verify panoramic x,y-coordinates range */
+                if ( ( lgSX > lg_Size_s( 0 ) ) && ( lgSY > lg_Size_s( 0 ) ) && ( lgSX < lgShiftedEqrWidth ) && ( lgSY < lgShiftedEqrHeight ) ) {
 
                     /* Interpolation process */
                     LG_B4( lgRectOut, lgRectPad, lgRectLayer, lgDX, lgDY, lg_Size_s( 0 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, 0, lgSX, lgSY );
@@ -299,7 +419,7 @@
                 if ( lgAH < lg_Real_s( 0.0 ) ) lgAH += LG_PI2;
                 
                 /* Retrieve panoramic x-pixel coordinates */    
-                if ( fabs(lgAH -lgPhi) > lg_Real_s( 1.5 ) * LG_PI ) {
+                if ( fabs(lgAH - lgPhi) > lg_Real_s( 1.5 ) * LG_PI ) {
 
                     /* Compute x-coordinates */
                     lgSX = lg_Real_c( lgPanWidth - 1 ) * ( ( lgAH - LG_PI2 - lgPhi) / LG_PI2 ) - lgEqrPosX + lgEqrCenterX ;
@@ -312,7 +432,7 @@
                 }
                 
                 /* Retrieve panoramic y-pixel coordinates */
-                if ( fabs(lgAV-lgTheta) > lg_Real_s( 1.5 ) * LG_PI ) {
+                if ( fabs(lgAV - lgTheta) > lg_Real_s( 1.5 ) * LG_PI ) {
 
                     /* Compute y-coordinates */
                     lgSY = lg_Real_c( lgPanWidth - 1 ) * ( ( -lgAV - LG_PI2 + lgTheta) / LG_PI2 ) - lgEqrPosY + lgEqrCenterY ;

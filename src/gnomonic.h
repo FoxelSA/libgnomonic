@@ -104,6 +104,7 @@
     /* Define mathematical constants */
     # define LG_PI              lg_Real_s( 3.14159265358979323846264338327950 )
     # define LG_PI2             lg_Real_s( 6.28318530717958647692528676655901 )
+    # define LG_DEG2RAD         ( LG_PI / lg_Real_s( 180.0 ) )
 
 /*
     Header - Preprocessor macros
@@ -126,8 +127,11 @@
     # define lg_Real_i          "lf"
 
     /* Define mathematical function */
-    # define LG_ATN(x,y)        ( ( x >= 0 ) ? ( ( y >= 0 ) ? atan( y / x ) : LG_PI2 + atan( y / x ) ) : LG_PI + atan( y / x ) )
+    # define LG_ATN(x,y)        ( ( ( x ) >= 0 ) ? ( ( ( y ) >= 0 ) ? atan( ( y ) / ( x ) ) : LG_PI2 + atan( ( y ) / ( x ) ) ) : LG_PI + atan( ( y ) / ( x ) ) )
     # define LG_ASN(x)          ( asin( x ) )
+
+    /* Define bitmap padding computation macro */
+    # define LG_B4PAD( l )      ( ( ( l ) % lg_Size_s( 4 ) ) != lg_Size_s( 0 ) ? ( l + lg_Size_s( 4 ) - ( ( l ) % lg_Size_s( 4 ) ) ) : ( l ) )
 
     /* Define bitmap element accessing macro */
     # define LG_B4(b,p,l,x,y,c) ( * ( b + p * y + l * x + c ) )

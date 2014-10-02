@@ -166,7 +166,7 @@
     Source - Focal fixed gnomonic projection from tile of equirectangular panoramic image
  */
 
-    lg_Void_t lg_ttg_ff(
+    lg_Void_t lg_ttg_focal(
 
         li_C8_t *   lgEQRBitmap,
         lg_Size_t   lgEQRWidth,

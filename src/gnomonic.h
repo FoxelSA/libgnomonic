@@ -116,7 +116,7 @@
 
     /* Define litteral suffix */
     # define lg_Size_s( x )     INT64_C( x )
-    # define lg_Real_s( x )     ( x ## f )
+    # define lg_Real_s( x )     ( x )
 
     /* Define formated output specifiers */
     # define lg_Size_p          PRId64

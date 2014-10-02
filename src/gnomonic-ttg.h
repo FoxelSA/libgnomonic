@@ -178,7 +178,7 @@
      *  \param lgInter Pointer to interpolation method function
      */
 
-    lg_Void_t lg_ttg_ff(
+    lg_Void_t lg_ttg_focal(
 
         li_C8_t *   lgEQRBitmap,
         lg_Size_t   lgEQRWidth,

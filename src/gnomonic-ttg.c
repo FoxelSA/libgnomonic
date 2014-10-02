@@ -247,6 +247,9 @@
                 lgSX = - lgEQRTopLeftX + ( lgEQRMapWidth  - lg_Size_s( 1 ) ) * ( LG_ATN( lgVectorf[0], lgVectorf[1] ) / LG_PI2 ) ;
                 lgSY = - lgEQRTopLeftY + ( lgEQRMapHeight - lg_Size_s( 1 ) ) * ( LG_ASN( lgVectorf[2] / LG_EUCLR3( lgVectorf ) ) / LG_PI + lg_Real_s( 0.5 ) );
 
+                /* Correction of boundary tiles */
+                lgSX = ( lgSX < lg_Size_s( 0 ) ) ? lgSX + lgEQRMapWidth : lgSX;
+
                 /* Verify panoramic x,y-coordinates range */
                 if ( ( lgSX > lg_Size_s( 0 ) ) && ( lgSY > lg_Size_s( 0 ) ) && ( lgSX < lgEQRWidthEdge ) && ( lgSY < lgEQRHeightEdge ) ) {
 

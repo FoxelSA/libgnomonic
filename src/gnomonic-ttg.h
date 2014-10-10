@@ -10,10 +10,10 @@
  *      Nils Hamel <n.hamel@foxel.ch>
  *
  * Contributor(s) :
- * 
+ *
  *     Stephane Flotron <s.flotron@foxel.ch>
  *
- * 
+ *
  * This file is part of the FOXEL project <http://foxel.ch>.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -89,12 +89,12 @@
  */
 
     /*! \brief Equirectangular tile to rectilinear gnomonic projection
-     *  
+     *
      *  This function performs an gnomonic projection considering a tile of an entire
      *  equirectangular panorama using the desired interpolation method. The results
      *  are drawn in the lgRectOut bitmap. The lgRectOut has to be already allocated
      *  according to its parameters.
-     *  
+     *
      *  \param lgEqrIn Pointer to equirectangular tile bitmap
      *  \param lgEqrWidth Width, in pixels, of the equirectangular tile bitmap eqr_img
      *  \param lgEqrHeight Height, in pixels, of the equirectangular tile bitmap eqr_img
@@ -134,12 +134,12 @@
 
 
     /*! \brief Equirectangular tile to uncentered rectilinear using elphel data
-     *  
+     *
      *  This function performs an gnomonic projection considering a tile of an entire
      *  equirectangular panorama using the desired interpolation method. The results
      *  are drawn in the lgRectOut bitmap. The lgRectOut has to be already allocated
      *  according to its parameters.
-     *  
+     *
      *  \param lgEqrIn Pointer to equirectangular tile bitmap
      *  \param lgEqrWidth Width, in pixels, of the equirectangular tile bitmap eqr_img
      *  \param lgEqrHeight Height, in pixels, of the equirectangular tile bitmap eqr_img
@@ -181,8 +181,6 @@
         lg_Size_t   lgPanHeight,
         lg_Size_t   lgEqrPosX,
         lg_Size_t   lgEqrPosY,
-        lg_Real_t   lgEqrCenterX,
-        lg_Real_t   lgEqrCenterY,
         lg_Real_t   lgRoll,
         lg_Real_t   lgAzi,
         lg_Real_t   lgEle,
@@ -192,8 +190,8 @@
         li_Method_t lgInter
 
     );
-    
-    
+
+
 /*
     Header - C/C++ compatibility
  */
@@ -207,4 +205,3 @@
  */
 
     # endif
-

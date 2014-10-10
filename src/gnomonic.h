@@ -54,8 +54,8 @@
      *
      *  \section Documentation
      *
-     *  More documentation can be found on the wiki provided on the project github
-     *  repository (https://github.com/FoxelSA/libgnomonic/wiki).
+     *  A detailed documentation can be generated through doxygen. A more general documentation 
+     *  can be consulted at https://github.com/FoxelSA/libgnomonic/wiki.
      *
      *  \section Copyright
      * 
@@ -104,6 +104,7 @@
     /* Define mathematical constants */
     # define LG_PI              lg_Real_s( 3.14159265358979323846264338327950 )
     # define LG_PI2             lg_Real_s( 6.28318530717958647692528676655901 )
+    # define LG_DEG2RAD         ( LG_PI / lg_Real_s( 180.0 ) )
 
 /*
     Header - Preprocessor macros
@@ -115,7 +116,7 @@
 
     /* Define litteral suffix */
     # define lg_Size_s( x )     INT64_C( x )
-    # define lg_Real_s( x )     ( x ## f )
+    # define lg_Real_s( x )     ( x )
 
     /* Define formated output specifiers */
     # define lg_Size_p          PRId64
@@ -126,8 +127,12 @@
     # define lg_Real_i          "lf"
 
     /* Define mathematical function */
-    # define LG_ATN(x,y)        ( ( x >= 0 ) ? ( ( y >= 0 ) ? atan( y / x ) : LG_PI2 + atan( y / x ) ) : LG_PI + atan( y / x ) )
+    # define LG_ATN(x,y)        ( ( ( x ) >= 0 ) ? ( ( ( y ) >= 0 ) ? atan( ( y ) / ( x ) ) : LG_PI2 + atan( ( y ) / ( x ) ) ) : LG_PI + atan( ( y ) / ( x ) ) )
     # define LG_ASN(x)          ( asin( x ) )
+    # define LG_EUCLR3(v)       ( sqrt( v[0] * v[0] + v[1] * v[1] + v[2] * v[2] ) )
+
+    /* Define bitmap padding computation macro */
+    # define LG_B4PAD( l )      ( ( ( l ) % lg_Size_s( 4 ) ) != lg_Size_s( 0 ) ? ( l + lg_Size_s( 4 ) - ( ( l ) % lg_Size_s( 4 ) ) ) : ( l ) )
 
     /* Define bitmap element accessing macro */
     # define LG_B4(b,p,l,x,y,c) ( * ( b + p * y + l * x + c ) )

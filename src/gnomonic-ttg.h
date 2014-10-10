@@ -10,10 +10,10 @@
  *      Nils Hamel <n.hamel@foxel.ch>
  *
  * Contributor(s) :
- *
+ * 
  *     Stephane Flotron <s.flotron@foxel.ch>
  *
- *
+ * 
  * This file is part of the FOXEL project <http://foxel.ch>.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -89,7 +89,7 @@
  */
 
     /*! \brief Equirectangular tile to rectilinear gnomonic projection
-     *
+     *  
      *  This function performs an gnomonic projection considering a tile of an entire
      *  equirectangular panorama using the desired interpolation method. The results
      *  are drawn in the lgRectOut bitmap. The lgRectOut has to be already allocated
@@ -202,7 +202,7 @@
     );
 
     /*! \brief Equirectangular tile to uncentered rectilinear using elphel data
-     *
+     *  
      *  This function performs an gnomonic projection considering a tile of an entire
      *  equirectangular panorama using the desired interpolation method. The results
      *  are drawn in the lgRectOut bitmap. The lgRectOut has to be already allocated
@@ -258,8 +258,8 @@
         li_Method_t lgInter
 
     );
-
-
+   
+   
 /*
     Header - C/C++ compatibility
  */

@@ -11,8 +11,8 @@
  *
  * Contributor(s) :
  *
- *     Stephane Flotron <s.flotron@foxel.ch>
- * 
+ *    Stephane Flotron <s.flotron@foxel.ch>
+ *
  *
  * This file is part of the FOXEL project <http://foxel.ch>.
  *
@@ -327,21 +327,21 @@
         lg_Real_t Rz[3][3] = { {1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0} };
         
         /* Rx rotation matrix */
-        Rx[1][1] = + cos( lgTheta );
+        Rx[1][1] = + cos( lgTheta ); 
         Rx[1][2] = + sin( lgTheta );
         Rx[2][1] = - Rx[1][2];
         Rx[2][2] = + Rx[1][1];
         
         /* Ry rotation matrix */
         Ry[0][0] = + cos( lgPhi );
-        Ry[0][2] = + sin( lgPhi );
+        Ry[0][2] = + sin( lgPhi ); 
         Ry[2][0] = - Ry[0][2];
         Ry[2][2] = + Ry[0][0];
         
         /* Rz rotation matrix */
         Rz[0][0] = + cos( lgPsi );
         Rz[0][1] = + sin( lgPsi );
-        Rz[1][0] = - Rz[0][1];
+        Rz[1][0] = - Rz[0][1]; 
         Rz[1][1] = + Rz[0][0];
 
         /* Position vector */
@@ -360,7 +360,7 @@
                 /* Normalized planar coordinates */
                 lgPX = ( lgPixSize * ( lg_Real_c( lgDX ) - lgPx0 ) ) ;
                 lgPY = ( lgPixSize * ( lg_Real_c( lgDY ) - lgPy0 ) ) ;
-                
+              
                 /* Rebuild position vector - x y z */
                 lgVectori[0] =  lgPX ;
                 lgVectori[1] = -lgPY ;
@@ -385,13 +385,13 @@
                 lgNorm = sqrt( lgVectorf[0] * lgVectorf[0] + lgVectorf[1] * lgVectorf[1] + lgVectorf[2] * lgVectorf[2]) ;
                 
                 /* Normalize final vector */
-                lgVectorf[0] /= lgNorm;
-                lgVectorf[1] /= lgNorm;
-                lgVectorf[2] /= lgNorm;
+                lgVectorf[0] /= lgNorm; 
+                lgVectorf[1] /= lgNorm; 
+                lgVectorf[2] /= lgNorm; 
                 
                 /* Compute azimuth-elevation */
                 if( sqrt( lgVectorf[0] * lgVectorf[0] + lgVectorf[2] * lgVectorf[2]  ) > lg_Real_s( 0.0 ) ) {
- 
+
                     /* Retrieve azimuth and elevation angles */
                     lgAH = atan2 ( lgVectorf[0] , lgVectorf[2]  ) ;
                     lgAV = atan2 ( lgVectorf[1] , sqrt( lgVectorf[0] * lgVectorf[0] + lgVectorf[2] * lgVectorf[2] ) );
@@ -442,4 +442,4 @@
         }
 
     }
- 
+   

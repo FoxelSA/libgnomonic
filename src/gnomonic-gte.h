@@ -114,19 +114,19 @@
 
     lg_Void_t lg_gte(
 
-        li_C8_t *   lgEqrIO,
-        lg_Size_t   lgEqrWidth,
-        lg_Size_t   lgEqrHeight,
-        lg_Size_t   lgEqrLayer,
-        li_C8_t *   lgRectIn,
-        lg_Size_t   lgRectWidth,
-        lg_Size_t   lgRectHeight,
-        lg_Size_t   lgRectLayer,
-        lg_Real_t   lgNadH,
-        lg_Real_t   lgNadV,
-        lg_Real_t   lgAppH,
-        lg_Real_t   lgAppV,
-        li_Method_t lgInter
+        li_C8_t           * const lgEqrIO,
+        lg_Size_t   const         lgEqrWidth,
+        lg_Size_t   const         lgEqrHeight,
+        lg_Size_t   const         lgEqrLayer,
+        li_C8_t     const * const lgRectIn,
+        lg_Size_t   const         lgRectWidth,
+        lg_Size_t   const         lgRectHeight,
+        lg_Size_t   const         lgRectLayer,
+        lg_Real_t   const         lgNadH,
+        lg_Real_t   const         lgNadV,
+        lg_Real_t   const         lgAppH,
+        lg_Real_t   const         lgAppV,
+        li_Method_t const         lgInter
 
     );
 
@@ -166,20 +166,20 @@
 
     lg_Void_t lg_gte_blend(
 
-        li_C8_t *   lgEqrIO,
-        lg_Size_t   lgEqrWidth,
-        lg_Size_t   lgEqrHeight,
-        lg_Size_t   lgEqrLayer,
-        li_C8_t *   lgRectIn,
-        li_C8_t *   lgMaskIn,
-        lg_Size_t   lgRectWidth,
-        lg_Size_t   lgRectHeight,
-        lg_Size_t   lgRectLayer,
-        lg_Real_t   lgNadH,
-        lg_Real_t   lgNadV,
-        lg_Real_t   lgAppH,
-        lg_Real_t   lgAppV,
-        li_Method_t lgInter
+        li_C8_t           * const lgEqrIO,
+        lg_Size_t   const         lgEqrWidth,
+        lg_Size_t   const         lgEqrHeight,
+        lg_Size_t   const         lgEqrLayer,
+        li_C8_t     const * const lgRectIn,
+        li_C8_t     const * const lgMaskIn,
+        lg_Size_t   const         lgRectWidth,
+        lg_Size_t   const         lgRectHeight,
+        lg_Size_t   const         lgRectLayer,
+        lg_Real_t   const         lgNadH,
+        lg_Real_t   const         lgNadV,
+        lg_Real_t   const         lgAppH,
+        lg_Real_t   const         lgAppV,
+        li_Method_t const         lgInter
 
     );
 

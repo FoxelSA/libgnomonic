@@ -122,21 +122,21 @@
 
     lg_Void_t lg_ttg(
 
-        li_C8_t *   lgEqrIn,
-        lg_Size_t   lgEqrWidth,
-        lg_Size_t   lgEqrHeight,
-        lg_Size_t   lgEqrLayer,
-        li_C8_t *   lgRectOut,
-        lg_Size_t   lgRectWidth,
-        lg_Size_t   lgRectHeight,
-        lg_Size_t   lgRectLayer,
-        lg_Size_t   lgPanWidth,
-        lg_Size_t   lgPanHeight,
-        lg_Size_t   lgEqrPosX,
-        lg_Size_t   lgEqrPosY,
-        lg_Real_t   lgEqrCenterX,
-        lg_Real_t   lgEqrCenterY,
-        li_Method_t lgInter
+        li_C8_t     const * const lgEqrIn,
+        lg_Size_t   const         lgEqrWidth,
+        lg_Size_t   const         lgEqrHeight,
+        lg_Size_t   const         lgEqrLayer,
+        li_C8_t           * const lgRectOut,
+        lg_Size_t   const         lgRectWidth,
+        lg_Size_t   const         lgRectHeight,
+        lg_Size_t   const         lgRectLayer,
+        lg_Size_t   const         lgPanWidth,
+        lg_Size_t   const         lgPanHeight,
+        lg_Size_t   const         lgEqrPosX,
+        lg_Size_t   const         lgEqrPosY,
+        lg_Real_t   const         lgEqrCenterX,
+        lg_Real_t   const         lgEqrCenterY,
+        li_Method_t const         lgInter
 
     );
 
@@ -202,24 +202,24 @@
 
     lg_Void_t lg_ttg_focal(
 
-        li_C8_t *   lgEQRBitmap,
-        lg_Size_t   lgEQRWidth,
-        lg_Size_t   lgEQRHeight,
-        lg_Size_t   lgEQRLayer,
-        li_C8_t *   lgRECBitmap,
-        lg_Size_t   lgRECWidth,
-        lg_Size_t   lgRECHeight,
-        lg_Size_t   lgRECLayer,
-        lg_Size_t   lgEQRMapWidth,
-        lg_Size_t   lgEQRMapHeight,
-        lg_Size_t   lgEQRTopLeftX,
-        lg_Size_t   lgEQRTopLeftY,
-        lg_Real_t   lgAzimut,
-        lg_Real_t   lgElevat,
-        lg_Real_t   lgRoll,
-        lg_Real_t   lgFocalLength,
-        lg_Real_t   lgPixelLength,
-        li_Method_t lgInter
+        li_C8_t     const * const lgEQRBitmap,
+        lg_Size_t   const         lgEQRWidth,
+        lg_Size_t   const         lgEQRHeight,
+        lg_Size_t   const         lgEQRLayer,
+        li_C8_t           * const lgRECBitmap,
+        lg_Size_t   const         lgRECWidth,
+        lg_Size_t   const         lgRECHeight,
+        lg_Size_t   const         lgRECLayer,
+        lg_Size_t   const         lgEQRMapWidth,
+        lg_Size_t   const         lgEQRMapHeight,
+        lg_Size_t   const         lgEQRTopLeftX,
+        lg_Size_t   const         lgEQRTopLeftY,
+        lg_Real_t   const         lgAzimut,
+        lg_Real_t   const         lgElevat,
+        lg_Real_t   const         lgRoll,
+        lg_Real_t   const         lgFocalLength,
+        lg_Real_t   const         lgPixelLength,
+        li_Method_t const         lgInter
 
     );
 
@@ -267,27 +267,27 @@
 
     lg_Void_t lg_ttg_uc(
 
-        li_C8_t *   lgEqrIn,
-        lg_Size_t   lgEqrWidth,
-        lg_Size_t   lgEqrHeight,
-        lg_Size_t   lgEqrLayer,
-        li_C8_t *   lgRectOut,
-        lg_Size_t   lgRectWidth,
-        lg_Size_t   lgRectHeight,
-        lg_Size_t   lgRectLayer,
-        lg_Real_t   lgPx0,
-        lg_Real_t   lgPy0,
-        lg_Size_t   lgPanWidth,
-        lg_Size_t   lgPanHeight,
-        lg_Size_t   lgEqrPosX,
-        lg_Size_t   lgEqrPosY,
-        lg_Real_t   lgRoll,
-        lg_Real_t   lgAzi,
-        lg_Real_t   lgEle,
-        lg_Real_t   lgHea,
-        lg_Real_t   lgPixSize,
-        lg_Real_t   lgFocalLength,
-        li_Method_t lgInter
+        li_C8_t     const * const lgEqrIn,
+        lg_Size_t   const         lgEqrWidth,
+        lg_Size_t   const         lgEqrHeight,
+        lg_Size_t   const         lgEqrLayer,
+        li_C8_t           * const lgRectOut,
+        lg_Size_t   const         lgRectWidth,
+        lg_Size_t   const         lgRectHeight,
+        lg_Size_t   const         lgRectLayer,
+        lg_Real_t   const         lgPx0,
+        lg_Real_t   const         lgPy0,
+        lg_Size_t   const         lgPanWidth,
+        lg_Size_t   const         lgPanHeight,
+        lg_Size_t   const         lgEqrPosX,
+        lg_Size_t   const         lgEqrPosY,
+        lg_Real_t   const         lgRoll,
+        lg_Real_t   const         lgAzi,
+        lg_Real_t   const         lgEle,
+        lg_Real_t   const         lgHea,
+        lg_Real_t   const         lgPixSize,
+        lg_Real_t   const         lgFocalLength,
+        li_Method_t const         lgInter
 
     );
    

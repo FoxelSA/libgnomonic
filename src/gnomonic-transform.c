@@ -49,15 +49,15 @@
 
     lg_Void_t lg_transform_rotate( 
 
-        li_C8_t *   lgEqrIn,
-        li_C8_t *   lgEqrOut,
-        lg_Size_t   lgEqrWidth,
-        lg_Size_t   lgEqrHeight,
-        lg_Size_t   lgEqrLayers,
-        lg_Real_t   lgAngleX,
-        lg_Real_t   lgAngleY,
-        lg_Real_t   lgAngleZ,
-        li_Method_t lgInter
+        li_C8_t     const * const lgEqrIn,
+        li_C8_t           * const lgEqrOut,
+        lg_Size_t   const         lgEqrWidth,
+        lg_Size_t   const         lgEqrHeight,
+        lg_Size_t   const         lgEqrLayers,
+        lg_Real_t   const         lgAngleX,
+        lg_Real_t   const         lgAngleY,
+        lg_Real_t   const         lgAngleZ,
+        li_Method_t const         lgInter
 
     ) {
 
@@ -126,9 +126,9 @@
                 lgDY = ( lgEqrHeight - lg_Size_s( 1 ) ) * ( ( lgAV / LG_PI ) + lg_Real_s( 0.5 ) );
 
                 /* Interpolation process */
-                LG_B4( lgEqrOut, lgEqrPad, lgEqrLayers, lgSX, lgSY, lg_Size_s( 0 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayers, lg_Size_s( 0 ), lgDX, lgDY );
-                LG_B4( lgEqrOut, lgEqrPad, lgEqrLayers, lgSX, lgSY, lg_Size_s( 1 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayers, lg_Size_s( 1 ), lgDX, lgDY );
-                LG_B4( lgEqrOut, lgEqrPad, lgEqrLayers, lgSX, lgSY, lg_Size_s( 2 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayers, lg_Size_s( 2 ), lgDX, lgDY );
+                LG_B4( lgEqrOut, lgEqrPad, lgEqrLayers, lgSX, lgSY, lg_Size_s( 0 ) ) = lgInter( ( li_C8_t * ) lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayers, lg_Size_s( 0 ), lgDX, lgDY );
+                LG_B4( lgEqrOut, lgEqrPad, lgEqrLayers, lgSX, lgSY, lg_Size_s( 1 ) ) = lgInter( ( li_C8_t * ) lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayers, lg_Size_s( 1 ), lgDX, lgDY );
+                LG_B4( lgEqrOut, lgEqrPad, lgEqrLayers, lgSX, lgSY, lg_Size_s( 2 ) ) = lgInter( ( li_C8_t * ) lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayers, lg_Size_s( 2 ), lgDX, lgDY );
 
             }
 

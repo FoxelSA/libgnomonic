@@ -105,15 +105,15 @@
 
     lg_Void_t lg_transform_rotate( 
 
-        li_C8_t *   lgEqrIn,
-        li_C8_t *   lgEqrOut,
-        lg_Size_t   lgEqrWidth,
-        lg_Size_t   lgEqrHeight,
-        lg_Size_t   lgEqrLayers,
-        lg_Real_t   lgAngleX,
-        lg_Real_t   lgAngleY,
-        lg_Real_t   lgAngleZ,
-        li_Method_t lgInter
+        li_C8_t     const * const lgEqrIn,
+        li_C8_t           * const lgEqrOut,
+        lg_Size_t   const         lgEqrWidth,
+        lg_Size_t   const         lgEqrHeight,
+        lg_Size_t   const         lgEqrLayers,
+        lg_Real_t   const         lgAngleX,
+        lg_Real_t   const         lgAngleY,
+        lg_Real_t   const         lgAngleZ,
+        li_Method_t const         lgInter
 
     );
 

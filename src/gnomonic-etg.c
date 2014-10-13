@@ -49,19 +49,19 @@
 
     lg_Void_t lg_etg(
 
-        li_C8_t *   lgEqrIn,
-        lg_Size_t   lgEqrWidth,
-        lg_Size_t   lgEqrHeight,
-        lg_Size_t   lgEqrLayer,
-        li_C8_t *   lgRectOut,
-        lg_Size_t   lgRectWidth,
-        lg_Size_t   lgRectHeight,
-        lg_Size_t   lgRectLayer,
-        lg_Real_t   lgNadH,
-        lg_Real_t   lgNadV,
-        lg_Real_t   lgAppH,
-        lg_Real_t   lgAppV,
-        li_Method_t lgInter
+        li_C8_t     const * const lgEqrIn,
+        lg_Size_t   const         lgEqrWidth,
+        lg_Size_t   const         lgEqrHeight,
+        lg_Size_t   const         lgEqrLayer,
+        li_C8_t           * const lgRectOut,
+        lg_Size_t   const         lgRectWidth,
+        lg_Size_t   const         lgRectHeight,
+        lg_Size_t   const         lgRectLayer,
+        lg_Real_t   const         lgNadH,
+        lg_Real_t   const         lgNadV,
+        lg_Real_t   const         lgAppH,
+        lg_Real_t   const         lgAppV,
+        li_Method_t const         lgInter
 
     ) {
 
@@ -123,9 +123,9 @@
                 lgSY = ( lgEqrHeight - lg_Size_s( 1 ) ) * ( ( lgAV / LG_PI ) + lg_Real_s( 0.5 ) );
 
                 /* Interpolation process */
-                LG_B4( lgRectOut, lgRectPad, lgRectLayer, lgDX, lgDY, lg_Size_s( 0 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, lg_Size_s( 0 ), lgSX, lgSY );
-                LG_B4( lgRectOut, lgRectPad, lgRectLayer, lgDX, lgDY, lg_Size_s( 1 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, lg_Size_s( 1 ), lgSX, lgSY );
-                LG_B4( lgRectOut, lgRectPad, lgRectLayer, lgDX, lgDY, lg_Size_s( 2 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, lg_Size_s( 2 ), lgSX, lgSY );
+                LG_B4( lgRectOut, lgRectPad, lgRectLayer, lgDX, lgDY, lg_Size_s( 0 ) ) = lgInter( ( li_C8_t * ) lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, lg_Size_s( 0 ), lgSX, lgSY );
+                LG_B4( lgRectOut, lgRectPad, lgRectLayer, lgDX, lgDY, lg_Size_s( 1 ) ) = lgInter( ( li_C8_t * ) lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, lg_Size_s( 1 ), lgSX, lgSY );
+                LG_B4( lgRectOut, lgRectPad, lgRectLayer, lgDX, lgDY, lg_Size_s( 2 ) ) = lgInter( ( li_C8_t * ) lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, lg_Size_s( 2 ), lgSX, lgSY );
 
             }
 

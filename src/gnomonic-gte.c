@@ -49,19 +49,19 @@
 
     lg_Void_t lg_gte(
 
-        li_C8_t *   lgEqrIO,
-        lg_Size_t   lgEqrWidth,
-        lg_Size_t   lgEqrHeight,
-        lg_Size_t   lgEqrLayer,
-        li_C8_t *   lgRectIn,
-        lg_Size_t   lgRectWidth,
-        lg_Size_t   lgRectHeight,
-        lg_Size_t   lgRectLayer,
-        lg_Real_t   lgNadH,
-        lg_Real_t   lgNadV,
-        lg_Real_t   lgAppH,
-        lg_Real_t   lgAppV,
-        li_Method_t lgInter
+        li_C8_t           * const lgEqrIO,
+        lg_Size_t   const         lgEqrWidth,
+        lg_Size_t   const         lgEqrHeight,
+        lg_Size_t   const         lgEqrLayer,
+        li_C8_t     const * const lgRectIn,
+        lg_Size_t   const         lgRectWidth,
+        lg_Size_t   const         lgRectHeight,
+        lg_Size_t   const         lgRectLayer,
+        lg_Real_t   const         lgNadH,
+        lg_Real_t   const         lgNadV,
+        lg_Real_t   const         lgAppH,
+        lg_Real_t   const         lgAppV,
+        li_Method_t const         lgInter
 
     ) {
 
@@ -130,9 +130,9 @@
                     ) {
 
                         /* Interpolation process */
-                        LG_B4( lgEqrIO, lgEqrPad, lgEqrLayer, lgDX, lgDY, lg_Size_s( 0 ) ) = lgInter( lgRectIn, lgRectWidth, lgRectHeight, lgRectLayer, lg_Size_s( 0 ), lgPX, lgPY );
-                        LG_B4( lgEqrIO, lgEqrPad, lgEqrLayer, lgDX, lgDY, lg_Size_s( 1 ) ) = lgInter( lgRectIn, lgRectWidth, lgRectHeight, lgRectLayer, lg_Size_s( 1 ), lgPX, lgPY );
-                        LG_B4( lgEqrIO, lgEqrPad, lgEqrLayer, lgDX, lgDY, lg_Size_s( 2 ) ) = lgInter( lgRectIn, lgRectWidth, lgRectHeight, lgRectLayer, lg_Size_s( 2 ), lgPX, lgPY );
+                        LG_B4( lgEqrIO, lgEqrPad, lgEqrLayer, lgDX, lgDY, lg_Size_s( 0 ) ) = lgInter( ( li_C8_t * ) lgRectIn, lgRectWidth, lgRectHeight, lgRectLayer, lg_Size_s( 0 ), lgPX, lgPY );
+                        LG_B4( lgEqrIO, lgEqrPad, lgEqrLayer, lgDX, lgDY, lg_Size_s( 1 ) ) = lgInter( ( li_C8_t * ) lgRectIn, lgRectWidth, lgRectHeight, lgRectLayer, lg_Size_s( 1 ), lgPX, lgPY );
+                        LG_B4( lgEqrIO, lgEqrPad, lgEqrLayer, lgDX, lgDY, lg_Size_s( 2 ) ) = lgInter( ( li_C8_t * ) lgRectIn, lgRectWidth, lgRectHeight, lgRectLayer, lg_Size_s( 2 ), lgPX, lgPY );
 
                     }
 
@@ -150,20 +150,20 @@
 
     lg_Void_t lg_gte_blend(
 
-        li_C8_t *   lgEqrIO,
-        lg_Size_t   lgEqrWidth,
-        lg_Size_t   lgEqrHeight,
-        lg_Size_t   lgEqrLayer,
-        li_C8_t *   lgRectIn,
-        li_C8_t *   lgMaskIn,
-        lg_Size_t   lgRectWidth,
-        lg_Size_t   lgRectHeight,
-        lg_Size_t   lgRectLayer,
-        lg_Real_t   lgNadH,
-        lg_Real_t   lgNadV,
-        lg_Real_t   lgAppH,
-        lg_Real_t   lgAppV,
-        li_Method_t lgInter
+        li_C8_t           * const lgEqrIO,
+        lg_Size_t   const         lgEqrWidth,
+        lg_Size_t   const         lgEqrHeight,
+        lg_Size_t   const         lgEqrLayer,
+        li_C8_t     const * const lgRectIn,
+        li_C8_t     const * const lgMaskIn,
+        lg_Size_t   const         lgRectWidth,
+        lg_Size_t   const         lgRectHeight,
+        lg_Size_t   const         lgRectLayer,
+        lg_Real_t   const         lgNadH,
+        lg_Real_t   const         lgNadV,
+        lg_Real_t   const         lgAppH,
+        lg_Real_t   const         lgAppV,
+        li_Method_t const         lgInter
 
     ) {
 
@@ -237,11 +237,14 @@
 
                         /* Interpolation process */
                         LG_B4( lgEqrIO, lgEqrPad, lgEqrLayer, lgDX, lgDY, lg_Size_s( 0 ) ) =
-                        LG_B4( lgEqrIO, lgEqrPad, lgEqrLayer, lgDX, lgDY, lg_Size_s( 0 ) ) * ( lg_Real_s( 1.0 ) - lgBF ) + lgInter( lgRectIn, lgRectWidth, lgRectHeight, lgRectLayer, lg_Size_s( 0 ), lgPX, lgPY ) * lgBF;
+                        LG_B4( lgEqrIO, lgEqrPad, lgEqrLayer, lgDX, lgDY, lg_Size_s( 0 ) ) * ( lg_Real_s( 1.0 ) - lgBF ) + 
+                        lgInter( ( li_C8_t * ) lgRectIn, lgRectWidth, lgRectHeight, lgRectLayer, lg_Size_s( 0 ), lgPX, lgPY ) * lgBF;
                         LG_B4( lgEqrIO, lgEqrPad, lgEqrLayer, lgDX, lgDY, lg_Size_s( 1 ) ) =
-                        LG_B4( lgEqrIO, lgEqrPad, lgEqrLayer, lgDX, lgDY, lg_Size_s( 1 ) ) * ( lg_Real_s( 1.0 ) - lgBF ) + lgInter( lgRectIn, lgRectWidth, lgRectHeight, lgRectLayer, lg_Size_s( 1 ), lgPX, lgPY ) * lgBF;
+                        LG_B4( lgEqrIO, lgEqrPad, lgEqrLayer, lgDX, lgDY, lg_Size_s( 1 ) ) * ( lg_Real_s( 1.0 ) - lgBF ) + 
+                        lgInter( ( li_C8_t * ) lgRectIn, lgRectWidth, lgRectHeight, lgRectLayer, lg_Size_s( 1 ), lgPX, lgPY ) * lgBF;
                         LG_B4( lgEqrIO, lgEqrPad, lgEqrLayer, lgDX, lgDY, lg_Size_s( 2 ) ) =
-                        LG_B4( lgEqrIO, lgEqrPad, lgEqrLayer, lgDX, lgDY, lg_Size_s( 2 ) ) * ( lg_Real_s( 1.0 ) - lgBF ) + lgInter( lgRectIn, lgRectWidth, lgRectHeight, lgRectLayer, lg_Size_s( 2 ), lgPX, lgPY ) * lgBF;
+                        LG_B4( lgEqrIO, lgEqrPad, lgEqrLayer, lgDX, lgDY, lg_Size_s( 2 ) ) * ( lg_Real_s( 1.0 ) - lgBF ) + 
+                        lgInter( ( li_C8_t * ) lgRectIn, lgRectWidth, lgRectHeight, lgRectLayer, lg_Size_s( 2 ), lgPX, lgPY ) * lgBF;
 
                     }
 

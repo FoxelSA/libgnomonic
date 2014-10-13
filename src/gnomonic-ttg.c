@@ -254,9 +254,9 @@
                 if ( ( lgSX > lg_Size_s( 0 ) ) && ( lgSY > lg_Size_s( 0 ) ) && ( lgSX < lgEQRWidthEdge ) && ( lgSY < lgEQRHeightEdge ) ) {
 
                     /* Interpolation process */
-                    LG_B4( lgRECBitmap, lgRECPad, lgRECLayer, lgDX, lgDY, lg_Size_s( 0 ) ) = lgInter( lgEQRBitmap, lgEQRWidth, lgEQRHeight, lgEQRLayer, 0, lgSX, lgSY );
-                    LG_B4( lgRECBitmap, lgRECPad, lgRECLayer, lgDX, lgDY, lg_Size_s( 1 ) ) = lgInter( lgEQRBitmap, lgEQRWidth, lgEQRHeight, lgEQRLayer, 1, lgSX, lgSY );
-                    LG_B4( lgRECBitmap, lgRECPad, lgRECLayer, lgDX, lgDY, lg_Size_s( 2 ) ) = lgInter( lgEQRBitmap, lgEQRWidth, lgEQRHeight, lgEQRLayer, 2, lgSX, lgSY );
+                    LG_B4( lgRECBitmap, lgRECPad, lgRECLayer, lgDX, lgDY, lg_Size_s( 0 ) ) = lgInter( lgEQRBitmap, lgEQRWidth, lgEQRHeight, lgEQRLayer, lg_Size_s( 0 ), lgSX, lgSY );
+                    LG_B4( lgRECBitmap, lgRECPad, lgRECLayer, lgDX, lgDY, lg_Size_s( 1 ) ) = lgInter( lgEQRBitmap, lgEQRWidth, lgEQRHeight, lgEQRLayer, lg_Size_s( 1 ), lgSX, lgSY );
+                    LG_B4( lgRECBitmap, lgRECPad, lgRECLayer, lgDX, lgDY, lg_Size_s( 2 ) ) = lgInter( lgEQRBitmap, lgEQRWidth, lgEQRHeight, lgEQRLayer, lg_Size_s( 2 ), lgSX, lgSY );
 
                 } else {
 
@@ -321,10 +321,32 @@
         lg_Real_t lgPsi   = lgRoll ; 
         lg_Real_t lgPhi   = lgAzi + lgHea ;
         
-        /* initialize rotation matrices */
-        lg_Real_t Rx[3][3] = { {1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0} };
-        lg_Real_t Ry[3][3] = { {1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0} };
-        lg_Real_t Rz[3][3] = { {1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0} };
+        /* initialize rotation matrices x-axis */
+        lg_Real_t Rx[3][3] = { 
+
+            { lg_Real_s( 1.0 ), lg_Real_s( 0.0 ), lg_Real_s( 0.0 ) }, 
+            { lg_Real_s( 0.0 ), lg_Real_s( 1.0 ), lg_Real_s( 0.0 ) }, 
+            { lg_Real_s( 0.0 ), lg_Real_s( 0.0 ), lg_Real_s( 1.0 ) } 
+
+        };
+
+        /* initialize rotation matrices y-axis */
+        lg_Real_t Ry[3][3] = { 
+
+            { lg_Real_s( 1.0 ), lg_Real_s( 0.0 ), lg_Real_s( 0.0 ) }, 
+            { lg_Real_s( 0.0 ), lg_Real_s( 1.0 ), lg_Real_s( 0.0 ) }, 
+            { lg_Real_s( 0.0 ), lg_Real_s( 0.0 ), lg_Real_s( 1.0 ) } 
+
+        };
+
+        /* initialize rotation matrices z-axis */
+        lg_Real_t Rz[3][3] = { 
+
+            { lg_Real_s( 1.0 ), lg_Real_s( 0.0 ), lg_Real_s( 0.0 ) }, 
+            { lg_Real_s( 0.0 ), lg_Real_s( 1.0 ), lg_Real_s( 0.0 ) }, 
+            { lg_Real_s( 0.0 ), lg_Real_s( 0.0 ), lg_Real_s( 1.0 ) } 
+
+        };
         
         /* Rx rotation matrix */
         Rx[1][1] = + cos( lgTheta ); 
@@ -408,7 +430,7 @@
                 lgSX = lg_Real_c( lgPanWidth - 1 ) * ( ( lgAH + LG_PI ) / LG_PI2 ) - lgEqrPosX ;
 
                 /* Retrieve panoramic y-pixel coordinates */
-                lgSY = lg_Real_c( lgPanWidth - 1 ) * ( ( -lgAV + LG_PI / 2.0 ) / LG_PI2 ) - lgEqrPosY ;
+                lgSY = lg_Real_c( lgPanWidth - 1 ) * ( ( -lgAV + LG_PI / lg_Real_s( 2.0 ) ) / LG_PI2 ) - lgEqrPosY ;
 
                 /* Correction of boundary tiles */
                 lgSX = ( lgSX < lg_Size_s( 0 ) ) ? lgSX + lgPanWidth : lgSX;
@@ -424,9 +446,9 @@
                 ) {
 
                     /* Interpolation process */
-                    LG_B4( lgRectOut, lgRectPad, lgRectLayer, lgDX, lgDY, lg_Size_s( 0 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, 0, lgSX, lgSY );
-                    LG_B4( lgRectOut, lgRectPad, lgRectLayer, lgDX, lgDY, lg_Size_s( 1 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, 1, lgSX, lgSY );
-                    LG_B4( lgRectOut, lgRectPad, lgRectLayer, lgDX, lgDY, lg_Size_s( 2 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, 2, lgSX, lgSY );
+                    LG_B4( lgRectOut, lgRectPad, lgRectLayer, lgDX, lgDY, lg_Size_s( 0 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, lg_Size_s( 0 ), lgSX, lgSY );
+                    LG_B4( lgRectOut, lgRectPad, lgRectLayer, lgDX, lgDY, lg_Size_s( 1 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, lg_Size_s( 1 ), lgSX, lgSY );
+                    LG_B4( lgRectOut, lgRectPad, lgRectLayer, lgDX, lgDY, lg_Size_s( 2 ) ) = lgInter( lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayer, lg_Size_s( 2 ), lgSX, lgSY );
 
                 } else {
 

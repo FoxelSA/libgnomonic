@@ -37,7 +37,7 @@
  */
 
     /*! \file   gnomonic.h
-     *  \author Nils Hamel (n.hamel@foxel.ch)
+     *  \author Nils Hamel <n.hamel@foxel.ch>
      *
      *  Library common header file
      */
@@ -47,15 +47,16 @@
      *  \section libgnomonic
      *  \section _ Gnomonic projection algorithms library
      *  
-     *  This library is made to perform gnomonic projections from a entire equirectangular
-     *  panorama mapping to extract rectlinear mappings and the inverted operation. It
-     *  also ensure gnomonic reprojection of specific tiles of the equirectangular mapping 
-     *  to retrieve rectilinear mapping of the desired tile.
+     *  This library is made to perform gnomonic projections from a entire
+     *  equirectangular panorama mapping to extract rectlinear mappings and the
+     *  inverted operation. It also ensure gnomonic reprojection of specific
+     *  tiles of the equirectangular mapping to retrieve rectilinear mapping of
+     *  the desired tile.
      *
      *  \section Documentation
      *
-     *  A detailed documentation can be generated through doxygen. A more general documentation 
-     *  can be consulted at https://github.com/FoxelSA/libgnomonic/wiki.
+     *  A detailed documentation can be generated through doxygen. A more general
+     *  documentation can be consulted at https://github.com/FoxelSA/libgnomonic/wiki.
      *
      *  \section Copyright
      * 
@@ -66,12 +67,13 @@
      *
      *  \section License
      *
-     *  This program is licensed under the terms of the GNU Affero General Public License
-     *  v3 (GNU AGPL), with two additional terms. The content is licensed under the terms 
-     *  of the Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA) license.
+     *  This program is licensed under the terms of the GNU Affero General Public
+     *  License v3 (GNU AGPL), with two additional terms. The content is licensed
+     *  under the terms of the Creative Commons Attribution-ShareAlike 4.0
+     *  International (CC BY-SA) license.
      *
-     *  You must read <http://foxel.ch/license> for more information about our Licensing
-     *  terms and our Usage and Attribution guidelines.
+     *  You must read <http://foxel.ch/license> for more information about our
+     *  Licensing terms and our Usage and Attribution guidelines.
      */
 
 /*

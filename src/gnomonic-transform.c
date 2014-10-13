@@ -44,7 +44,7 @@
     # include "gnomonic-transform.h"
 
 /*
-    Source - 
+    Source - Equirectangular mapping rotation
  */
 
     lg_Void_t lg_transform_rotate( 

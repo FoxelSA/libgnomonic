@@ -44,7 +44,7 @@
     # include "gnomonic-etg.h"
 
 /*
-    Source - Gnomonic projection from equirectangular panoramic image
+    Source - Equirectangular to rectilinear gnomonic projection
  */
 
     lg_Void_t lg_etg(

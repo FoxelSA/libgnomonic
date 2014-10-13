@@ -163,7 +163,7 @@
     }
 
 /*
-    Source - Focal fixed gnomonic projection from tile of equirectangular panoramic image
+    Source - Equirectangular tile to rectilinear fixed focal gnomonic projection
  */
 
     lg_Void_t lg_ttg_focal(
@@ -274,7 +274,7 @@
     }
 
  /*
-    Source - Gnomonic projection from tile of equirectangular panoramic image using elphel's method
+    Source - Equirectangular tile to uncentered rectilinear gnomonic projection
  */
 
     lg_Void_t lg_ttg_uc(

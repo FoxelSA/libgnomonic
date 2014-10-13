@@ -44,7 +44,7 @@
     # include "gnomonic-gte.h"
 
 /*
-    Source - Reprojection of gnomonic image back into equirectangluar image
+    Source - Rectilinear to equirectangular inverted gnomonic projection
  */
 
     lg_Void_t lg_gte(
@@ -145,7 +145,7 @@
     }
 
 /*
-    Source - Blended reprojection of gnomonic image back into equirectangluar image
+    Source - Rectilinear to equirectangular inverted gnomonic projection
  */
 
     lg_Void_t lg_gte_blend(

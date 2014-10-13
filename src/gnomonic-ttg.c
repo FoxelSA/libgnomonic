@@ -10,8 +10,8 @@
  *      Nils Hamel <n.hamel@foxel.ch>
  *
  * Contributor(s) :
- * 
- *     Stephane Flotron <s.flotron@foxel.ch>
+ *
+ *    Stephane Flotron <s.flotron@foxel.ch>
  *
  *
  * This file is part of the FOXEL project <http://foxel.ch>.
@@ -293,8 +293,6 @@
         lg_Size_t   lgPanHeight,
         lg_Size_t   lgEqrPosX,
         lg_Size_t   lgEqrPosY,
-        lg_Real_t   lgEqrCenterX,
-        lg_Real_t   lgEqrCenterY,
         lg_Real_t   lgRoll,
         lg_Real_t   lgAzi,
         lg_Real_t   lgEle,
@@ -405,36 +403,16 @@
                     lgAV = ( lgVectorf[1] > lg_Real_s( 0.0 ) ) ? LG_PI / lg_Real_s( 2.0 ): - LG_PI / lg_Real_s( 2.0 );
 
                 }
-                
-                /* Angle domain normalization */
-                if ( lgAH < lg_Real_s( 0.0 ) ) lgAH += LG_PI2;
-                
-                /* Retrieve panoramic x-pixel coordinates */    
-                if ( fabs(lgAH - lgPhi) > lg_Real_s( 1.5 ) * LG_PI ) {
 
-                    /* Compute x-coordinates */
-                    lgSX = lg_Real_c( lgPanWidth - 1 ) * ( ( lgAH - LG_PI2 - lgPhi) / LG_PI2 ) - lgEqrPosX + lgEqrCenterX ;
+                /* Retrieve panoramic x-pixel coordinates */
+                lgSX = lg_Real_c( lgPanWidth - 1 ) * ( ( lgAH + LG_PI ) / LG_PI2 ) - lgEqrPosX ;
 
-                } else {
-
-                    /* Compute x-coordinates */
-                    lgSX = lg_Real_c( lgPanWidth - 1 ) * ( ( lgAH - lgPhi ) / LG_PI2 ) - lgEqrPosX + lgEqrCenterX ;
-
-                }
-                
                 /* Retrieve panoramic y-pixel coordinates */
-                if ( fabs(lgAV - lgTheta) > lg_Real_s( 1.5 ) * LG_PI ) {
+                lgSY = lg_Real_c( lgPanWidth - 1 ) * ( ( -lgAV + LG_PI / 2.0 ) / LG_PI2 ) - lgEqrPosY ;
 
-                    /* Compute y-coordinates */
-                    lgSY = lg_Real_c( lgPanWidth - 1 ) * ( ( -lgAV - LG_PI2 + lgTheta) / LG_PI2 ) - lgEqrPosY + lgEqrCenterY ;
+                /* Correction of boundary tiles */
+                lgSX = ( lgSX < lg_Size_s( 0 ) ) ? lgSX + lgPanWidth : lgSX;
 
-                } else {
-
-                    /* Compute y-coordinates */
-                    lgSY = lg_Real_c( lgPanWidth - 1 ) * ( ( -lgAV + lgTheta ) / LG_PI2 ) - lgEqrPosY + lgEqrCenterY ;
-
-                }
-                
                 /* Verify tile panoramic range */
                 if ( 
 
@@ -464,4 +442,4 @@
         }
 
     }
-    
+   

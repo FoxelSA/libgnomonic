@@ -125,3 +125,13 @@ endif
 	rm $(MAKE_BINARY)/* -f
 	rm $(MAKE_OBJECT)/*.o -f
 
+#
+#   make - Management - Implementation
+#
+
+    install:
+	cp $(MAKE_BINARY)/$(MAKE_NAME) /usr/lib/$(MAKE_NAME)
+
+    uninstall:
+	rm -f /usr/lib/$(MAKE_NAME)
+

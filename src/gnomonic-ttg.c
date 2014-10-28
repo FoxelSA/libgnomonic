@@ -464,4 +464,113 @@
         }
 
     }
-   
+
+/*
+    Source - Equirectangular tile to rectilinear image gnomonic projection
+ */
+
+    lg_Void_t lg_ttg_generic(
+
+        li_C8_t     const * const lgEQRBitmap,
+        lg_Size_t   const         lgEQRWidth,
+        lg_Size_t   const         lgEQRHeight,
+        lg_Size_t   const         lgEQRLayer,
+        li_C8_t           * const lgRECBitmap,
+        lg_Size_t   const         lgRECWidth,
+        lg_Size_t   const         lgRECHeight,
+        lg_Size_t   const         lgRECLayer,
+        lg_Size_t   const         lgEQRMapWidth,
+        lg_Size_t   const         lgEQRMapHeight,
+        lg_Size_t   const         lgEQRTopLeftX,
+        lg_Size_t   const         lgEQRTopLeftY,
+        lg_Real_t   const         lgRECSightX,
+        lg_Real_t   const         lgRECSightY,
+        lg_Real_t   const         lgAzimut,
+        lg_Real_t   const         lgElevat,
+        lg_Real_t   const         lgRoll,
+        lg_Real_t   const         lgFocalLength,
+        lg_Real_t   const         lgPixelLength,
+        li_Method_t const         lgInter
+
+    ) {
+
+        /* Coordinates variables */
+        lg_Size_t lgDX = lg_Size_s( 0   );
+        lg_Size_t lgDY = lg_Size_s( 0   );
+        lg_Real_t lgSX = lg_Real_s( 0.0 );
+        lg_Real_t lgSY = lg_Real_s( 0.0 );
+
+        /* Optimization variables */
+        lg_Size_t lgEQRWidthEdge  = lgEQRWidth  - lg_Size_s( 1 );
+        lg_Size_t lgEQRHeightEdge = lgEQRHeight - lg_Size_s( 1 );
+
+        /* Bitmap padding variable */
+        lg_Size_t lgRECPad = LG_B4PAD( lgRECWidth * lgRECLayer );
+
+        /* Angles trigonometric value variables */
+        lg_Real_t lgCosAz = cos( + lgAzimut );
+        lg_Real_t lgSinAz = sin( + lgAzimut );
+        lg_Real_t lgCosEl = cos( + lgElevat );
+        lg_Real_t lgSinEl = sin( + lgElevat );
+        lg_Real_t lgCosRl = cos( + lgRoll   );
+        lg_Real_t lgSinRl = sin( + lgRoll   );
+
+        /* Position vector variables */
+        lg_Real_t lgVectori[3] = { lg_Real_s( 0.0 ) };
+        lg_Real_t lgVectorf[3] = { lg_Real_s( 0.0 ) };
+
+        /* Rotation matrix variables */
+        lg_Real_t lgMatrix[3][3] = {
+
+            { + lgCosAz * lgCosEl, + lgCosAz * lgSinEl * lgSinRl - lgSinAz * lgCosRl, + lgCosAz * lgSinEl * lgCosRl + lgSinAz * lgSinRl },
+            { + lgSinAz * lgCosEl, + lgSinAz * lgSinEl * lgSinRl + lgCosAz * lgCosRl, + lgSinAz * lgSinEl * lgCosRl - lgCosAz * lgSinRl },
+            { - lgSinEl          , + lgCosEl * lgSinRl                              , + lgCosEl * lgCosRl                               },
+
+        };
+
+        /* Planar projection referential y-loop */
+        for ( lgDY = lg_Size_s( 0 ); lgDY < lgRECHeight; lgDY++ ) {
+
+            /* Planar projection referential x-loop */
+            for ( lgDX = lg_Size_s( 0 ); lgDX < lgRECWidth; lgDX++ ) {
+
+                /* Compute virtual sensor pixel position in 3D-frame */
+                lgVectori[0] = lgFocalLength;
+                lgVectori[1] = lgPixelLength * ( lg_Real_c( lgDX ) - lgRECSightX );
+                lgVectori[2] = lgPixelLength * ( lg_Real_c( lgDY ) - lgRECSightY );
+
+                /* Compute rotated vector based on rotation matrix */
+                lgVectorf[0] = lgMatrix[0][0] * lgVectori[0] + lgMatrix[0][1] * lgVectori[1] + lgMatrix[0][2] * lgVectori[2];
+                lgVectorf[1] = lgMatrix[1][0] * lgVectori[0] + lgMatrix[1][1] * lgVectori[1] + lgMatrix[1][2] * lgVectori[2];
+                lgVectorf[2] = lgMatrix[2][0] * lgVectori[0] + lgMatrix[2][1] * lgVectori[1] + lgMatrix[2][2] * lgVectori[2];
+
+                /* Retrieve panoramic pixel x,y-coordinates */
+                lgSX = - lgEQRTopLeftX + ( lgEQRMapWidth  - lg_Size_s( 1 ) ) * ( LG_ATN( lgVectorf[0], lgVectorf[1] ) / LG_PI2 ) ;
+                lgSY = - lgEQRTopLeftY + ( lgEQRMapHeight - lg_Size_s( 1 ) ) * ( LG_ASN( lgVectorf[2] / LG_EUCLR3( lgVectorf ) ) / LG_PI + lg_Real_s( 0.5 ) );
+
+                /* Correction of boundary tiles */
+                lgSX = ( lgSX < lg_Size_s( 0 ) ) ? lgSX + lgEQRMapWidth : lgSX;
+
+                /* Verify panoramic x,y-coordinates range */
+                if ( ( lgSX > lg_Size_s( 0 ) ) && ( lgSY > lg_Size_s( 0 ) ) && ( lgSX < lgEQRWidthEdge ) && ( lgSY < lgEQRHeightEdge ) ) {
+
+                    /* Assign interpolated pixel */
+                    LG_B4( lgRECBitmap, lgRECPad, lgRECLayer, lgDX, lgDY, lg_Size_s( 0 ) ) = lgInter( ( li_C8_t * ) lgEQRBitmap, lgEQRWidth, lgEQRHeight, lgEQRLayer, lg_Size_s( 0 ), lgSX, lgSY );
+                    LG_B4( lgRECBitmap, lgRECPad, lgRECLayer, lgDX, lgDY, lg_Size_s( 1 ) ) = lgInter( ( li_C8_t * ) lgEQRBitmap, lgEQRWidth, lgEQRHeight, lgEQRLayer, lg_Size_s( 1 ), lgSX, lgSY );
+                    LG_B4( lgRECBitmap, lgRECPad, lgRECLayer, lgDX, lgDY, lg_Size_s( 2 ) ) = lgInter( ( li_C8_t * ) lgEQRBitmap, lgEQRWidth, lgEQRHeight, lgEQRLayer, lg_Size_s( 2 ), lgSX, lgSY );
+
+                } else {
+
+                    /* Assign black pixel */
+                    LG_B4( lgRECBitmap, lgRECPad, lgRECLayer, lgDX, lgDY, lg_Size_s( 0 ) ) = li_C8_s( 0 );
+                    LG_B4( lgRECBitmap, lgRECPad, lgRECLayer, lgDX, lgDY, lg_Size_s( 1 ) ) = li_C8_s( 0 );
+                    LG_B4( lgRECBitmap, lgRECPad, lgRECLayer, lgDX, lgDY, lg_Size_s( 2 ) ) = li_C8_s( 0 );
+
+                }
+
+            }
+
+        }
+
+    }
+

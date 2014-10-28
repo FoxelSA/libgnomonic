@@ -130,8 +130,8 @@ endif
 #
 
     install:
-	cp $(MAKE_BINARY)/$(MAKE_NAME) /usr/lib/$(MAKE_NAME)
+	cp $(MAKE_BINARY)/$(MAKE_NAME).a /usr/lib/$(MAKE_NAME).a
 
     uninstall:
-	rm -f /usr/lib/$(MAKE_NAME)
+	rm -f /usr/lib/$(MAKE_NAME).a
 

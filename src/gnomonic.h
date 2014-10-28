@@ -104,8 +104,8 @@
  */
 
     /* Define mathematical constants */
-    # define LG_PI              lg_Real_s( 3.14159265358979323846264338327950 )
-    # define LG_PI2             lg_Real_s( 6.28318530717958647692528676655901 )
+    # define LG_PI              ( lg_Real_s( 3.14159265358979323846264338327950 ) )
+    # define LG_PI2             ( lg_Real_s( 6.28318530717958647692528676655901 ) )
     # define LG_DEG2RAD         ( LG_PI / lg_Real_s( 180.0 ) )
 
 /*

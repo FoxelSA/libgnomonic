@@ -469,9 +469,114 @@
     Source - Equirectangular tile to rectilinear - Centered sight methods
  */
 
+    lg_Void_t lg_ttg_center(
+
+        li_C8_t     const * const lgeBitmap,
+        lg_Size_t   const         lgeWidth,
+        lg_Size_t   const         lgeHeight,
+        lg_Size_t   const         lgeLayers,
+        li_C8_t           * const lgrBitmap,
+        lg_Size_t   const         lgrWidth,
+        lg_Size_t   const         lgrHeight,
+        lg_Size_t   const         lgrLayers,
+        lg_Size_t   const         lgmWidth,
+        lg_Size_t   const         lgmHeight,
+        lg_Size_t   const         lgmCornerX,
+        lg_Size_t   const         lgmCornerY,
+        lg_Real_t   const         lgAzim,
+        lg_Real_t   const         lgElev,
+        lg_Real_t   const         lgRoll,
+        lg_Real_t   const         lgFocal,
+        lg_Real_t   const         lgPixel,
+        li_Method_t const         lgInter
+
+    ) {
+
+        /* Generic method centered-specific parameters */
+        lg_ttg_generic(
+
+            lgeBitmap,
+            lgeWidth,
+            lgeHeight,
+            lgeLayers,
+            lgrBitmap,
+            lgrWidth,
+            lgrHeight,
+            lgrLayers,
+            lg_Real_c( lgrWidth  ) / lg_Real_s( 2.0 ),
+            lg_Real_c( lgrHeight ) / lg_Real_s( 2.0 ),
+            lgmWidth,
+            lgmHeight,
+            lgmCornerX,
+            lgmCornerY,
+            lgAzim,
+            lgElev,
+            lgRoll,
+            lgFocal,
+            lgPixel,
+            lgInter
+
+        );        
+
+    }
+
 /*
     Source - Equirectangular tile to rectilinear - Elphel methods
  */
+
+    lg_Void_t lg_ttg_elphel(
+
+        li_C8_t     const * const lgeBitmap,
+        lg_Size_t   const         lgeWidth,
+        lg_Size_t   const         lgeHeight,
+        lg_Size_t   const         lgeLayers,
+        li_C8_t           * const lgrBitmap,
+        lg_Size_t   const         lgrWidth,
+        lg_Size_t   const         lgrHeight,
+        lg_Size_t   const         lgrLayers,
+        lg_Real_t   const         lgrSightX,
+        lg_Real_t   const         lgrSightY,
+        lg_Size_t   const         lgmWidth,
+        lg_Size_t   const         lgmHeight,
+        lg_Size_t   const         lgmCornerX,
+        lg_Size_t   const         lgmCornerY,
+        lg_Real_t   const         lgRoll,
+        lg_Real_t   const         lgAzim,
+        lg_Real_t   const         lgElev,
+        lg_Real_t   const         lgHead,
+        lg_Real_t   const         lgPixel,
+        lg_Real_t   const         lgFocal,
+        li_Method_t const         lgInter
+
+    ) {
+
+        /* Generic method elphel-specific parameters */
+        lg_ttg_generic(
+
+            lgeBitmap,
+            lgeWidth,
+            lgeHeight,
+            lgeLayers,
+            lgrBitmap,
+            lgrWidth,
+            lgrHeight,
+            lgrLayers,
+            lgrSightX,
+            lgrSightY,
+            lgmWidth,
+            lgmHeight,
+            lgmCornerX,
+            lgmCornerY,
+            lgAzim + lgHead + LG_PI,
+            lgElev,
+            lgRoll,
+            lgFocal,
+            lgPixel,
+            lgInter
+
+        );
+
+    }
 
 /*
     Source - Equirectangular tile to rectilinear image gnomonic projection

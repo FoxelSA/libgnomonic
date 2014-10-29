@@ -66,6 +66,7 @@
  */
 
     # include "gnomonic.h"
+    # include "gnomonic-algebra.h"
     # include "inter-all.h"
 
 /*
@@ -293,25 +294,25 @@
 
     lg_Void_t lg_ttg_generic(
 
-        li_C8_t     const * const lgEQRBitmap,
-        lg_Size_t   const         lgEQRWidth,
-        lg_Size_t   const         lgEQRHeight,
-        lg_Size_t   const         lgEQRLayer,
-        li_C8_t           * const lgRECBitmap,
-        lg_Size_t   const         lgRECWidth,
-        lg_Size_t   const         lgRECHeight,
-        lg_Size_t   const         lgRECLayer,
-        lg_Size_t   const         lgEQRMapWidth,
-        lg_Size_t   const         lgEQRMapHeight,
-        lg_Size_t   const         lgEQRTopLeftX,
-        lg_Size_t   const         lgEQRTopLeftY,
-        lg_Real_t   const         lgRECSightX,
-        lg_Real_t   const         lgRECSightY,
-        lg_Real_t   const         lgAzimut,
-        lg_Real_t   const         lgElevat,
+        li_C8_t     const * const lgeBitmap,
+        lg_Size_t   const         lgeWidth,
+        lg_Size_t   const         lgeHeight,
+        lg_Size_t   const         lgeLayers,
+        li_C8_t           * const lgrBitmap,
+        lg_Size_t   const         lgrWidth,
+        lg_Size_t   const         lgrHeight,
+        lg_Size_t   const         lgrLayers,
+        lg_Real_t   const         lgrSightX,
+        lg_Real_t   const         lgrSightY,
+        lg_Size_t   const         lgMapWidth,
+        lg_Size_t   const         lgMapHeight,
+        lg_Size_t   const         lgMapCornerX,
+        lg_Size_t   const         lgMapCornerY,
+        lg_Real_t   const         lgAzim,
+        lg_Real_t   const         lgElev,
         lg_Real_t   const         lgRoll,
-        lg_Real_t   const         lgFocalLength,
-        lg_Real_t   const         lgPixelLength,
+        lg_Real_t   const         lgFocal,
+        lg_Real_t   const         lgPixel,
         li_Method_t const         lgInter
 
     );

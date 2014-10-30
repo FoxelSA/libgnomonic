@@ -48,6 +48,60 @@
     # include "gnomonic-ttg.h"
 
 /*
+    Source - Equirectangular tile to rectilinear - Automatic methods
+ */
+
+    lg_Void_t lg_ttg_auto(
+
+        li_C8_t     const * const lgeBitmap,
+        lg_Size_t   const         lgeWidth,
+        lg_Size_t   const         lgeHeight,
+        lg_Size_t   const         lgeLayers,
+        li_C8_t           * const lgrBitmap,
+        lg_Size_t   const         lgrWidth,
+        lg_Size_t   const         lgrHeight,
+        lg_Size_t   const         lgrLayers,
+        lg_Size_t   const         lgmWidth,
+        lg_Size_t   const         lgmHeight,
+        lg_Size_t   const         lgmCornerX,
+        lg_Size_t   const         lgmCornerY,
+        li_Method_t const         lgInter
+
+    ) {
+
+        /* Sensor pixel size variables */
+        lg_Real_t lgSizeX = lg_Real_s( 2.0 ) * tan( ( lg_Real_c( lgeWidth  ) / lg_Real_c( lgmWidth  ) ) * LG_PI ) / lgrWidth;
+        lg_Real_t lgSizeY = lg_Real_s( 2.0 ) * tan( ( lg_Real_c( lgeHeight ) / lg_Real_c( lgmHeight ) ) * LG_PI ) / lgrHeight;
+
+        /* Generic method automatic-specific parameters */
+        lg_ttg_generic(
+
+            lgeBitmap,
+            lgeWidth,
+            lgeHeight,
+            lgeLayers,
+            lgrBitmap,
+            lgrWidth,
+            lgrHeight,
+            lgrLayers,
+            lg_Real_c( lgrWidth  ) / lg_Real_s( 2.0 ),
+            lg_Real_c( lgrHeight ) / lg_Real_s( 2.0 ),
+            lgmWidth,
+            lgmHeight,
+            lgmCornerX,
+            lgmCornerY,
+            LG_PI2 * ( + ( lgmCornerX + ( lg_Real_c( lgeWidth  ) / lg_Real_s( 2.0 ) ) ) / lg_Real_c( lgmWidth  ) ),
+            LG_PI  * ( - ( lgmCornerY + ( lg_Real_c( lgeHeight ) / lg_Real_s( 2.0 ) ) ) / lg_Real_c( lgmHeight ) + lg_Real_s( 0.5 ) ),
+            lg_Real_s( 0.0 ),
+            lg_Real_s( 1.0 ),
+            lgSizeX > lgSizeY ? lgSizeX : lgSizeY,
+            lgInter
+
+        );        
+
+    }
+
+/*
     Source - Equirectangular tile to rectilinear - Centered sight methods
  */
 

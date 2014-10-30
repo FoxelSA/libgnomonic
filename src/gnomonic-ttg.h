@@ -89,6 +89,24 @@
     Header - Function prototypes
  */
 
+    lg_Void_t lg_ttg_auto(
+
+        li_C8_t     const * const lgeBitmap,
+        lg_Size_t   const         lgeWidth,
+        lg_Size_t   const         lgeHeight,
+        lg_Size_t   const         lgeLayers,
+        li_C8_t           * const lgrBitmap,
+        lg_Size_t   const         lgrWidth,
+        lg_Size_t   const         lgrHeight,
+        lg_Size_t   const         lgrLayers,
+        lg_Size_t   const         lgmWidth,
+        lg_Size_t   const         lgmHeight,
+        lg_Size_t   const         lgmCornerX,
+        lg_Size_t   const         lgmCornerY,
+        li_Method_t const         lgInter
+
+    );
+
     /*! \brief Equirectangular tile to rectilinear fixed focal gnomonic projection
      * 
      *  This function performs a gnomonic reprojection of an equirectangular

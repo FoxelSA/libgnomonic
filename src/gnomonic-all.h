@@ -80,7 +80,8 @@
     # define gnomonic_gte               lg_gte              /* Beta 0.2 */
     # define gnomonic_gte_blend         lg_gte_blend        /* Beta 0.2 */
     # define gnomonic_transform_rotate  lg_transform_rotate /* Beta 0.2 */
-    # define gnomonic_ttg               lg_ttg              /* Beta 0.2 */
+    # define lg_ttg_focal               lg_ttg_center       /* Beta 0.2 */
+    # define lg_ttg_uc                  lg_ttg_elphel       /* Beta 0.2 */
 
     /* Ascending compatibility - Types */
     # define gnomonic_Void_t            lg_Void_t           /* Beta 0.2 */

@@ -89,58 +89,6 @@
     Header - Function prototypes
  */
 
-    /*! \brief Equirectangular tile to rectilinear gnomonic projection
-     *  
-     *  This function performs an gnomonic projection considering a tile of an
-     *  entire equirectangular mapping using the desired interpolation method.
-     *  The result is drawn in the lgRectOut bitmap. The lgRectOut has to be
-     *  already allocated according to its parameters.
-     *
-     *  \param lgEqrIn      Pointer to equirectangular tile bitmap
-     *  \param lgEqrWidth   Width, in pixels, of the equirectangular tile bitmap
-     *  \param lgEqrHeight  Height, in pixels, of the equirectangular tile bitmap 
-     *  \param lgEqrLayer   Depth, in chromatic layer count, of equirectangular
-     *                      tile bitmap
-     *  \param lgRectOut    Pointer to rectilinear bitmap
-     *  \param lgRectWidth  Width, in pixels, of the rectilinear bitmap
-     *  \param lgRectHeight Height, in pixels, of the rectilinear bitmap
-     *  \param lgRectLayer  Depth, in chromatic layer count, of the rectilinear 
-     *                      bitmap
-     *  \param lgPanWidth   Width, in pixel, of the entire equirectangular 
-     *                      mapping
-     *  \param lgPanHeight  Height, in pixel, of the entire equirectangular 
-     *                      mapping
-     *  \param lgEqrPosX    Position x, in pixel, of the tile in the entire 
-     *                      equirectangular mapping
-     *  \param lgEqrPosY    Position y, in pixel, of the tile in the entire
-     *                      equirectangular mapping
-     *  \param lgEqrCenterX Position x, in pixel, of the tile center in the 
-     *                      entire equirectangular mapping
-     *  \param lgEqrCenterY Position y, in pixel, of the tile center in the 
-     *                      entire equirectangular mapping
-     *  \param lgInter      Pointer to interpolation method function
-     */
-
-    lg_Void_t lg_ttg(
-
-        li_C8_t     const * const lgEqrIn,
-        lg_Size_t   const         lgEqrWidth,
-        lg_Size_t   const         lgEqrHeight,
-        lg_Size_t   const         lgEqrLayer,
-        li_C8_t           * const lgRectOut,
-        lg_Size_t   const         lgRectWidth,
-        lg_Size_t   const         lgRectHeight,
-        lg_Size_t   const         lgRectLayer,
-        lg_Size_t   const         lgPanWidth,
-        lg_Size_t   const         lgPanHeight,
-        lg_Size_t   const         lgEqrPosX,
-        lg_Size_t   const         lgEqrPosY,
-        lg_Real_t   const         lgEqrCenterX,
-        lg_Real_t   const         lgEqrCenterY,
-        li_Method_t const         lgInter
-
-    );
-
     /*! \brief Equirectangular tile to rectilinear fixed focal gnomonic projection
      * 
      *  This function performs a gnomonic reprojection of an equirectangular
@@ -201,25 +149,25 @@
      *  \param lgInter        Pointer to interpolation method function
      */
 
-    lg_Void_t lg_ttg_focal(
+    lg_Void_t lg_ttg_center(
 
-        li_C8_t     const * const lgEQRBitmap,
-        lg_Size_t   const         lgEQRWidth,
-        lg_Size_t   const         lgEQRHeight,
-        lg_Size_t   const         lgEQRLayer,
-        li_C8_t           * const lgRECBitmap,
-        lg_Size_t   const         lgRECWidth,
-        lg_Size_t   const         lgRECHeight,
-        lg_Size_t   const         lgRECLayer,
-        lg_Size_t   const         lgEQRMapWidth,
-        lg_Size_t   const         lgEQRMapHeight,
-        lg_Size_t   const         lgEQRTopLeftX,
-        lg_Size_t   const         lgEQRTopLeftY,
-        lg_Real_t   const         lgAzimut,
-        lg_Real_t   const         lgElevat,
+        li_C8_t     const * const lgeBitmap,
+        lg_Size_t   const         lgeWidth,
+        lg_Size_t   const         lgeHeight,
+        lg_Size_t   const         lgeLayers,
+        li_C8_t           * const lgrBitmap,
+        lg_Size_t   const         lgrWidth,
+        lg_Size_t   const         lgrHeight,
+        lg_Size_t   const         lgrLayers,
+        lg_Size_t   const         lgmWidth,
+        lg_Size_t   const         lgmHeight,
+        lg_Size_t   const         lgmCornerX,
+        lg_Size_t   const         lgmCornerY,
+        lg_Real_t   const         lgAzim,
+        lg_Real_t   const         lgElev,
         lg_Real_t   const         lgRoll,
-        lg_Real_t   const         lgFocalLength,
-        lg_Real_t   const         lgPixelLength,
+        lg_Real_t   const         lgFocal,
+        lg_Real_t   const         lgPixel,
         li_Method_t const         lgInter
 
     );
@@ -265,55 +213,6 @@
      *  \param lgFocalLength Focal length in mm
      *  \param lgInter       Pointer to interpolation method function
      */
-
-    lg_Void_t lg_ttg_uc(
-
-        li_C8_t     const * const lgEqrIn,
-        lg_Size_t   const         lgEqrWidth,
-        lg_Size_t   const         lgEqrHeight,
-        lg_Size_t   const         lgEqrLayer,
-        li_C8_t           * const lgRectOut,
-        lg_Size_t   const         lgRectWidth,
-        lg_Size_t   const         lgRectHeight,
-        lg_Size_t   const         lgRectLayer,
-        lg_Real_t   const         lgPx0,
-        lg_Real_t   const         lgPy0,
-        lg_Size_t   const         lgPanWidth,
-        lg_Size_t   const         lgPanHeight,
-        lg_Size_t   const         lgEqrPosX,
-        lg_Size_t   const         lgEqrPosY,
-        lg_Real_t   const         lgRoll,
-        lg_Real_t   const         lgAzi,
-        lg_Real_t   const         lgEle,
-        lg_Real_t   const         lgHea,
-        lg_Real_t   const         lgPixSize,
-        lg_Real_t   const         lgFocalLength,
-        li_Method_t const         lgInter
-
-    );
-
-    lg_Void_t lg_ttg_center(
-
-        li_C8_t     const * const lgeBitmap,
-        lg_Size_t   const         lgeWidth,
-        lg_Size_t   const         lgeHeight,
-        lg_Size_t   const         lgeLayers,
-        li_C8_t           * const lgrBitmap,
-        lg_Size_t   const         lgrWidth,
-        lg_Size_t   const         lgrHeight,
-        lg_Size_t   const         lgrLayers,
-        lg_Size_t   const         lgmWidth,
-        lg_Size_t   const         lgmHeight,
-        lg_Size_t   const         lgmCornerX,
-        lg_Size_t   const         lgmCornerY,
-        lg_Real_t   const         lgAzim,
-        lg_Real_t   const         lgElev,
-        lg_Real_t   const         lgRoll,
-        lg_Real_t   const         lgFocal,
-        lg_Real_t   const         lgPixel,
-        li_Method_t const         lgInter
-
-    );
 
     lg_Void_t lg_ttg_elphel(
 

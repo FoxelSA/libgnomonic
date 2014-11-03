@@ -167,32 +167,36 @@
      *  and corresponds to the rotation that brings the rectilinear image pixels
      *  on the equirectangular mapping.
      *
-     *  \param lgEQRBitmap    Pointer to equirectangular tile bitmap
-     *  \param lgEQRWidth     Width, in pixels, of the equirectangular tile
+     *  \param lgeBitmap      Pointer to equirectangular tile bitmap
+     *  \param lgeWidth       Width, in pixels, of the equirectangular tile
      *                        bitmap
-     *  \param lgEQRHeight    Height, in pixels, of the equirectangular tile
+     *  \param lgeHeight      Height, in pixels, of the equirectangular tile
      *                        bitmap
-     *  \param lgEQRLayer     Depth, in chromatic layer count, of equirectangular 
+     *  \param lgeLayers      Depth, in chromatic layer count, of equirectangular 
      *                        tile bitmap
-     *  \param lgRECBitmap    Pointer to rectilinear bitmap that recieve the 
+     *  \param lgrBitmap      Pointer to rectilinear bitmap that recieve the 
      *                        gnomonic projection
-     *  \param lgRECWidth     Width, in pixels, of the rectilinear bitmap
-     *  \param lgRECHeight    Height, in pixels, of the rectilinear bitmap
-     *  \param lgRECLayer     Depth, in chromatic layer count, of rectilinear 
+     *  \param lgrWidth       Width, in pixels, of the rectilinear bitmap
+     *  \param lgrHeight      Height, in pixels, of the rectilinear bitmap
+     *  \param lgrLayers      Depth, in chromatic layer count, of rectilinear 
      *                        bitmap
-     *  \param lgEQRMapWidth  Width, in pixels, of the entire equirectangular 
+     *  \param lgrSightX      Position X, in pixels on rectilinear image,of the
+     *                        projection center
+     *  \param lgrSightY      Position Y, in pixels on rectilinear image,of the
+     *                        projection center
+     *  \param lgMapWidth     Width, in pixels, of the entire equirectangular 
      *                        mapping
-     *  \param lgEQRMapHeight Height, in pixels, of the entire equirectangular 
+     *  \param lgMapHeight    Height, in pixels, of the entire equirectangular 
      *                        mapping
-     *  \param lgEQRTopLeftX  Position x, in pixels, of the equirectangular tile
+     *  \param lgMapCornerX   Position x, in pixels, of the equirectangular tile
      *                        top-left corner in the entire mapping
-     *  \param lgEQRTopLeftY  Position y, in pixels, of the equirectangular tile
+     *  \param lgMapCornerY   Position y, in pixels, of the equirectangular tile
      *                        top-left corner in the entire mapping
-     *  \param lgAzimut       Azimut angle, in radians
-     *  \param lgElevat       Elevation angle, in radians
+     *  \param lgAzim         Azimut angle, in radians
+     *  \param lgElev         Elevation angle, in radians
      *  \param lgRoll         Roll angle, in radians
-     *  \param lgFocalLength  Focal length, in mm, of the rectilinear image
-     *  \param lgPixelLength  Length, in mm, of the pixels on the rectilinear
+     *  \param lgFocal        Focal length, in mm, of the rectilinear image
+     *  \param lgPixel        Length, in mm, of the pixels of the rectilinear
      *                        image virtual camera
      *  \param lgInter        Pointer to interpolation method function
      */
@@ -235,3 +239,4 @@
  */
 
     # endif
+

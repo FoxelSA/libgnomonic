@@ -62,7 +62,7 @@
  */
 
     # include "gnomonic.h"
-    # include "inter-all.h"
+    # include "gnomonic-gtt.h"
 
 /*
     Header - Preprocessor definitions
@@ -84,101 +84,20 @@
     Header - Function prototypes
  */
 
-    /*! \brief Rectilinear to equirectangular inverted gnomonic projection
-     *  
-     *  This function performs an inverted gnomonic projection of a rectilinear
-     *  image back in the original equirectangular mapping of an entire panorama. 
-     *  The result is drawn in the lgEqrIO bitmap that has to be already 
-     *  allocated according to its paramters.
-     *  
-     *  \param lgEqrIO      Pointer to equirectangular bitmap
-     *  \param lgEqrWidth   Width, in pixels, of the equirectangular bitmap
-     *  \param lgEqrHeight  Height, in pixels, of the equirectangular bitmap
-     *  \param lgEqrLayer   Depth, in chromatic layer count, of equirectangular
-     *                      bitmap
-     *  \param lgRectIn     Pointer to rectilinear bitmap
-     *  \param lgRectWidth  Width, in pixels, of the rectilinear bitmap
-     *  \param lgRectHeight Height, in pixels, of the rectilinear bitmap
-     *  \param lgRectLayer  Depth, in chromatic layer count, of the rectilinear 
-     *                      bitmap
-     *  \param lgNadH       Horizontal angle, in radian, of the center of view
-     *                      of the gnomonic projection, in [0,2PI[
-     *  \param lgNadV       Vertical angle, in radian, of the center of view of
-     *                      the gnomonic projection, in [-PI/2,+PI/2[
-     *  \param lgAppH       Half horizontal apperture, from center of view, of 
-     *                      the gnomonic projection in radian
-     *  \param lgAppV       Half vertical apperture, from center of view, of the
-     *                      gnomonic projection in radian
-     *  \param lgInter      Pointer to interpolation method function
-     */
+    lg_Void_t lg_gte_apperture( 
 
-    lg_Void_t lg_gte(
-
-        li_C8_t           * const lgEqrIO,
-        lg_Size_t   const         lgEqrWidth,
-        lg_Size_t   const         lgEqrHeight,
-        lg_Size_t   const         lgEqrLayer,
-        li_C8_t     const * const lgRectIn,
-        lg_Size_t   const         lgRectWidth,
-        lg_Size_t   const         lgRectHeight,
-        lg_Size_t   const         lgRectLayer,
-        lg_Real_t   const         lgNadH,
-        lg_Real_t   const         lgNadV,
-        lg_Real_t   const         lgAppH,
-        lg_Real_t   const         lgAppV,
-        li_Method_t const         lgInter
-
-    );
-
-    /*! \brief Rectilinear to equirectangular inverted gnomonic projection
-     *  
-     *  This function performs an inverted gnomonic projection of a rectilinear 
-     *  back in the original equirectangular mapping of an entire panorama image 
-     *  using the alpha layer stored by lgMaskIn. The result is drawn in the 
-     *  lgEqrIO bitmap that has to be already allocated according to its
-     *  parameters.
-     *  
-     *  The mask lgMaskIn has to be a monochromatic bitmap identical in size to 
-     *  the lgRectIn. The values in the mask are interpreted has the alpha 
-     *  channel of the lgRectIn.
-     *  
-     *  \param lgEqrIO      Pointer to equirectangular bitmap
-     *  \param lgEqrWidth   Width, in pixels, of the equirectangular bitmap
-     *  \param lgEqrHeight  Height, in pixels, of the equirectangular bitmap
-     *  \param lgEqrLayer   Depth, in chromatic layer count, of equirectangular
-     *                      bitmap
-     *  \param lgRectIn     Pointer to rectilinear bitmap
-     *  \param lgMaskIn     Pointer to monochromatic rectilinear mask bitmap
-     *  \param lgRectWidth  Width, in pixels, of the rectilinear bitmap
-     *  \param lgRectHeight Height, in pixels, of the rectilinear bitmap
-     *  \param lgRectLayer  Depth, in chromatic layer count, of the rectilinear 
-     *                      bitmap
-     *  \param lgNadH       Horizontal angle, in radian, of the center of view
-     *                      of the gnomonic projection, in [0,2PI[
-     *  \param lgNadV       Vertical angle, in radian, of the center of view of
-     *                      the gnomonic projection, in [-PI/2,+PI/2[
-     *  \param lgAppH       Half horizontal apperture, from center of view, of
-     *                      the gnomonic projection in radian
-     *  \param lgAppV       Half vertical apperture, from center of view, of the
-     *                      gnomonic projection in radian
-     *  \param lgInter      Pointer to interpolation method function
-     */
-
-    lg_Void_t lg_gte_blend(
-
-        li_C8_t           * const lgEqrIO,
-        lg_Size_t   const         lgEqrWidth,
-        lg_Size_t   const         lgEqrHeight,
-        lg_Size_t   const         lgEqrLayer,
-        li_C8_t     const * const lgRectIn,
-        li_C8_t     const * const lgMaskIn,
-        lg_Size_t   const         lgRectWidth,
-        lg_Size_t   const         lgRectHeight,
-        lg_Size_t   const         lgRectLayer,
-        lg_Real_t   const         lgNadH,
-        lg_Real_t   const         lgNadV,
-        lg_Real_t   const         lgAppH,
-        lg_Real_t   const         lgAppV,
+        li_C8_t           * const lgeBitmap,
+        lg_Size_t   const         lgeWidth,
+        lg_Size_t   const         lgeHeight,
+        lg_Size_t   const         lgeLayers,
+        li_C8_t     const * const lgrBitmap,
+        lg_Size_t   const         lgrWidth,
+        lg_Size_t   const         lgrHeight,
+        lg_Size_t   const         lgrLayers, 
+        lg_Real_t   const         lgAzim,
+        lg_Real_t   const         lgElev,
+        lg_Real_t   const         lgRoll,
+        lg_Real_t   const         lgApper,
         li_Method_t const         lgInter
 
     );

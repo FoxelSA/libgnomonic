@@ -98,6 +98,7 @@
     # include <stdio.h>
     # include <math.h>
     # include <stdint.h>
+    # include "inter-all.h"
 
 /*
     Header - Preprocessor definitions

@@ -44,215 +44,51 @@
     # include "gnomonic-gte.h"
 
 /*
-    Source - Rectilinear to equirectangular inverted gnomonic projection
+    Source - Rectilinear to equirectangular transform
  */
 
-    lg_Void_t lg_gte(
+    lg_Void_t lg_gte_apperture( 
 
-        li_C8_t           * const lgEqrIO,
-        lg_Size_t   const         lgEqrWidth,
-        lg_Size_t   const         lgEqrHeight,
-        lg_Size_t   const         lgEqrLayer,
-        li_C8_t     const * const lgRectIn,
-        lg_Size_t   const         lgRectWidth,
-        lg_Size_t   const         lgRectHeight,
-        lg_Size_t   const         lgRectLayer,
-        lg_Real_t   const         lgNadH,
-        lg_Real_t   const         lgNadV,
-        lg_Real_t   const         lgAppH,
-        lg_Real_t   const         lgAppV,
+        li_C8_t           * const lgeBitmap,
+        lg_Size_t   const         lgeWidth,
+        lg_Size_t   const         lgeHeight,
+        lg_Size_t   const         lgeLayers,
+        li_C8_t     const * const lgrBitmap,
+        lg_Size_t   const         lgrWidth,
+        lg_Size_t   const         lgrHeight,
+        lg_Size_t   const         lgrLayers, 
+        lg_Real_t   const         lgAzim,
+        lg_Real_t   const         lgElev,
+        lg_Real_t   const         lgRoll,
+        lg_Real_t   const         lgApper,
         li_Method_t const         lgInter
 
     ) {
 
-        /* Parsing variables */
-        lg_Size_t lgDX = lg_Size_s( 0 );
-        lg_Size_t lgDY = lg_Size_s( 0 );
+        lg_gtt_generic(
 
-        /* Projection variables */
-        lg_Real_t lgPX = lg_Real_s( 0.0 );
-        lg_Real_t lgPY = lg_Real_s( 0.0 );
-        lg_Real_t lgAH = lg_Real_s( 0.0 );
-        lg_Real_t lgAV = lg_Real_s( 0.0 );
+            lgeBitmap,
+            lgeWidth,
+            lgeHeight,
+            lgeLayers,
+            lgrBitmap,
+            lgrWidth,
+            lgrHeight,
+            lgrLayers,
+            lg_Real_c( lgrWidth  ) / lg_Real_s( 2.0 ),
+            lg_Real_c( lgrHeight ) / lg_Real_s( 2.0 ),
+            lgeWidth,
+            lgeHeight,
+            lg_Real_s( 0.0 ),
+            lg_Real_s( 0.0 ),
+            lgAzim,
+            lgElev,
+            lgRoll,
+            lg_Real_s( 1.0 ),
+            lg_Real_s( 2.0 ) * tan( lgApper / lg_Real_s( 2.0 ) ) / lgrWidth,
+            lgInter
 
-        /* Compute gnomonic apperture tangants */
-        lg_Real_t lgTanAppH = tan( lgAppH );
-        lg_Real_t lgTanAppV = tan( lgAppV );
-
-        /* Rotation matrix coefficients */
-        lg_Real_t lgCosY = cos( - lgNadV );
-        lg_Real_t lgSinY = sin( - lgNadV );
-        lg_Real_t lgCosZ = cos( - lgNadH );
-        lg_Real_t lgSinZ = sin( - lgNadH );
-
-        /* Position vector */
-        lg_Real_t lgVectori[3] = { lg_Real_s( 0.0 ) };
-        lg_Real_t lgVectorf[3] = { lg_Real_s( 0.0 ) };
-
-        /* Padding variable */
-        lg_Size_t lgEqrPad = lgEqrWidth * lgEqrLayer; if ( lgEqrPad % lg_Size_s( 4 ) ) lgEqrPad += lg_Size_s( 4 ) - lgEqrPad % lg_Size_s( 4 );
-
-        /* Planar projection referential y-loop */
-        for ( lgDY = lg_Size_s( 0 ); lgDY < lgEqrHeight; lgDY++ ) {
-
-            /* Planar projection referential x-loop */
-            for ( lgDX = lg_Size_s( 0 ); lgDX < lgEqrWidth; lgDX++ ) {
-
-                /* Build angular position */
-                lgAH = ( ( lg_Real_c( lgDX ) / lg_Real_c( lgEqrWidth  - lg_Size_s( 1 ) ) ) * lg_Real_s( 2.0 ) ) * LG_PI;
-                lgAV = ( ( lg_Real_c( lgDY ) / lg_Real_c( lgEqrHeight - lg_Size_s( 1 ) ) ) - lg_Real_s( 0.5 ) ) * LG_PI;
-
-                /* Build position vector */
-                lgVectori[0] = cos( lgAH ) * cos( lgAV );
-                lgVectori[1] = sin( lgAH ) * cos( lgAV );
-                lgVectori[2] = sin( lgAV );
-
-                /* Apply rotation due to t-nadir and p-nadir */
-                lgVectorf[0] = + lgCosY * lgCosZ * lgVectori[0] - lgCosY * lgSinZ * lgVectori[1] + lgSinY * lgVectori[2];
-                lgVectorf[1] = + lgSinZ          * lgVectori[0] + lgCosZ          * lgVectori[1];
-                lgVectorf[2] = - lgSinY * lgCosZ * lgVectori[0] + lgSinY * lgSinZ * lgVectori[1] + lgCosY * lgVectori[2];
-
-                /* Verify projection domain */
-                if ( lgVectorf[0] > lg_Real_s( 0.0 ) ) {
-
-                    /* Apply projection and scaling */
-                    lgPX = ( ( ( lgVectorf[1] / lgVectorf[0] / lgTanAppH ) + lg_Real_s( 1.0 ) ) / lg_Real_s( 2.0 ) ) * ( lgRectWidth  - lg_Size_s( 1 ) );
-                    lgPY = ( ( ( lgVectorf[2] / lgVectorf[0] / lgTanAppV ) + lg_Real_s( 1.0 ) ) / lg_Real_s( 2.0 ) ) * ( lgRectHeight - lg_Size_s( 1 ) );
-
-                    /* Verify gnomonic domain */
-                    if ( 
-
-                        ( lgPX >= lg_Real_s( 0.0 ) ) && 
-                        ( lgPY >= lg_Real_s( 0.0 ) ) && 
-                        ( lgPX <  lg_Real_c( lgRectWidth  - lg_Size_s( 1 ) ) ) && 
-                        ( lgPY <  lg_Real_c( lgRectHeight - lg_Size_s( 1 ) ) ) 
-
-                    ) {
-
-                        /* Interpolation process */
-                        LG_B4( lgEqrIO, lgEqrPad, lgEqrLayer, lgDX, lgDY, lg_Size_s( 0 ) ) = lgInter( ( li_C8_t * ) lgRectIn, lgRectWidth, lgRectHeight, lgRectLayer, lg_Size_s( 0 ), lgPX, lgPY );
-                        LG_B4( lgEqrIO, lgEqrPad, lgEqrLayer, lgDX, lgDY, lg_Size_s( 1 ) ) = lgInter( ( li_C8_t * ) lgRectIn, lgRectWidth, lgRectHeight, lgRectLayer, lg_Size_s( 1 ), lgPX, lgPY );
-                        LG_B4( lgEqrIO, lgEqrPad, lgEqrLayer, lgDX, lgDY, lg_Size_s( 2 ) ) = lgInter( ( li_C8_t * ) lgRectIn, lgRectWidth, lgRectHeight, lgRectLayer, lg_Size_s( 2 ), lgPX, lgPY );
-
-                    }
-
-                }
-
-            }
-
-        }
-
-    }
-
-/*
-    Source - Rectilinear to equirectangular inverted gnomonic projection
- */
-
-    lg_Void_t lg_gte_blend(
-
-        li_C8_t           * const lgEqrIO,
-        lg_Size_t   const         lgEqrWidth,
-        lg_Size_t   const         lgEqrHeight,
-        lg_Size_t   const         lgEqrLayer,
-        li_C8_t     const * const lgRectIn,
-        li_C8_t     const * const lgMaskIn,
-        lg_Size_t   const         lgRectWidth,
-        lg_Size_t   const         lgRectHeight,
-        lg_Size_t   const         lgRectLayer,
-        lg_Real_t   const         lgNadH,
-        lg_Real_t   const         lgNadV,
-        lg_Real_t   const         lgAppH,
-        lg_Real_t   const         lgAppV,
-        li_Method_t const         lgInter
-
-    ) {
-
-        /* Parsing variables */
-        lg_Size_t lgDX = lg_Size_s( 0 );
-        lg_Size_t lgDY = lg_Size_s( 0 );
-
-        /* Projection variables */
-        lg_Real_t lgPX = lg_Real_s( 0.0 );
-        lg_Real_t lgPY = lg_Real_s( 0.0 );
-        lg_Real_t lgAH = lg_Real_s( 0.0 );
-        lg_Real_t lgAV = lg_Real_s( 0.0 );
-        lg_Real_t lgBF = lg_Real_s( 0.0 );
-
-        /* Compute gnomonic apperture tangants */
-        lg_Real_t lgTanAppH = tan( lgAppH );
-        lg_Real_t lgTanAppV = tan( lgAppV );
-
-        /* Rotation matrix coefficients */
-        lg_Real_t lgCosY = cos( - lgNadV );
-        lg_Real_t lgSinY = sin( - lgNadV );
-        lg_Real_t lgCosZ = cos( - lgNadH );
-        lg_Real_t lgSinZ = sin( - lgNadH );
-
-        /* Position vector */
-        lg_Real_t lgVectori[3] = { lg_Real_s( 0.0 ) };
-        lg_Real_t lgVectorf[3] = { lg_Real_s( 0.0 ) };
-
-        /* Padding variable */
-        lg_Size_t lgEqrPad = lgEqrWidth * lgEqrLayer; if ( lgEqrPad % lg_Size_s( 4 ) ) lgEqrPad += lg_Size_s( 4 ) - lgEqrPad % lg_Size_s( 4 );
-
-        /* Planar projection referential y-loop */
-        for ( lgDY = lg_Size_s( 0 ); lgDY < lgEqrHeight; lgDY++ ) {
-
-            /* Planar projection referential x-loop */
-            for ( lgDX = lg_Size_s( 0 ); lgDX < lgEqrWidth; lgDX++ ) {
-
-                /* Build angular position */
-                lgAH = ( ( lg_Real_c( lgDX ) / lg_Real_c( lgEqrWidth  - lg_Size_s( 1 ) ) ) * lg_Real_s( 2.0 ) ) * LG_PI;
-                lgAV = ( ( lg_Real_c( lgDY ) / lg_Real_c( lgEqrHeight - lg_Size_s( 1 ) ) ) - lg_Real_s( 0.5 ) ) * LG_PI;
-
-                /* Build position vector */
-                lgVectori[0] = cos( lgAH ) * cos( lgAV );
-                lgVectori[1] = sin( lgAH ) * cos( lgAV );
-                lgVectori[2] = sin( lgAV );
-
-                /* Apply rotation due to t-nadir and p-nadir */
-                lgVectorf[0] = + lgCosY * lgCosZ * lgVectori[0] - lgCosY * lgSinZ * lgVectori[1] + lgSinY * lgVectori[2];
-                lgVectorf[1] = + lgSinZ          * lgVectori[0] + lgCosZ          * lgVectori[1];
-                lgVectorf[2] = - lgSinY * lgCosZ * lgVectori[0] + lgSinY * lgSinZ * lgVectori[1] + lgCosY * lgVectori[2];
-
-                /* Verify projection domain */
-                if ( lgVectorf[0] > lg_Real_s( 0.0 ) ) {
-
-                    /* Apply projection and scaling */
-                    lgPX = ( ( ( lgVectorf[1] / lgVectorf[0] / lgTanAppH ) + lg_Real_s( 1.0 ) ) / lg_Real_s( 2.0 ) ) * ( lgRectWidth  - lg_Size_s( 1 ) );
-                    lgPY = ( ( ( lgVectorf[2] / lgVectorf[0] / lgTanAppV ) + lg_Real_s( 1.0 ) ) / lg_Real_s( 2.0 ) ) * ( lgRectHeight - lg_Size_s( 1 ) );
-
-                    /* Verify gnomonic domain */
-                    if ( 
-
-                        ( lgPX >= lg_Real_s( 0.0 ) ) && 
-                        ( lgPY >= lg_Real_s( 0.0 ) ) && 
-                        ( lgPX <  lg_Real_c( lgRectWidth  - lg_Size_s( 1 ) ) ) && 
-                        ( lgPY <  lg_Real_c( lgRectHeight - lg_Size_s( 1 ) ) ) 
-
-                    ) {
-
-                        /* Compute the blending factor */
-                        lgBF = lg_Real_c( * ( lgMaskIn + lgRectWidth * lg_Size_c( lgPY ) + lg_Size_c( lgPX ) ) ) / lg_Real_s( 255.0 );
-
-                        /* Interpolation process */
-                        LG_B4( lgEqrIO, lgEqrPad, lgEqrLayer, lgDX, lgDY, lg_Size_s( 0 ) ) =
-                        LG_B4( lgEqrIO, lgEqrPad, lgEqrLayer, lgDX, lgDY, lg_Size_s( 0 ) ) * ( lg_Real_s( 1.0 ) - lgBF ) + 
-                        lgInter( ( li_C8_t * ) lgRectIn, lgRectWidth, lgRectHeight, lgRectLayer, lg_Size_s( 0 ), lgPX, lgPY ) * lgBF;
-                        LG_B4( lgEqrIO, lgEqrPad, lgEqrLayer, lgDX, lgDY, lg_Size_s( 1 ) ) =
-                        LG_B4( lgEqrIO, lgEqrPad, lgEqrLayer, lgDX, lgDY, lg_Size_s( 1 ) ) * ( lg_Real_s( 1.0 ) - lgBF ) + 
-                        lgInter( ( li_C8_t * ) lgRectIn, lgRectWidth, lgRectHeight, lgRectLayer, lg_Size_s( 1 ), lgPX, lgPY ) * lgBF;
-                        LG_B4( lgEqrIO, lgEqrPad, lgEqrLayer, lgDX, lgDY, lg_Size_s( 2 ) ) =
-                        LG_B4( lgEqrIO, lgEqrPad, lgEqrLayer, lgDX, lgDY, lg_Size_s( 2 ) ) * ( lg_Real_s( 1.0 ) - lgBF ) + 
-                        lgInter( ( li_C8_t * ) lgRectIn, lgRectWidth, lgRectHeight, lgRectLayer, lg_Size_s( 2 ), lgPX, lgPY ) * lgBF;
-
-                    }
-
-                }
-
-            }
-
-        }
+        );
 
     }
 

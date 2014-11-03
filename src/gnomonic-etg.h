@@ -62,7 +62,7 @@
  */
 
     # include "gnomonic.h"
-    # include "inter-all.h"
+    # include "gnomonic-ttg.h"
 
 /*
     Header - Preprocessor definitions
@@ -84,49 +84,20 @@
     Header - Function prototypes
  */
 
-    /*! \brief Equirectangular to rectilinear gnomonic projection
-     *  
-     *  This function performs a gnomonic reprojection on the base of an
-     *  equirectangular mapping of an entire panorama using desired 
-     *  interpolation method. The result is drawn in the lgRectOut bitmap. 
-     *  The lgRectOut has to be already allocated accroding to its provided
-     *  parameters.
-     *  
-     *  \param lgEqrIn      Pointer to equirectangular bitmap
-     *  \param lgEqrWidth   Width, in pixels, of the equirectangular bitmap 
-     *  \param lgEqrHeight  Height, in pixels, of the equirectangular bitmap 
-     *  \param lgEqrLayer   Depth, in chromatic layer count, of equirectangular 
-     *                      bitmap
-     *  \param lgRectOut    Pointer to gnomonic bitmap
-     *  \param lgRectWidth  Width, in pixels, of the rectilinear bitmap
-     *  \param lgRectHeight Height, in pixels, of the rectilinear bitmap
-     *  \param lgRectLayer  Depth, in chromatic layer count, of the rectilinear 
-     *                      bitmap
-     *  \param lgNadH       Horizontal angle, in radian, of the center of view 
-     *                      of the gnomonic projection, in [0,2PI[
-     *  \param lgNadV       Vertical angle, in radian, of the center of view of 
-     *                      the gnomonic projection, in [-PI/2,+PI/2[
-     *  \param lgAppH       Half horizontal apperture, from center of view, of 
-     *                      the gnomonic projection in radian
-     *  \param lgAppV       Half vertical apperture, from center of view, of the
-     *                      gnomonic projection in radian
-     *  \param lgInter      Pointer to interpolation method function
-     */
+    lg_Void_t lg_etg_apperture( 
 
-    lg_Void_t lg_etg(
-
-        li_C8_t     const * const lgEqrIn,
-        lg_Size_t   const         lgEqrWidth,
-        lg_Size_t   const         lgEqrHeight,
-        lg_Size_t   const         lgEqrLayer,
-        li_C8_t           * const lgRectOut,
-        lg_Size_t   const         lgRectWidth,
-        lg_Size_t   const         lgRectHeight,
-        lg_Size_t   const         lgRectLayer,
-        lg_Real_t   const         lgNadH,
-        lg_Real_t   const         lgNadV,
-        lg_Real_t   const         lgAppH,
-        lg_Real_t   const         lgAppV,
+        li_C8_t     const * const lgeBitmap,
+        lg_Size_t   const         lgeWidth,
+        lg_Size_t   const         lgeHeight,
+        lg_Size_t   const         lgeLayers,
+        li_C8_t           * const lgrBitmap,
+        lg_Size_t   const         lgrWidth,
+        lg_Size_t   const         lgrHeight,
+        lg_Size_t   const         lgrLayers, 
+        lg_Real_t   const         lgAzim,
+        lg_Real_t   const         lgElev,
+        lg_Real_t   const         lgRoll,
+        lg_Real_t   const         lgApper,
         li_Method_t const         lgInter
 
     );

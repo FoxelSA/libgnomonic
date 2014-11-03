@@ -75,7 +75,6 @@
         lgMatrix[2][1] = + lgCosE * lgSinR;
         lgMatrix[2][2] = + lgCosE * lgCosR;
 
-
     }
 
 /*
@@ -92,11 +91,23 @@
     ) {
 
         /* Trigonometric variables */
-        //lg_Real_t const lgCosA = cos( lgAzim );
-        //lg_Real_t const lgSinA = sin( lgAzim );
-        //lg_Real_t const lgCosE = cos( lgElev );
-        //lg_Real_t const lgSinE = sin( lgElev );
-        //lg_Real_t const lgCosR = cos( lgRoll );
-        //lg_Real_t const lgSinR = sin( lgRoll );
+        lg_Real_t const lgCosA = cos( lgAzim );
+        lg_Real_t const lgSinA = sin( lgAzim );
+        lg_Real_t const lgCosE = cos( lgElev );
+        lg_Real_t const lgSinE = sin( lgElev );
+        lg_Real_t const lgCosR = cos( lgRoll );
+        lg_Real_t const lgSinR = sin( lgRoll );
+
+        /* Compute matrix entries */
+        lgMatrix[0][0] = + lgCosA * lgCosE;
+        lgMatrix[0][1] = + lgSinA * lgCosE; 
+        lgMatrix[0][2] = - lgSinE;
+        lgMatrix[1][0] = + lgCosA * lgSinE * lgSinR - lgSinA * lgCosR;
+        lgMatrix[1][1] = + lgSinA * lgSinE * lgSinR + lgCosA * lgCosR;
+        lgMatrix[1][2] = + lgCosE * lgSinR;
+        lgMatrix[2][0] = + lgCosA * lgSinE * lgCosR + lgSinA * lgSinR;
+        lgMatrix[2][1] = + lgSinA * lgSinE * lgCosR - lgCosA * lgSinR;
+        lgMatrix[2][2] = + lgCosE * lgCosR;
 
     }
+

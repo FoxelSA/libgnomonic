@@ -9,10 +9,6 @@
  *
  *      Nils Hamel <n.hamel@foxel.ch>
  *
- * Contributor(s) :
- *
- *      Stephane Flotron <s.flotron@foxel.ch>
- *
  *
  * This file is part of the FOXEL project <http://foxel.ch>.
  *
@@ -45,19 +41,19 @@
     Source - Includes
  */
 
-    # include "gnomonic-ttg.h"
+    # include "gnomonic-gtt.h"
 
 /*
-    Source - Equirectangular tile to rectilinear transform - Centered-specific
+    Source - Rectilinear to equirectangular tile transform - Centered-specific
  */
 
-    lg_Void_t lg_ttg_center(
+    lg_Void_t lg_gtt_center(
 
-        li_C8_t     const * const lgeBitmap,
+        li_C8_t           * const lgeBitmap,
         lg_Size_t   const         lgeWidth,
         lg_Size_t   const         lgeHeight,
         lg_Size_t   const         lgeLayers,
-        li_C8_t           * const lgrBitmap,
+        li_C8_t     const * const lgrBitmap,
         lg_Size_t   const         lgrWidth,
         lg_Size_t   const         lgrHeight,
         lg_Size_t   const         lgrLayers,
@@ -74,8 +70,8 @@
 
     ) {
 
-        /* Generic method centered-specific parameters */
-        lg_ttg_generic(
+        /* Generic method elphel-specific parameters */
+        lg_gtt_generic(
 
             lgeBitmap,
             lgeWidth,
@@ -98,21 +94,21 @@
             lgPixel,
             lgInter
 
-        );        
+        );
 
     }
 
 /*
-    Source - Equirectangular tile to rectilinear transform - Elphel-specific
+    Source - Rectilinear to equirectangular tile transform - Elphel-specific
  */
 
-    lg_Void_t lg_ttg_elphel(
+    lg_Void_t lg_gtt_elphel(
 
-        li_C8_t     const * const lgeBitmap,
+        li_C8_t           * const lgeBitmap,
         lg_Size_t   const         lgeWidth,
         lg_Size_t   const         lgeHeight,
         lg_Size_t   const         lgeLayers,
-        li_C8_t           * const lgrBitmap,
+        li_C8_t     const * const lgrBitmap,
         lg_Size_t   const         lgrWidth,
         lg_Size_t   const         lgrHeight,
         lg_Size_t   const         lgrLayers,
@@ -133,7 +129,7 @@
     ) {
 
         /* Generic method elphel-specific parameters */
-        lg_ttg_generic(
+        lg_gtt_generic(
 
             lgeBitmap,
             lgeWidth,
@@ -161,16 +157,16 @@
     }
 
 /*
-    Source - Equirectangular tile to rectilinear transform
+    Source - Rectilinear to equirectangular tile transform
  */
 
-    lg_Void_t lg_ttg_generic(
+    lg_Void_t lg_gtt_generic(
 
-        li_C8_t     const * const lgeBitmap,
+        li_C8_t           * const lgeBitmap,
         lg_Size_t   const         lgeWidth,
         lg_Size_t   const         lgeHeight,
         lg_Size_t   const         lgeLayers,
-        li_C8_t           * const lgrBitmap,
+        li_C8_t     const * const lgrBitmap,
         lg_Size_t   const         lgrWidth,
         lg_Size_t   const         lgrHeight,
         lg_Size_t   const         lgrLayers,
@@ -203,47 +199,55 @@
         lg_Real_t lgMat[3][3] = { { lg_Real_s( 0.0 ) } };
 
         /* Optimization variables */
-        lg_Size_t lgeEdgeX = lgeWidth  - lg_Size_s( 1 );
-        lg_Size_t lgeEdgeY = lgeHeight - lg_Size_s( 1 );
+        lg_Size_t lgrEdgeX = lgrWidth  - lg_Size_s( 1 );
+        lg_Size_t lgrEdgeY = lgrHeight - lg_Size_s( 1 );
         lg_Size_t lgmEdgeX = lgmWidth  - lg_Size_s( 1 );
         lg_Size_t lgmEdgeY = lgmHeight - lg_Size_s( 1 );
 
         /* Bitmap padding variable */
-        lg_Size_t lgrPad = LG_B4PAD( lgrWidth * lgrLayers );
+        lg_Size_t lgePad = LG_B4PAD( lgeWidth * lgeLayers );
 
         /* Compute rotation matrix */
-        lg_algebra_r2erotation( lgMat, lgAzim, lgElev, lgRoll );
+        lg_algebra_e2rrotation( lgMat, lgAzim, lgElev, lgRoll );
 
         /* Rectilinear pixels y-loop */
-        for ( lgDY = lg_Size_s( 0 ); lgDY < lgrHeight; lgDY ++ ) {
+        for ( lgDY = lg_Size_s( 0 ); lgDY < lgeHeight; lgDY ++ ) {
 
             /* Rectilinear pixels x-loop */
-            for ( lgDX = lg_Size_s( 0 ); lgDX < lgrWidth; lgDX ++ ) {
+            for ( lgDX = lg_Size_s( 0 ); lgDX < lgeWidth; lgDX ++ ) {
+
+                /* Compute mapping pixel angular coordinates */
+                lgSX = + ( ( lg_Real_c( lgDX + lgmCornerX ) / lgmEdgeX ) * LG_PI2 );
+                lgSY = + ( ( lg_Real_c( lgDY + lgmCornerY ) / lgmEdgeY ) - lg_Real_s( 0.5 ) ) * LG_PI;
 
                 /* Compute pixel position in 3d-frame */
-                lgPvi[0] = lgFocal;
-                lgPvi[1] = lgPixel * ( lg_Real_c( lgDX ) - lgrSightX );
-                lgPvi[2] = lgPixel * ( lg_Real_c( lgDY ) - lgrSightY );
+                lgPvi[0] = cos( lgSY ) * cos( lgSX );
+                lgPvi[1] = cos( lgSY ) * sin( lgSX );
+                lgPvi[2] = sin( lgSY );
 
                 /* Compute rotated pixel position in 3d-frame */
                 lgPvf[0] = lgMat[0][0] * lgPvi[0] + lgMat[0][1] * lgPvi[1] + lgMat[0][2] * lgPvi[2];
-                lgPvf[1] = lgMat[1][0] * lgPvi[0] + lgMat[1][1] * lgPvi[1] + lgMat[1][2] * lgPvi[2];
-                lgPvf[2] = lgMat[2][0] * lgPvi[0] + lgMat[2][1] * lgPvi[1] + lgMat[2][2] * lgPvi[2];
 
-                /* Retrieve mapping pixel (x,y)-coordinates */
-                lgSX = - lgmCornerX + lgmEdgeX * ( LG_ATN( lgPvf[0], lgPvf[1] ) / LG_PI2 ) ;
-                lgSY = - lgmCornerY + lgmEdgeY * ( LG_ASN( lgPvf[2] / LG_EUCLR3( lgPvf ) ) / LG_PI + lg_Real_s( 0.5 ) );
+                /* Positivity of x-axis check */
+                if ( lgPvf[0] > lg_Real_s( 0.0 ) ) {
 
-                /* Mapping boundary conditions management */
-                lgSX = ( lgSX < lg_Size_s( 0 ) ) ? lgSX + lgmWidth : lgSX;
+                    /* Compute rotated pixel position in 3d-frame */
+                    lgPvf[1] = lgMat[1][0] * lgPvi[0] + lgMat[1][1] * lgPvi[1] + lgMat[1][2] * lgPvi[2];
+                    lgPvf[2] = lgMat[2][0] * lgPvi[0] + lgMat[2][1] * lgPvi[1] + lgMat[2][2] * lgPvi[2];
 
-                /* Verify mapping pixel (x,y)-coordinates */
-                if ( ( lgSX >= lg_Size_s( 0 ) ) && ( lgSY >= lg_Size_s( 0 ) ) && ( lgSX <= lgeEdgeX ) && ( lgSY <= lgeEdgeY ) ) {
+                    /* Retrieve rectilinear (x,y)-coordinates */
+                    lgSX = + ( ( lgPvf[1] / lgPvf[0] ) * lgFocal ) / lgPixel + lgrSightX;
+                    lgSY = + ( ( lgPvf[2] / lgPvf[0] ) * lgFocal ) / lgPixel + lgrSightY;
 
-                    /* Assign interpolated pixel */
-                    LG_B4( lgrBitmap, lgrPad, lgrLayers, lgDX, lgDY, lg_Size_s( 0 ) ) = lgInter( ( li_C8_t * ) lgeBitmap, lgeWidth, lgeHeight, lgeLayers, lg_Size_s( 0 ), lgSX, lgSY );
-                    LG_B4( lgrBitmap, lgrPad, lgrLayers, lgDX, lgDY, lg_Size_s( 1 ) ) = lgInter( ( li_C8_t * ) lgeBitmap, lgeWidth, lgeHeight, lgeLayers, lg_Size_s( 1 ), lgSX, lgSY );
-                    LG_B4( lgrBitmap, lgrPad, lgrLayers, lgDX, lgDY, lg_Size_s( 2 ) ) = lgInter( ( li_C8_t * ) lgeBitmap, lgeWidth, lgeHeight, lgeLayers, lg_Size_s( 2 ), lgSX, lgSY );
+                    /* Verify mapping pixel (x,y)-coordinates */
+                    if ( ( lgSX >= lg_Size_s( 0 ) ) && ( lgSY >= lg_Size_s( 0 ) ) && ( lgSX <= lgrEdgeX ) && ( lgSY <= lgrEdgeY ) ) {
+
+                        /* Assign interpolated pixel */
+                        LG_B4( lgeBitmap, lgePad, lgeLayers, lgDX, lgDY, lg_Size_s( 0 ) ) = lgInter( ( li_C8_t * ) lgrBitmap, lgrWidth, lgrHeight, lgrLayers, lg_Size_s( 0 ), lgSX, lgSY );
+                        LG_B4( lgeBitmap, lgePad, lgeLayers, lgDX, lgDY, lg_Size_s( 1 ) ) = lgInter( ( li_C8_t * ) lgrBitmap, lgrWidth, lgrHeight, lgrLayers, lg_Size_s( 1 ), lgSX, lgSY );
+                        LG_B4( lgeBitmap, lgePad, lgeLayers, lgDX, lgDY, lg_Size_s( 2 ) ) = lgInter( ( li_C8_t * ) lgrBitmap, lgrWidth, lgrHeight, lgrLayers, lg_Size_s( 2 ), lgSX, lgSY );
+
+                    }
 
                 }
 

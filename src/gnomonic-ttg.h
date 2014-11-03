@@ -11,7 +11,7 @@
  *
  * Contributor(s) :
  * 
- *     Stephane Flotron <s.flotron@foxel.ch>
+ *      Stephane Flotron <s.flotron@foxel.ch>
  *
  * 
  * This file is part of the FOXEL project <http://foxel.ch>.
@@ -67,7 +67,6 @@
 
     # include "gnomonic.h"
     # include "gnomonic-algebra.h"
-    # include "inter-all.h"
 
 /*
     Header - Preprocessor definitions
@@ -89,7 +88,7 @@
     Header - Function prototypes
  */
 
-    lg_Void_t lg_ttg_auto(
+    lg_Void_t lg_ttg_center(
 
         li_C8_t     const * const lgeBitmap,
         lg_Size_t   const         lgeWidth,
@@ -103,6 +102,37 @@
         lg_Size_t   const         lgmHeight,
         lg_Size_t   const         lgmCornerX,
         lg_Size_t   const         lgmCornerY,
+        lg_Real_t   const         lgAzim,
+        lg_Real_t   const         lgElev,
+        lg_Real_t   const         lgRoll,
+        lg_Real_t   const         lgFocal,
+        lg_Real_t   const         lgPixel,
+        li_Method_t const         lgInter
+
+    );
+
+    lg_Void_t lg_ttg_elphel(
+
+        li_C8_t     const * const lgeBitmap,
+        lg_Size_t   const         lgeWidth,
+        lg_Size_t   const         lgeHeight,
+        lg_Size_t   const         lgeLayers,
+        li_C8_t           * const lgrBitmap,
+        lg_Size_t   const         lgrWidth,
+        lg_Size_t   const         lgrHeight,
+        lg_Size_t   const         lgrLayers,
+        lg_Real_t   const         lgrSightX,
+        lg_Real_t   const         lgrSightY,
+        lg_Size_t   const         lgmWidth,
+        lg_Size_t   const         lgmHeight,
+        lg_Size_t   const         lgmCornerX,
+        lg_Size_t   const         lgmCornerY,
+        lg_Real_t   const         lgRoll,
+        lg_Real_t   const         lgAzim,
+        lg_Real_t   const         lgElev,
+        lg_Real_t   const         lgHead,
+        lg_Real_t   const         lgPixel,
+        lg_Real_t   const         lgFocal,
         li_Method_t const         lgInter
 
     );
@@ -115,10 +145,10 @@
      *  scaling of pixels is set through focal length and pixel length, assumed
      *  to be identical in both direction.
      *  
-     *  The input equirectangular tile has to be at least a three chromatic
+     *  The input equirectangular tile has to be a three or four chromatic 
      *  layers image and the output rectilinear image has to be already allocated
-     *  according to its parameters and has to come with at least three chromatic
-     *  layers. The bitmaps are standard bitmaps that consider byte padding in
+     *  according to its parameters and has to come with three or four chromatic
+     *  layers. The bitmaps are standard bitmaps that considers byte padding in
      *  memory.
      *
      *  In order to perform the desired projection, the following 3d-frame is 
@@ -166,97 +196,6 @@
      *                        image virtual camera
      *  \param lgInter        Pointer to interpolation method function
      */
-
-    lg_Void_t lg_ttg_center(
-
-        li_C8_t     const * const lgeBitmap,
-        lg_Size_t   const         lgeWidth,
-        lg_Size_t   const         lgeHeight,
-        lg_Size_t   const         lgeLayers,
-        li_C8_t           * const lgrBitmap,
-        lg_Size_t   const         lgrWidth,
-        lg_Size_t   const         lgrHeight,
-        lg_Size_t   const         lgrLayers,
-        lg_Size_t   const         lgmWidth,
-        lg_Size_t   const         lgmHeight,
-        lg_Size_t   const         lgmCornerX,
-        lg_Size_t   const         lgmCornerY,
-        lg_Real_t   const         lgAzim,
-        lg_Real_t   const         lgElev,
-        lg_Real_t   const         lgRoll,
-        lg_Real_t   const         lgFocal,
-        lg_Real_t   const         lgPixel,
-        li_Method_t const         lgInter
-
-    );
-
-    /*! \brief Equirectangular tile to uncentered rectilinear gnomonic projection
-     *  
-     *  This function performs an gnomonic projection considering a tile of an
-     *  entire equirectangular panorama using the desired interpolation method. 
-     *  The results are drawn in the lgRectOut bitmap. The lgRectOut has to be 
-     *  already allocated according to its parameters.
-     *
-     *  \param lgEqrIn       Pointer to equirectangular tile bitmap
-     *  \param lgEqrWidth    Width, in pixels, of equirectangular tile bitmap
-     *  \param lgEqrHeight   Height, in pixels, of equirectangular tile bitmap
-     *  \param lgEqrLayer    Depth, in chromatic layer count, of equirectangular
-     *                       tile bitmap
-     *  \param lgRectOut     Pointer to rectilinear bitmap
-     *  \param lgRectWidth   Width, in pixels, of the rectilinear bitmap
-     *  \param lgRectHeight  Height, in pixels, of the rectilinear bitmap
-     *  \param lgRectLayer   Depth, in chromatic layer count, of the rectilinear
-     *                       bitmap
-     *  \param lgPx0         X coordinate of principal point of the rectilinear
-     *                       bitmap
-     *  \param lgPy0         Y coordinate of principal point of the rectilinear
-     *                       bitmap
-     *  \param lgPanWidth    Width, in pixel, of the entire equirectangular 
-     *                       mapping
-     *  \param lgPanHeight   Height, in pixel, of the entire equirectangular 
-     *                       mapping
-     *  \param lgEqrPosX     Position x, in pixels, of the tile in the entire 
-     *                       equirectangular mapping
-     *  \param lgEqrPosY     Position y, in pixels, of the tile in the entire
-     *                       equirectangular mapping
-     *  \param lgEqrPosX     Position x, in pixels, of the tile center in the
-     *                       entire equirectangular mapping
-     *  \param lgEqrPosY     Position y, in pixels, of the tile center in the
-     *                       entire equirectangular mapping
-     *  \param lgRoll        Roll angle, in radians
-     *  \param lgAzi         Azimut angle, in radians
-     *  \param lgEle         Elevation angle, in radians
-     *  \param lgHea         Heading angle, in radians
-     *  \param lgPixSize     Pixel size in mm
-     *  \param lgFocalLength Focal length in mm
-     *  \param lgInter       Pointer to interpolation method function
-     */
-
-    lg_Void_t lg_ttg_elphel(
-
-        li_C8_t     const * const lgeBitmap,
-        lg_Size_t   const         lgeWidth,
-        lg_Size_t   const         lgeHeight,
-        lg_Size_t   const         lgeLayers,
-        li_C8_t           * const lgrBitmap,
-        lg_Size_t   const         lgrWidth,
-        lg_Size_t   const         lgrHeight,
-        lg_Size_t   const         lgrLayers,
-        lg_Real_t   const         lgrSightX,
-        lg_Real_t   const         lgrSightY,
-        lg_Size_t   const         lgmWidth,
-        lg_Size_t   const         lgmHeight,
-        lg_Size_t   const         lgmCornerX,
-        lg_Size_t   const         lgmCornerY,
-        lg_Real_t   const         lgRoll,
-        lg_Real_t   const         lgAzim,
-        lg_Real_t   const         lgElev,
-        lg_Real_t   const         lgHead,
-        lg_Real_t   const         lgPixel,
-        lg_Real_t   const         lgFocal,
-        li_Method_t const         lgInter
-
-    );
 
     lg_Void_t lg_ttg_generic(
 

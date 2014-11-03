@@ -62,7 +62,6 @@
  */
 
     # include "gnomonic.h"
-    # include "inter-all.h"
 
 /*
     Header - Preprocessor definitions

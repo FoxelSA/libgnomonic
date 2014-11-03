@@ -92,6 +92,15 @@
 
     );
 
+    lg_Void_t lg_algebra_e2rrotation(
+
+        lg_Real_t       lgMatrix[3][3],
+        lg_Real_t const lgAzim,
+        lg_Real_t const lgElev,
+        lg_Real_t const lgRoll
+
+    );
+
 /*
     Header - C/C++ compatibility
  */

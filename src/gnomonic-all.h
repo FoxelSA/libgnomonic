@@ -63,9 +63,10 @@
 
     # include "gnomonic.h"
     # include "gnomonic-algebra.h"
+    # include "gnomonic-ttg.h"
+    # include "gnomonic-gtt.h"
     # include "gnomonic-etg.h"
     # include "gnomonic-gte.h"
-    # include "gnomonic-ttg.h"
     # include "gnomonic-transform.h"
 
 /*
@@ -76,9 +77,6 @@
     # define GNOMONIC_PI                LG_PI
 
     /* Ascending compatibility - Functions */
-    # define gnomonic_etg               lg_etg              /* Beta 0.2 */
-    # define gnomonic_gte               lg_gte              /* Beta 0.2 */
-    # define gnomonic_gte_blend         lg_gte_blend        /* Beta 0.2 */
     # define gnomonic_transform_rotate  lg_transform_rotate /* Beta 0.2 */
     # define lg_ttg_focal               lg_ttg_center       /* Beta 0.2 */
     # define lg_ttg_uc                  lg_ttg_elphel       /* Beta 0.2 */

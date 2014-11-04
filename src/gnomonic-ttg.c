@@ -208,15 +208,15 @@
         lg_Size_t lgmEdgeX = lgmWidth  - lg_Size_s( 1 );
         lg_Size_t lgmEdgeY = lgmHeight - lg_Size_s( 1 );
 
-        /* Bitmap padding variable */
-        lg_Size_t lgrPad = LG_B4PAD( lgrWidth * lgrLayers );
-
-        /* Alpha channel variables */
-        li_C8_t   lgAlpha = li_C8_s( 0 );
-
         /* Transparency variables */
         lg_Real_t lgWeiA = lg_Real_s( 0.0 );
         lg_Real_t lgWeiB = lg_Real_s( 0.0 );
+
+        /* Alpha channel variables */
+        li_C8_t lgAlpha = li_C8_s( 0 );
+
+        /* Bitmap padding variable */
+        lg_Size_t lgrPad = LG_B4PAD( lgrWidth * lgrLayers );
 
         /* Compute rotation matrix */
         lg_algebra_r2erotation( lgMat, lgAzim, lgElev, lgRoll );
@@ -296,7 +296,7 @@
 
                         ) * lgWeiA + LG_B4( lgrBitmap, lgrPad, lgrLayers, lgDX, lgDY, lg_Size_s( 2 ) ) * lgWeiB;;
 
-                        /* Assign transparency value */
+                        /* Assign transparency pixel */
                         if ( lgrLayers == 4 ) LG_B4( lgrBitmap, lgrPad, lgrLayers, lgDX, lgDY, lg_Size_s( 3 ) ) = lgAlpha;
 
                     } else {

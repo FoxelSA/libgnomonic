@@ -116,7 +116,7 @@
      *                        top-left corner in the entire mapping
      *  \param lgmCornerY     Position Y, in pixels, of the equirectangular tile
      *                        top-left corner in the entire mapping
-     *  \param lgAzim         Azimut angle, in radians, of gnomonic center
+     *  \param lgAzim         Azimuth angle, in radians, of gnomonic center
      *  \param lgElev         Elevation angle, in radians, of gnomonic center
      *  \param lgRoll         Roll angle, in radians, around gnomonic center
      *  \param lgFocal        Focal length, in mm, of the rectilinear image
@@ -262,7 +262,7 @@
      *                        top-left corner in the entire mapping
      *  \param lgmCornerY     Position Y, in pixels, of the equirectangular tile
      *                        top-left corner in the entire mapping
-     *  \param lgAzim         Azimut angle, in radians, of gnomonic center
+     *  \param lgAzim         Azimuth angle, in radians, of gnomonic center
      *  \param lgElev         Elevation angle, in radians, of gnomonic center
      *  \param lgRoll         Roll angle, in radians, around gnomonic center
      *  \param lgFocal        Focal length, in mm, of the rectilinear image

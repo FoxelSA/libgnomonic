@@ -108,7 +108,7 @@
                 lgDX = lgeEdgeX * ( LG_ATN( lgPvf[0] , lgPvf[1] ) / LG_PI2 );
                 lgDY = lgeEdgeY * ( ( LG_ASN( lgPvf[2] ) / LG_PI ) + lg_Real_s( 0.5 ) );
 
-                /* Interpolation process */
+                /* Assign interpolated pixel */
                 LG_B4( lgoBitmap, lgePad, lgeLayers, lgSX, lgSY, lg_Size_s( 0 ) ) = lgInter( ( li_C8_t * ) lgiBitmap, lgeWidth, lgeHeight, lgeLayers, lg_Size_s( 0 ), lgDX, lgDY );
                 LG_B4( lgoBitmap, lgePad, lgeLayers, lgSX, lgSY, lg_Size_s( 1 ) ) = lgInter( ( li_C8_t * ) lgiBitmap, lgeWidth, lgeHeight, lgeLayers, lg_Size_s( 1 ), lgDX, lgDY );
                 LG_B4( lgoBitmap, lgePad, lgeLayers, lgSX, lgSY, lg_Size_s( 2 ) ) = lgInter( ( li_C8_t * ) lgiBitmap, lgeWidth, lgeHeight, lgeLayers, lg_Size_s( 2 ), lgDX, lgDY );

@@ -88,7 +88,7 @@
      *  This function compute three angles defined rotation matrix. The matrix
      *  considers the three angles as follows :
      *
-     *  M = Rz(Azimut)Ry(Elevation)Rx(Roll)
+     *      M = Rz(Azimut)Ry(Elevation)Rx(Roll)
      *
      *  to compute the matrix entries.
      *

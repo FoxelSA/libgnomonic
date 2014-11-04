@@ -86,20 +86,31 @@
 
     /*! \brief Equirectangular mapping rotation
      *  
-     *  This function applies a rotation matrix to the sphere mapped by the 
-     *  gEqrIn equirectangular image. The result is drawn in the gEqrOut bitmap 
-     *  that has to be already allocated. The gEqrOut bitmap has to be the same
-     *  size and to have the same number of chromatic layer count than gEqrIn
-     *  bitmap.
+     *  This function allows to rotate the sphere mapped by the provided
+     *  equirectangular mapping. The result is drawn in the output bitmap that
+     *  has to be already allocated according to its parameters.
+     *
+     *  The rotation is performed considering the following frame : the x-axis
+     *  points the left edge of the mapping at half height. The y-axis points at
+     *  third fourth of the mapping width and at half of its height. The z-axis
+     *  is obtained using a cross-product, inducing a direct frame in which the 
+     *  mapped sphere is considered.
+     *
+     *  The three angles defined rotation matrix is built as follows :
+     *
+     *      M = Rz(Azimut)Ry(Elevation)Rx(Roll)
+     *
+     *  and is then used to rotate the mapped sphere.
      *  
-     *  \param lgEqrIn      Input equirectangular bitmap
-     *  \param lgEqrOut     Output equirectangular bitmap
-     *  \param lgEqrWidth   Width, in pixel, of input/output bitmaps
-     *  \param lgEqrHeight  Height, in pixel, of input/output bitmaps
-     *  \param lgEqrLayers  Chromatic layer count of input/output bitmaps
-     *  \param lgAngleX     Rotation angle, in radiant, along x-axis
-     *  \param lgAngleY     Rotation angle, in radiant, along y-axis
-     *  \param lgAngleZ     Rotation angle, in radiant, along z-axis
+     *  \param lgiBitmap    Pointer to input equirectangular bitmap
+     *  \param lgoBitmap    Pointer to output equirectangular bitmap
+     *  \param lgEqrWidth   Width, in pixels, of input/output bitmaps
+     *  \param lgeWidth     Height, in pixels, of input/output bitmaps
+     *  \param lgeLayers    Depth, in chromatic layer count, of equirectangular 
+     *                      bitmaps
+     *  \param lgAzim       Azimuth angle, in radians
+     *  \param lgElev       Elevation angle, in radians
+     *  \param lgRoll       Roll angle, in radians
      *  \param lgInter      Pointer to interpolation method function
      */
 

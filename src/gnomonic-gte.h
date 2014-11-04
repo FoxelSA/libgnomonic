@@ -105,7 +105,7 @@
      *  \param lgrHeight      Height, in pixels, of the rectilinear bitmap
      *  \param lgrLayers      Depth, in chromatic layer count, of rectilinear 
      *                        bitmap
-     *  \param lgAzim         Azimut angle, in radians, of gnomonic center
+     *  \param lgAzim         Azimuth angle, in radians, of gnomonic center
      *  \param lgElev         Elevation angle, in radians, of gnomonic center
      *  \param lgRoll         Roll angle, in radians, around gnomonic center
      *  \param lgApper        Horizontal apparture, in radians, of the gnomonic

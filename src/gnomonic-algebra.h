@@ -83,6 +83,22 @@
     Header - Function prototypes
  */
 
+    /*! \brief Three angles rectilinear to equirectangular rotation matrix
+     *
+     *  This function compute three angles defined rotation matrix. The matrix
+     *  considers the three angles as follows :
+     *
+     *  M = Rz(Azimut)Ry(Elevation)Rx(Roll)
+     *
+     *  to compute the matrix entries.
+     *
+     *  \param lgMatrix Computed rotation matrix
+     *  \param lgAzim   Azimutal angle, in radians
+     *  \param lgElev   Elevation angle, in radians
+     *  \param lgRoll   Roll angle, in radians
+     * 
+     */
+
     lg_Void_t lg_algebra_r2erotation(
 
         lg_Real_t       lgMatrix[3][3],
@@ -91,6 +107,18 @@
         lg_Real_t const lgRoll
 
     );
+
+    /*! \brief Three angles equirectangular to rectilinear rotation matrix
+     *
+     *  This function computes the three angles defined rotation matrix that
+     *  corresponds to the invert, using the same angles, of the matrix provided
+     *  by the 'lg_algebra_r2erotation' function.
+     *
+     *  \param lgMatrix Matrix to compute
+     *  \param lgAzim   Azimutal angle
+     *  \param lgElev   Elevation angle
+     *  \param lgRoll   Roll angle
+     */
 
     lg_Void_t lg_algebra_e2rrotation(
 

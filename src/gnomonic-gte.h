@@ -84,6 +84,35 @@
     Header - Function prototypes
  */
 
+    /*! \brief Rectilinear to equirectangular transform
+     *
+     *  This function offers the inverted gnomonic projection provided by the
+     *  'lg_etg_apperture' function. Their parameters are the same and have to
+     *  be understood in the exact same way.
+     *
+     *  See 'lg_etg_apperture' documentation for more information.
+     *  
+     *  \param lgeBitmap      Pointer to equirectangular tile bitmap
+     *  \param lgeWidth       Width, in pixels, of the equirectangular tile
+     *                        bitmap
+     *  \param lgeHeight      Height, in pixels, of the equirectangular tile
+     *                        bitmap
+     *  \param lgeLayers      Depth, in chromatic layer count, of equirectangular 
+     *                        tile bitmap
+     *  \param lgrBitmap      Pointer to rectilinear bitmap that recieve the 
+     *                        gnomonic projection
+     *  \param lgrWidth       Width, in pixels, of the rectilinear bitmap
+     *  \param lgrHeight      Height, in pixels, of the rectilinear bitmap
+     *  \param lgrLayers      Depth, in chromatic layer count, of rectilinear 
+     *                        bitmap
+     *  \param lgAzim         Azimut angle, in radians, of gnomonic center
+     *  \param lgElev         Elevation angle, in radians, of gnomonic center
+     *  \param lgRoll         Roll angle, in radians, around gnomonic center
+     *  \param lgApper        Horizontal apparture, in radians, of the gnomonic
+     *                        projection.
+     *  \param lgInter        Pointer to interpolation method function
+     */
+
     lg_Void_t lg_gte_apperture( 
 
         li_C8_t           * const lgeBitmap,

@@ -84,6 +84,47 @@
     Header - Function prototypes
  */
 
+    /*! \brief Rectilinear to equirectangular tile transform - Centered-specific
+     *
+     *  This function offers the inverted gnomonic projection provided by the
+     *  centered specific 'lg_ttg_center' function. Their parameters are the
+     *  same and have to be understood in the exact same way.
+     *
+     *  This function is then a front-end to the 'lg_gtt_generic' function in the
+     *  same way 'lg_ttg_center' is a front-end to the 'lg_ttg_generic' function.
+     *
+     *  See 'lg_ttg_center' documentation for more information.
+     *
+     *  \param lgeBitmap      Pointer to equirectangular tile bitmap
+     *  \param lgeWidth       Width, in pixels, of the equirectangular tile
+     *                        bitmap
+     *  \param lgeHeight      Height, in pixels, of the equirectangular tile
+     *                        bitmap
+     *  \param lgeLayers      Depth, in chromatic layer count, of equirectangular 
+     *                        tile bitmap
+     *  \param lgrBitmap      Pointer to rectilinear bitmap that recieve the 
+     *                        gnomonic projection
+     *  \param lgrWidth       Width, in pixels, of the rectilinear bitmap
+     *  \param lgrHeight      Height, in pixels, of the rectilinear bitmap
+     *  \param lgrLayers      Depth, in chromatic layer count, of rectilinear 
+     *                        bitmap
+     *  \param lgmWidth       Width, in pixels, of the entire equirectangular 
+     *                        mapping from which the tile is extracted
+     *  \param lgmHeight      Height, in pixels, of the entire equirectangular 
+     *                        mapping from which the tile is extracted
+     *  \param lgmCornerX     Position X, in pixels, of the equirectangular tile
+     *                        top-left corner in the entire mapping
+     *  \param lgmCornerY     Position Y, in pixels, of the equirectangular tile
+     *                        top-left corner in the entire mapping
+     *  \param lgAzim         Azimut angle, in radians, of gnomonic center
+     *  \param lgElev         Elevation angle, in radians, of gnomonic center
+     *  \param lgRoll         Roll angle, in radians, around gnomonic center
+     *  \param lgFocal        Focal length, in mm, of the rectilinear image
+     *  \param lgPixel        Length, in mm, of the pixels of the rectilinear
+     *                        image virtual camera
+     *  \param lgInter        Pointer to interpolation method function
+     */
+
     lg_Void_t lg_gtt_center(
 
         li_C8_t           * const lgeBitmap,
@@ -106,6 +147,52 @@
         li_Method_t const         lgInter
 
     );
+
+    /*! \brief Rectilinear to equirectangular tile transform - Elphel-specific
+     *
+     *  This function offers the inverted gnomonic projection provided by the
+     *  Elphel calibrated cameras specific 'lg_ttg_elphel' function. Their
+     *  parameters are the same and have to be understood in the exact same way.
+     *
+     *  This function is then a front-end to the 'lg_gtt_generic' function in the
+     *  same way 'lg_ttg_elphel' is a front-end to the 'lg_ttg_generic' function.
+     *
+     *  See 'lg_ttg_elphel' documentation for more information.
+     *
+     *  \param lgeBitmap      Pointer to equirectangular tile bitmap
+     *  \param lgeWidth       Width, in pixels, of the equirectangular tile
+     *                        bitmap
+     *  \param lgeHeight      Height, in pixels, of the equirectangular tile
+     *                        bitmap
+     *  \param lgeLayers      Depth, in chromatic layer count, of equirectangular 
+     *                        tile bitmap
+     *  \param lgrBitmap      Pointer to rectilinear bitmap that recieve the 
+     *                        gnomonic projection
+     *  \param lgrWidth       Width, in pixels, of the rectilinear bitmap
+     *  \param lgrHeight      Height, in pixels, of the rectilinear bitmap
+     *  \param lgrLayers      Depth, in chromatic layer count, of rectilinear 
+     *                        bitmap
+     *  \param lgrSightX      Position X, in pixels on rectilinear image,of the
+     *                        gnomonic projection center
+     *  \param lgrSightY      Position Y, in pixels on rectilinear image,of the
+     *                        gnomonic projection center
+     *  \param lgmWidth       Width, in pixels, of the entire equirectangular 
+     *                        mapping from which the tile is extracted
+     *  \param lgmHeight      Height, in pixels, of the entire equirectangular 
+     *                        mapping from which the tile is extracted
+     *  \param lgmCornerX     Position X, in pixels, of the equirectangular tile
+     *                        top-left corner in the entire mapping
+     *  \param lgmCornerY     Position Y, in pixels, of the equirectangular tile
+     *                        top-left corner in the entire mapping
+     *  \param lgRoll         Elphel calirbation roll angle, in radians
+     *  \param lgAzim         Elphel calirbation azimuth angle, in radians
+     *  \param lgElev         Elphel calirbation elevation angle, in radians
+     *  \param lgHead         Elphel calirbation heading angle, in radians
+     *  \param lgFocal        Focal length, in mm, of the rectilinear image
+     *  \param lgPixel        Length, in mm, of the pixels of the rectilinear
+     *                        image virtual camera
+     *  \param lgInter        Pointer to interpolation method function
+     */
 
     lg_Void_t lg_gtt_elphel(
 
@@ -132,6 +219,57 @@
         li_Method_t const         lgInter
 
     );
+
+    /*! \brief Rectilinear to equirectangular tile transform
+     *
+     *  This function offers the inverted gnomonic projection provided by the
+     *  generic function 'lg_ttg_generic'. Their parameters are the same and
+     *  have to be understood in the exact same way.
+     *
+     *  The input rectilinear bitmap has to be a three or four chromatic layers 
+     *  bitmap and the output equirectangular bitmap has to be already allocated
+     *  according to its parameters and has to come with three or four chromatic
+     *  layers. The bitmaps are standard bitmaps that considers byte padding in
+     *  memory.
+     *
+     *  When input rectilinear bitmap comes with an alpha channel, it is used
+     *  do define rectilinear pixels transparency. If the output equirectangular
+     *  bitmap is allocated with an alpha channel, the de-projected alpha channel
+     *  of the rectilinear bitmap is stored in the equirectangular alpha channel.
+     *
+     *  \param lgeBitmap      Pointer to equirectangular tile bitmap
+     *  \param lgeWidth       Width, in pixels, of the equirectangular tile
+     *                        bitmap
+     *  \param lgeHeight      Height, in pixels, of the equirectangular tile
+     *                        bitmap
+     *  \param lgeLayers      Depth, in chromatic layer count, of equirectangular 
+     *                        tile bitmap
+     *  \param lgrBitmap      Pointer to rectilinear bitmap that recieve the 
+     *                        gnomonic projection
+     *  \param lgrWidth       Width, in pixels, of the rectilinear bitmap
+     *  \param lgrHeight      Height, in pixels, of the rectilinear bitmap
+     *  \param lgrLayers      Depth, in chromatic layer count, of rectilinear 
+     *                        bitmap
+     *  \param lgrSightX      Position X, in pixels on rectilinear image,of the
+     *                        gnomonic projection center
+     *  \param lgrSightY      Position Y, in pixels on rectilinear image,of the
+     *                        gnomonic projection center
+     *  \param lgmWidth       Width, in pixels, of the entire equirectangular 
+     *                        mapping from which the tile is extracted
+     *  \param lgmHeight      Height, in pixels, of the entire equirectangular 
+     *                        mapping from which the tile is extracted
+     *  \param lgmCornerX     Position X, in pixels, of the equirectangular tile
+     *                        top-left corner in the entire mapping
+     *  \param lgmCornerY     Position Y, in pixels, of the equirectangular tile
+     *                        top-left corner in the entire mapping
+     *  \param lgAzim         Azimut angle, in radians, of gnomonic center
+     *  \param lgElev         Elevation angle, in radians, of gnomonic center
+     *  \param lgRoll         Roll angle, in radians, around gnomonic center
+     *  \param lgFocal        Focal length, in mm, of the rectilinear image
+     *  \param lgPixel        Length, in mm, of the pixels of the rectilinear
+     *                        image virtual camera
+     *  \param lgInter        Pointer to interpolation method function
+     */
 
     lg_Void_t lg_gtt_generic(
 

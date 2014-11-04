@@ -62,6 +62,7 @@
  */
 
     # include "gnomonic.h"
+    # include "gnomonic-algebra.h"
 
 /*
     Header - Preprocessor definitions
@@ -104,14 +105,14 @@
 
     lg_Void_t lg_transform_rotate( 
 
-        li_C8_t     const * const lgEqrIn,
-        li_C8_t           * const lgEqrOut,
-        lg_Size_t   const         lgEqrWidth,
-        lg_Size_t   const         lgEqrHeight,
-        lg_Size_t   const         lgEqrLayers,
-        lg_Real_t   const         lgAngleX,
-        lg_Real_t   const         lgAngleY,
-        lg_Real_t   const         lgAngleZ,
+        li_C8_t     const * const lgiBitmap,
+        li_C8_t           * const lgoBitmap,
+        lg_Size_t   const         lgeWidth,
+        lg_Size_t   const         lgeHeight,
+        lg_Size_t   const         lgeLayers,
+        lg_Real_t   const         lgAzim,
+        lg_Real_t   const         lgElev,
+        lg_Real_t   const         lgRoll,
         li_Method_t const         lgInter
 
     );

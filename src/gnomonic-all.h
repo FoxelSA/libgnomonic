@@ -73,19 +73,6 @@
     Header - Preprocessor definitions
  */
 
-    /* Ascending compatibility - Macros */
-    # define GNOMONIC_PI                LG_PI
-
-    /* Ascending compatibility - Functions */
-    # define gnomonic_transform_rotate  lg_transform_rotate /* Beta 0.2 */
-    # define lg_ttg_focal               lg_ttg_center       /* Beta 0.2 */
-    # define lg_ttg_uc                  lg_ttg_elphel       /* Beta 0.2 */
-
-    /* Ascending compatibility - Types */
-    # define gnomonic_Void_t            lg_Void_t           /* Beta 0.2 */
-    # define gnomonic_Index_t           lg_Size_t           /* Beta 0.2 */
-    # define gnomonic_Real_t            lg_Real_t           /* Beta 0.2 */
-
 /*
     Header - Preprocessor macros
  */

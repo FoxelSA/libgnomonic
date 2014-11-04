@@ -49,86 +49,69 @@
 
     lg_Void_t lg_transform_rotate( 
 
-        li_C8_t     const * const lgEqrIn,
-        li_C8_t           * const lgEqrOut,
-        lg_Size_t   const         lgEqrWidth,
-        lg_Size_t   const         lgEqrHeight,
-        lg_Size_t   const         lgEqrLayers,
-        lg_Real_t   const         lgAngleX,
-        lg_Real_t   const         lgAngleY,
-        lg_Real_t   const         lgAngleZ,
+        li_C8_t     const * const lgiBitmap,
+        li_C8_t           * const lgoBitmap,
+        lg_Size_t   const         lgeWidth,
+        lg_Size_t   const         lgeHeight,
+        lg_Size_t   const         lgeLayers,
+        lg_Real_t   const         lgAzim,
+        lg_Real_t   const         lgElev,
+        lg_Real_t   const         lgRoll,
         li_Method_t const         lgInter
 
     ) {
 
-        /* Position angles */
-        lg_Real_t lgAH = lg_Real_s( 0.0 );
-        lg_Real_t lgAV = lg_Real_s( 0.0 );
-
-        /* Positionning variables */
+        /* Coordinates variables */
+        lg_Size_t lgSX = lg_Size_s( 0   );
+        lg_Size_t lgSY = lg_Size_s( 0   );
         lg_Real_t lgDX = lg_Real_s( 0.0 );
         lg_Real_t lgDY = lg_Real_s( 0.0 );
 
-        /* Parsing variable */
-        lg_Size_t lgSX = lg_Real_s( 0.0 );
-        lg_Size_t lgSY = lg_Real_s( 0.0 );
+        /* Optimization variables */
+        lg_Real_t lgeEdgeX = lgeWidth  - lg_Size_s( 1 );
+        lg_Real_t lgeEdgeY = lgeHeight - lg_Size_s( 1 );
 
-        /* Sphere point vectors */
-        lg_Real_t lgVectori[3] = { lg_Real_s( 0.0 ) };
-        lg_Real_t lgVectorf[3] = { lg_Real_s( 0.0 ) };
+        /* Position vector variables */
+        lg_Real_t lgPvi[3] = { lg_Real_s( 0.0 ) };
+        lg_Real_t lgPvf[3] = { lg_Real_s( 0.0 ) };
 
-        /* Rotation matrix */
-        lg_Real_t lgMatrix[3][3] = {
-            { 
-                + cos( lgAngleZ ) * cos( lgAngleY ), 
-                + sin( lgAngleZ ) * cos( lgAngleX ) + cos( lgAngleZ ) * sin( lgAngleY ) * sin( lgAngleX ), 
-                + sin( lgAngleZ ) * sin( lgAngleX ) - cos( lgAngleZ ) * sin( lgAngleY ) * cos( lgAngleX ) 
-            }, { 
-                - sin( lgAngleZ ) * cos( lgAngleY ), 
-                + cos( lgAngleZ ) * cos( lgAngleX ) - sin( lgAngleZ ) * sin( lgAngleY ) * sin( lgAngleX ), 
-                + cos( lgAngleZ ) * sin( lgAngleX ) + sin( lgAngleZ ) * sin( lgAngleY ) * cos( lgAngleX ) 
-            }, { 
-                + sin( lgAngleY ), 
-                - cos( lgAngleY ) * sin( lgAngleX ), 
-                + cos( lgAngleY ) * cos( lgAngleX ) 
-            }
-        };
+        /* Rotation matrix variables */
+        lg_Real_t lgMat[3][3] = { { lg_Real_s( 0.0 ) } };
 
-        /* Padding variable */
-        lg_Size_t lgEqrPad = lgEqrWidth * lgEqrLayers; if ( lgEqrPad % lg_Size_s( 4 ) ) lgEqrPad += lg_Size_s( 4 ) - lgEqrPad % lg_Size_s( 4 );
+        /* Bitmap padding variable */
+        lg_Size_t lgePad = LG_B4PAD( lgeWidth * lgeLayers );
+
+        /* Compute rotation matrix */
+        lg_algebra_r2erotation( lgMat, lgAzim, lgElev, lgRoll );
 
         /* Processing loop on y */
-        for ( lgSY = lg_Size_s( 0 ); lgSY < lgEqrHeight; lgSY ++ ) {
+        for ( lgSY = lg_Size_s( 0 ); lgSY < lgeHeight; lgSY ++ ) {
 
             /* Processing loop on x */
-            for ( lgSX = lg_Size_s( 0 ); lgSX < lgEqrWidth; lgSX ++ ) {
+            for ( lgSX = lg_Size_s( 0 ); lgSX < lgeWidth; lgSX ++ ) {
 
-                /* Retrive position angles from pixels */
-                lgAH = ( ( lg_Real_c( lgSX ) / lg_Real_c( lgEqrWidth  - lg_Size_s( 1 ) ) ) * lg_Real_s( 2.0 ) ) * LG_PI;
-                lgAV = ( ( lg_Real_c( lgSY ) / lg_Real_c( lgEqrHeight - lg_Size_s( 1 ) ) ) - lg_Real_s( 0.5 ) ) * LG_PI;
+                /* Compute mapping pixel angular coordinates */
+                lgDX = ( ( lg_Real_c( lgSX ) / lgeEdgeX ) * lg_Real_s( 2.0 ) ) * LG_PI;
+                lgDY = ( ( lg_Real_c( lgSY ) / lgeEdgeY ) - lg_Real_s( 0.5 ) ) * LG_PI;
 
-                /* Retrieve initial vector on sphere */
-                lgVectori[0] = cos( lgAH ) * cos( lgAV );
-                lgVectori[1] = sin( lgAH ) * cos( lgAV );
-                lgVectori[2] = sin( lgAV );
+                /* Compute pixel position in 3d-frame */
+                lgPvi[0] = cos( lgDY ) * cos( lgDX );
+                lgPvi[1] = cos( lgDY ) * sin( lgDX );
+                lgPvi[2] = sin( lgDY );
 
-                /* Apply rotation transform */
-                lgVectorf[0] = lgMatrix[0][0] * lgVectori[0] + lgMatrix[0][1] * lgVectori[1] + lgMatrix[0][2] * lgVectori[2];
-                lgVectorf[1] = lgMatrix[1][0] * lgVectori[0] + lgMatrix[1][1] * lgVectori[1] + lgMatrix[1][2] * lgVectori[2];
-                lgVectorf[2] = lgMatrix[2][0] * lgVectori[0] + lgMatrix[2][1] * lgVectori[1] + lgMatrix[2][2] * lgVectori[2];
+                /* Compute rotated pixel position in 3d-frame */
+                lgPvf[0] = lgMat[0][0] * lgPvi[0] + lgMat[0][1] * lgPvi[1] + lgMat[0][2] * lgPvi[2];
+                lgPvf[1] = lgMat[1][0] * lgPvi[0] + lgMat[1][1] * lgPvi[1] + lgMat[1][2] * lgPvi[2];
+                lgPvf[2] = lgMat[2][0] * lgPvi[0] + lgMat[2][1] * lgPvi[1] + lgMat[2][2] * lgPvi[2];
 
-                /* Retreive angular position */
-                lgAH = LG_ATN( lgVectorf[0] , lgVectorf[1] );
-                lgAV = LG_ASN( lgVectorf[2] );
-
-                /* Retrieve panoramic pixel coordinates */
-                lgDX = ( lgEqrWidth  - lg_Size_s( 1 ) ) * ( lgAH / LG_PI2 );
-                lgDY = ( lgEqrHeight - lg_Size_s( 1 ) ) * ( ( lgAV / LG_PI ) + lg_Real_s( 0.5 ) );
+                /* Retrieve mapping pixel (x,y)-coordinates */
+                lgDX = lgeEdgeX * ( LG_ATN( lgPvf[0] , lgPvf[1] ) / LG_PI2 );
+                lgDY = lgeEdgeY * ( ( LG_ASN( lgPvf[2] ) / LG_PI ) + lg_Real_s( 0.5 ) );
 
                 /* Interpolation process */
-                LG_B4( lgEqrOut, lgEqrPad, lgEqrLayers, lgSX, lgSY, lg_Size_s( 0 ) ) = lgInter( ( li_C8_t * ) lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayers, lg_Size_s( 0 ), lgDX, lgDY );
-                LG_B4( lgEqrOut, lgEqrPad, lgEqrLayers, lgSX, lgSY, lg_Size_s( 1 ) ) = lgInter( ( li_C8_t * ) lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayers, lg_Size_s( 1 ), lgDX, lgDY );
-                LG_B4( lgEqrOut, lgEqrPad, lgEqrLayers, lgSX, lgSY, lg_Size_s( 2 ) ) = lgInter( ( li_C8_t * ) lgEqrIn, lgEqrWidth, lgEqrHeight, lgEqrLayers, lg_Size_s( 2 ), lgDX, lgDY );
+                LG_B4( lgoBitmap, lgePad, lgeLayers, lgSX, lgSY, lg_Size_s( 0 ) ) = lgInter( ( li_C8_t * ) lgiBitmap, lgeWidth, lgeHeight, lgeLayers, lg_Size_s( 0 ), lgDX, lgDY );
+                LG_B4( lgoBitmap, lgePad, lgeLayers, lgSX, lgSY, lg_Size_s( 1 ) ) = lgInter( ( li_C8_t * ) lgiBitmap, lgeWidth, lgeHeight, lgeLayers, lg_Size_s( 1 ), lgDX, lgDY );
+                LG_B4( lgoBitmap, lgePad, lgeLayers, lgSX, lgSY, lg_Size_s( 2 ) ) = lgInter( ( li_C8_t * ) lgiBitmap, lgeWidth, lgeHeight, lgeLayers, lg_Size_s( 2 ), lgDX, lgDY );
 
             }
 

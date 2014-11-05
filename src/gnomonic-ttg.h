@@ -90,20 +90,10 @@
 
     /*! \brief Equirectangular tile to rectilinear transform - Centered-specific
      *
-     *  This function offers a front-end to the generic projection function
-     *  lg_ttg_generic. It simplifies the call of the generic function in case
-     *  the gnomonic projection center match the center of the rectilinear image.
+     *  This function is the mono-threaded front-end to the definition of the
+     *  lg_ttg_centerp.
      *
-     *  The lgrSightX and lgrSightY parameters passed to the generic function
-     *  are computed as follows : 
-     *  
-     *  lgrSightX = lgrWidth  / 2
-     *  lgrSightY = lgrHeight / 2
-     *
-     *  inducing matching of rectilinear image center and gnomonic projection
-     *  center.
-     *
-     *  See lg_ttg_generic documentation for more information.
+     *  See lg_ttg_centerp documentation for more information.
      *
      *  \param lgeBitmap      Pointer to equirectangular tile bitmap
      *  \param lgeWidth       Width, in pixels, of the equirectangular tile
@@ -158,22 +148,84 @@
 
     );
 
-    /*! \brief Equirectangular tile to rectilinear transform - Elphel-specific
+    /*! \brief Equirectangular tile to rectilinear transform - Centered-specific
      *
      *  This function offers a front-end to the generic projection function
-     *  lg_ttg_generic. It simplifies the gnomonic projection call in case
-     *  where equirectangular tiles come from Elphel calibrated camera post
-     *  processing
+     *  lg_ttg_generic. It simplifies the call of the generic function in case
+     *  the gnomonic projection center match the center of the rectilinear image.
      *
-     *  The front-end function sends
+     *  The lgrSightX and lgrSightY parameters passed to the generic function
+     *  are computed as follows : 
+     *  
+     *  lgrSightX = lgrWidth  / 2
+     *  lgrSightY = lgrHeight / 2
      *
-     *  lgAzim + lgHead + PI
-     *
-     *  as the lgAzim parameter of the generic function, matching the Elphel and
-     *  libgnomonic referentials and definitions. The parameters lgRoll and
-     *  lgElev are sent without any change.
+     *  inducing matching of rectilinear image center and gnomonic projection
+     *  center.
      *
      *  See lg_ttg_generic documentation for more information.
+     *
+     *  \param lgeBitmap      Pointer to equirectangular tile bitmap
+     *  \param lgeWidth       Width, in pixels, of the equirectangular tile
+     *                        bitmap
+     *  \param lgeHeight      Height, in pixels, of the equirectangular tile
+     *                        bitmap
+     *  \param lgeLayers      Depth, in chromatic layer count, of equirectangular 
+     *                        tile bitmap
+     *  \param lgrBitmap      Pointer to rectilinear bitmap that recieve the 
+     *                        gnomonic projection
+     *  \param lgrWidth       Width, in pixels, of the rectilinear bitmap
+     *  \param lgrHeight      Height, in pixels, of the rectilinear bitmap
+     *  \param lgrLayers      Depth, in chromatic layer count, of rectilinear 
+     *                        bitmap
+     *  \param lgmWidth       Width, in pixels, of the entire equirectangular 
+     *                        mapping from which the tile is extracted
+     *  \param lgmHeight      Height, in pixels, of the entire equirectangular 
+     *                        mapping from which the tile is extracted
+     *  \param lgmCornerX     Position X, in pixels, of the equirectangular tile
+     *                        top-left corner in the entire mapping
+     *  \param lgmCornerY     Position Y, in pixels, of the equirectangular tile
+     *                        top-left corner in the entire mapping
+     *  \param lgAzim         Azimuth angle, in radians, of gnomonic center
+     *  \param lgElev         Elevation angle, in radians, of gnomonic center
+     *  \param lgRoll         Roll angle, in radians, around gnomonic center
+     *  \param lgFocal        Focal length, in mm, of the rectilinear image
+     *  \param lgPixel        Length, in mm, of the pixels of the rectilinear
+     *                        image virtual camera
+     *  \param lgInter        Pointer to interpolation method function
+     *  \param lgThread       Thread number (OpenMP)
+     */
+
+    lg_Void_t lg_ttg_centerp(
+
+        li_C8_t     const * const lgeBitmap,
+        lg_Size_t   const         lgeWidth,
+        lg_Size_t   const         lgeHeight,
+        lg_Size_t   const         lgeLayers,
+        li_C8_t           * const lgrBitmap,
+        lg_Size_t   const         lgrWidth,
+        lg_Size_t   const         lgrHeight,
+        lg_Size_t   const         lgrLayers,
+        lg_Size_t   const         lgmWidth,
+        lg_Size_t   const         lgmHeight,
+        lg_Size_t   const         lgmCornerX,
+        lg_Size_t   const         lgmCornerY,
+        lg_Real_t   const         lgAzim,
+        lg_Real_t   const         lgElev,
+        lg_Real_t   const         lgRoll,
+        lg_Real_t   const         lgFocal,
+        lg_Real_t   const         lgPixel,
+        li_Method_t const         lgInter,
+        lg_Size_t   const         lgThread
+
+    );
+
+    /*! \brief Equirectangular tile to rectilinear transform - Elphel-specific
+     *
+     *  This function is the mono-threaded front-end to the definition of the
+     *  lg_ttg_elphelp.
+     *
+     *  See lg_ttg_elphelp documentation for more information.
      *  
      *  \param lgeBitmap      Pointer to equirectangular tile bitmap
      *  \param lgeWidth       Width, in pixels, of the equirectangular tile
@@ -233,6 +285,86 @@
         lg_Real_t   const         lgPixel,
         lg_Real_t   const         lgFocal,
         li_Method_t const         lgInter
+
+    );
+
+    /*! \brief Equirectangular tile to rectilinear transform - Elphel-specific
+     *
+     *  This function offers a front-end to the generic projection function
+     *  lg_ttg_generic. It simplifies the gnomonic projection call in case
+     *  where equirectangular tiles come from Elphel calibrated camera post
+     *  processing
+     *
+     *  The front-end function sends
+     *
+     *  lgAzim + lgHead + PI
+     *
+     *  as the lgAzim parameter of the generic function, matching the Elphel and
+     *  libgnomonic referentials and definitions. The parameters lgRoll and
+     *  lgElev are sent without any change.
+     *
+     *  See lg_ttg_generic documentation for more information.
+     *  
+     *  \param lgeBitmap      Pointer to equirectangular tile bitmap
+     *  \param lgeWidth       Width, in pixels, of the equirectangular tile
+     *                        bitmap
+     *  \param lgeHeight      Height, in pixels, of the equirectangular tile
+     *                        bitmap
+     *  \param lgeLayers      Depth, in chromatic layer count, of equirectangular 
+     *                        tile bitmap
+     *  \param lgrBitmap      Pointer to rectilinear bitmap that recieve the 
+     *                        gnomonic projection
+     *  \param lgrWidth       Width, in pixels, of the rectilinear bitmap
+     *  \param lgrHeight      Height, in pixels, of the rectilinear bitmap
+     *  \param lgrLayers      Depth, in chromatic layer count, of rectilinear 
+     *                        bitmap
+     *  \param lgrSightX      Position X, in pixels on rectilinear image,of the
+     *                        gnomonic projection center
+     *  \param lgrSightY      Position Y, in pixels on rectilinear image,of the
+     *                        gnomonic projection center
+     *  \param lgmWidth       Width, in pixels, of the entire equirectangular 
+     *                        mapping from which the tile is extracted
+     *  \param lgmHeight      Height, in pixels, of the entire equirectangular 
+     *                        mapping from which the tile is extracted
+     *  \param lgmCornerX     Position X, in pixels, of the equirectangular tile
+     *                        top-left corner in the entire mapping
+     *  \param lgmCornerY     Position Y, in pixels, of the equirectangular tile
+     *                        top-left corner in the entire mapping
+     *  \param lgRoll         Elphel calirbation roll angle, in radians
+     *  \param lgAzim         Elphel calirbation azimuth angle, in radians
+     *  \param lgElev         Elphel calirbation elevation angle, in radians
+     *  \param lgHead         Elphel calirbation heading angle, in radians
+     *  \param lgFocal        Focal length, in mm, of the rectilinear image
+     *  \param lgPixel        Length, in mm, of the pixels of the rectilinear
+     *                        image virtual camera
+     *  \param lgInter        Pointer to interpolation method function
+     *  \param lgThread       Thread number (OpenMP)
+     */
+
+    lg_Void_t lg_ttg_elphelp(
+
+        li_C8_t     const * const lgeBitmap,
+        lg_Size_t   const         lgeWidth,
+        lg_Size_t   const         lgeHeight,
+        lg_Size_t   const         lgeLayers,
+        li_C8_t           * const lgrBitmap,
+        lg_Size_t   const         lgrWidth,
+        lg_Size_t   const         lgrHeight,
+        lg_Size_t   const         lgrLayers,
+        lg_Real_t   const         lgrSightX,
+        lg_Real_t   const         lgrSightY,
+        lg_Size_t   const         lgmWidth,
+        lg_Size_t   const         lgmHeight,
+        lg_Size_t   const         lgmCornerX,
+        lg_Size_t   const         lgmCornerY,
+        lg_Real_t   const         lgRoll,
+        lg_Real_t   const         lgAzim,
+        lg_Real_t   const         lgElev,
+        lg_Real_t   const         lgHead,
+        lg_Real_t   const         lgPixel,
+        lg_Real_t   const         lgFocal,
+        li_Method_t const         lgInter,
+        lg_Size_t   const         lgThread
 
     );
 

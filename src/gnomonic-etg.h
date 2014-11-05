@@ -89,8 +89,6 @@
      *  This function is the mono-threaded front-end to the definition of the
      *  lg_etg_apperturep.
      *
-     *  See lg_etg_apperturep documentation for more information.
-     *
      *  \param lgeBitmap      Pointer to equirectangular tile bitmap
      *  \param lgeWidth       Width, in pixels, of the equirectangular tile
      *                        bitmap
@@ -141,8 +139,6 @@
      *  The focal length and pixel length are computed using the provided
      *  horizontal apperture of the gnomonic projection and the width/height
      *  ratio of the rectilinear bitmap to fill.
-     *
-     *  See lg_ttg_generic documentation for more information.
      *
      *  \param lgeBitmap      Pointer to equirectangular tile bitmap
      *  \param lgeWidth       Width, in pixels, of the equirectangular tile

@@ -89,8 +89,6 @@
      *  This function is the mono-threaded front-end to the definition of the
      *  lg_gtt_centerp.
      *
-     *  See lg_gtt_centerp documentation for more information.
-     *
      *  \param lgeBitmap      Pointer to equirectangular tile bitmap
      *  \param lgeWidth       Width, in pixels, of the equirectangular tile
      *                        bitmap
@@ -153,8 +151,6 @@
      *  This function is then a front-end to the lg_gtt_generic function in the
      *  same way lg_ttg_center is a front-end to the lg_ttg_generic function.
      *
-     *  See lg_ttg_center documentation for more information.
-     *
      *  \param lgeBitmap      Pointer to equirectangular tile bitmap
      *  \param lgeWidth       Width, in pixels, of the equirectangular tile
      *                        bitmap
@@ -214,8 +210,6 @@
      *
      *  This function is the mono-threaded front-end to the definition of the
      *  lg_gtt_elphelp.
-     *
-     *  See lg_gtt_elphelp documentation for more information.
      *
      *  \param lgeBitmap      Pointer to equirectangular tile bitmap
      *  \param lgeWidth       Width, in pixels, of the equirectangular tile
@@ -287,8 +281,6 @@
      *  This function is then a front-end to the lg_gtt_generic function in the
      *  same way lg_ttg_elphel is a front-end to the lg_ttg_generic function.
      *
-     *  See lg_ttg_elphel documentation for more information.
-     *
      *  \param lgeBitmap      Pointer to equirectangular tile bitmap
      *  \param lgeWidth       Width, in pixels, of the equirectangular tile
      *                        bitmap
@@ -356,8 +348,6 @@
      *
      *  This function is the mono-threaded front-end to the definition of the
      *  lg_gtt_genericp.
-     *
-     *  See lg_gtt_genericp documentation for more information.
      *
      *  \param lgeBitmap      Pointer to equirectangular tile bitmap
      *  \param lgeWidth       Width, in pixels, of the equirectangular tile

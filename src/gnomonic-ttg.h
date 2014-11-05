@@ -93,8 +93,6 @@
      *  This function is the mono-threaded front-end to the definition of the
      *  lg_ttg_centerp.
      *
-     *  See lg_ttg_centerp documentation for more information.
-     *
      *  \param lgeBitmap      Pointer to equirectangular tile bitmap
      *  \param lgeWidth       Width, in pixels, of the equirectangular tile
      *                        bitmap
@@ -163,8 +161,6 @@
      *  inducing matching of rectilinear image center and gnomonic projection
      *  center.
      *
-     *  See lg_ttg_generic documentation for more information.
-     *
      *  \param lgeBitmap      Pointer to equirectangular tile bitmap
      *  \param lgeWidth       Width, in pixels, of the equirectangular tile
      *                        bitmap
@@ -224,8 +220,6 @@
      *
      *  This function is the mono-threaded front-end to the definition of the
      *  lg_ttg_elphelp.
-     *
-     *  See lg_ttg_elphelp documentation for more information.
      *  
      *  \param lgeBitmap      Pointer to equirectangular tile bitmap
      *  \param lgeWidth       Width, in pixels, of the equirectangular tile
@@ -302,8 +296,6 @@
      *  as the lgAzim parameter of the generic function, matching the Elphel and
      *  libgnomonic referentials and definitions. The parameters lgRoll and
      *  lgElev are sent without any change.
-     *
-     *  See lg_ttg_generic documentation for more information.
      *  
      *  \param lgeBitmap      Pointer to equirectangular tile bitmap
      *  \param lgeWidth       Width, in pixels, of the equirectangular tile
@@ -372,8 +364,6 @@
      * 
      *  This function is the mono-threaded front-end to the definition of the
      *  lg_ttg_genericp.
-     *
-     *  See lg_ttg_genericp documentation for more information.
      *
      *  \param lgeBitmap      Pointer to equirectangular tile bitmap
      *  \param lgeWidth       Width, in pixels, of the equirectangular tile

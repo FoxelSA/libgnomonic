@@ -89,8 +89,6 @@
      *  This function is the mono-threaded front-end to the definition of the
      *  lg_transform_rotatep.
      *
-     *  See lg_transform_rotatep documentation for more information.
-     *
      *  \param lgiBitmap    Pointer to input equirectangular bitmap
      *  \param lgoBitmap    Pointer to output equirectangular bitmap
      *  \param lgeWidth     Width, in pixels, of input/output bitmaps

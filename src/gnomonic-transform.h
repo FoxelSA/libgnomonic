@@ -104,8 +104,8 @@
      *  
      *  \param lgiBitmap    Pointer to input equirectangular bitmap
      *  \param lgoBitmap    Pointer to output equirectangular bitmap
-     *  \param lgEqrWidth   Width, in pixels, of input/output bitmaps
-     *  \param lgeWidth     Height, in pixels, of input/output bitmaps
+     *  \param lgeWidth     Width, in pixels, of input/output bitmaps
+     *  \param lgeHeight    Height, in pixels, of input/output bitmaps
      *  \param lgeLayers    Depth, in chromatic layer count, of equirectangular 
      *                      bitmaps
      *  \param lgAzim       Azimuth angle, in radians
@@ -125,6 +125,21 @@
         lg_Real_t   const         lgElev,
         lg_Real_t   const         lgRoll,
         li_Method_t const         lgInter
+
+    );
+
+    lg_Void_t lg_transform_rotatep( 
+
+        li_C8_t     const * const lgiBitmap,
+        li_C8_t           * const lgoBitmap,
+        lg_Size_t   const         lgeWidth,
+        lg_Size_t   const         lgeHeight,
+        lg_Size_t   const         lgeLayers,
+        lg_Real_t   const         lgAzim,
+        lg_Real_t   const         lgElev,
+        lg_Real_t   const         lgRoll,
+        li_Method_t const         lgInter,
+        lg_Size_t   const         lgThread
 
     );
 

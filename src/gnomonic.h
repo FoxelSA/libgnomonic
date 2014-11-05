@@ -98,6 +98,9 @@
     # include <stdio.h>
     # include <math.h>
     # include <stdint.h>
+    # ifdef __OPENMP__
+    # include <omp.h>
+    # endif
     # include "inter-all.h"
 
 /*

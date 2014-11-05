@@ -59,6 +59,34 @@
         lg_Real_t   const         lgRoll,
         li_Method_t const         lgInter
 
+    ) { return( lg_transform_rotatep(
+
+            lgiBitmap,
+            lgoBitmap,
+            lgeWidth,
+            lgeHeight,
+            lgeLayers,
+            lgAzim,
+            lgElev,
+            lgRoll,
+            lgInter,
+            lg_Size_s( 1 )
+
+    ) ); }
+
+    lg_Void_t lg_transform_rotatep( 
+
+        li_C8_t     const * const lgiBitmap,
+        li_C8_t           * const lgoBitmap,
+        lg_Size_t   const         lgeWidth,
+        lg_Size_t   const         lgeHeight,
+        lg_Size_t   const         lgeLayers,
+        lg_Real_t   const         lgAzim,
+        lg_Real_t   const         lgElev,
+        lg_Real_t   const         lgRoll,
+        li_Method_t const         lgInter,
+        lg_Size_t   const         lgThread
+
     ) {
 
         /* Coordinates variables */
@@ -85,6 +113,11 @@
         lg_algebra_r2erotation( lgMat, lgAzim, lgElev, lgRoll );
 
         /* Processing loop on y */
+        # ifdef __OPENMP__
+        # pragma omp parallel private(lgSX,lgSY,lgDX,lgDY,lgPvi,lgPvf) num_threads( lgThread )
+        {
+        # pragma omp for 
+        # endif
         for ( lgSY = lg_Size_s( 0 ); lgSY < lgeHeight; lgSY ++ ) {
 
             /* Processing loop on x */
@@ -116,6 +149,10 @@
             }
 
         }
+
+        # ifdef __OPENMP__
+        }
+        # endif 
 
     }
 

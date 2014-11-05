@@ -87,10 +87,10 @@
     /*! \brief Rectilinear to equirectangular transform
      *
      *  This function offers the inverted gnomonic projection provided by the
-     *  'lg_etg_apperture' function. Their parameters are the same and have to
-     *  be understood in the exact same way.
+     *  lg_etg_apperture function. Their parameters are the same and have to be
+     *  understood in the exact same way.
      *
-     *  See 'lg_etg_apperture' documentation for more information.
+     *  See lg_etg_apperture documentation for more information.
      *  
      *  \param lgeBitmap      Pointer to equirectangular tile bitmap
      *  \param lgeWidth       Width, in pixels, of the equirectangular tile

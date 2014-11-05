@@ -84,12 +84,12 @@
     Header - Function prototypes
  */
 
-    /*! \brief Equirectangular mapping rotation (Mono-thread front-end)
+    /*! \brief Equirectangular mapping rotation
      *
      *  This function is the mono-threaded front-end to the definition of the
      *  lg_transform_rotatep.
      *
-     *  See 'lg_transform_rotatep' documentation for more information.
+     *  See lg_transform_rotatep documentation for more information.
      *
      *  \param lgiBitmap    Pointer to input equirectangular bitmap
      *  \param lgoBitmap    Pointer to output equirectangular bitmap
@@ -101,7 +101,7 @@
      *  \param lgElev       Elevation angle, in radians
      *  \param lgRoll       Roll angle, in radians
      *  \param lgInter      Pointer to interpolation method function
-    */
+     */
 
     lg_Void_t lg_transform_rotate( 
 
@@ -117,7 +117,7 @@
 
     );
 
-    /*! \brief Equirectangular mapping rotation (Definition)
+    /*! \brief Equirectangular mapping rotation
      *  
      *  This function allows to rotate the sphere mapped by the provided
      *  equirectangular mapping. The result is drawn in the output bitmap that
@@ -131,7 +131,7 @@
      *
      *  The three angles defined rotation matrix is built as follows :
      *
-     *      M = Rz(Azimut)Ry(Elevation)Rx(Roll)
+     *      M = Rz(Azimuth)Ry(Elevation)Rx(Roll)
      *
      *  and is then used to rotate the mapped sphere.
      *  

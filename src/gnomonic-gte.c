@@ -63,32 +63,28 @@
         lg_Real_t   const         lgApper,
         li_Method_t const         lgInter
 
-    ) {
+    ) { lg_gtt_generic(
 
-        lg_gtt_generic(
+        lgeBitmap,
+        lgeWidth,
+        lgeHeight,
+        lgeLayers,
+        lgrBitmap,
+        lgrWidth,
+        lgrHeight,
+        lgrLayers,
+        lg_Real_c( lgrWidth  ) / lg_Real_s( 2.0 ),
+        lg_Real_c( lgrHeight ) / lg_Real_s( 2.0 ),
+        lgeWidth,
+        lgeHeight,
+        lg_Real_s( 0.0 ),
+        lg_Real_s( 0.0 ),
+        lgAzim,
+        lgElev,
+        lgRoll,
+        lg_Real_s( 1.0 ),
+        lg_Real_s( 2.0 ) * tan( lgApper / lg_Real_s( 2.0 ) ) / lgrWidth,
+        lgInter
 
-            lgeBitmap,
-            lgeWidth,
-            lgeHeight,
-            lgeLayers,
-            lgrBitmap,
-            lgrWidth,
-            lgrHeight,
-            lgrLayers,
-            lg_Real_c( lgrWidth  ) / lg_Real_s( 2.0 ),
-            lg_Real_c( lgrHeight ) / lg_Real_s( 2.0 ),
-            lgeWidth,
-            lgeHeight,
-            lg_Real_s( 0.0 ),
-            lg_Real_s( 0.0 ),
-            lgAzim,
-            lgElev,
-            lgRoll,
-            lg_Real_s( 1.0 ),
-            lg_Real_s( 2.0 ) * tan( lgApper / lg_Real_s( 2.0 ) ) / lgrWidth,
-            lgInter
-
-        );
-
-    }
+    ); }
 

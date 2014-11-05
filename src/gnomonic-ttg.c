@@ -72,35 +72,30 @@
         lg_Real_t   const         lgPixel,
         li_Method_t const         lgInter
 
-    ) {
+    ) { lg_ttg_generic(
 
-        /* Generic method centered-specific parameters */
-        lg_ttg_generic(
+        lgeBitmap,
+        lgeWidth,
+        lgeHeight,
+        lgeLayers,
+        lgrBitmap,
+        lgrWidth,
+        lgrHeight,
+        lgrLayers,
+        lg_Real_c( lgrWidth  ) / lg_Real_s( 2.0 ),
+        lg_Real_c( lgrHeight ) / lg_Real_s( 2.0 ),
+        lgmWidth,
+        lgmHeight,
+        lgmCornerX,
+        lgmCornerY,
+        lgAzim,
+        lgElev,
+        lgRoll,
+        lgFocal,
+        lgPixel,
+        lgInter
 
-            lgeBitmap,
-            lgeWidth,
-            lgeHeight,
-            lgeLayers,
-            lgrBitmap,
-            lgrWidth,
-            lgrHeight,
-            lgrLayers,
-            lg_Real_c( lgrWidth  ) / lg_Real_s( 2.0 ),
-            lg_Real_c( lgrHeight ) / lg_Real_s( 2.0 ),
-            lgmWidth,
-            lgmHeight,
-            lgmCornerX,
-            lgmCornerY,
-            lgAzim,
-            lgElev,
-            lgRoll,
-            lgFocal,
-            lgPixel,
-            lgInter
-
-        );        
-
-    }
+    ); }
 
 /*
     Source - Equirectangular tile to rectilinear transform - Elphel-specific
@@ -130,35 +125,30 @@
         lg_Real_t   const         lgFocal,
         li_Method_t const         lgInter
 
-    ) {
+    ) { lg_ttg_generic(
 
-        /* Generic method elphel-specific parameters */
-        lg_ttg_generic(
+        lgeBitmap,
+        lgeWidth,
+        lgeHeight,
+        lgeLayers,
+        lgrBitmap,
+        lgrWidth,
+        lgrHeight,
+        lgrLayers,
+        lgrSightX,
+        lgrSightY,
+        lgmWidth,
+        lgmHeight,
+        lgmCornerX,
+        lgmCornerY,
+        lgAzim + lgHead + LG_PI,
+        lgElev,
+        lgRoll,
+        lgFocal,
+        lgPixel,
+        lgInter
 
-            lgeBitmap,
-            lgeWidth,
-            lgeHeight,
-            lgeLayers,
-            lgrBitmap,
-            lgrWidth,
-            lgrHeight,
-            lgrLayers,
-            lgrSightX,
-            lgrSightY,
-            lgmWidth,
-            lgmHeight,
-            lgmCornerX,
-            lgmCornerY,
-            lgAzim + lgHead + LG_PI,
-            lgElev,
-            lgRoll,
-            lgFocal,
-            lgPixel,
-            lgInter
-
-        );
-
-    }
+    ); }
 
 /*
     Source - Equirectangular tile to rectilinear transform
@@ -186,6 +176,56 @@
         lg_Real_t   const         lgFocal,
         lg_Real_t   const         lgPixel,
         li_Method_t const         lgInter
+
+    ) { lg_ttg_genericp(
+
+        lgeBitmap,
+        lgeWidth,
+        lgeHeight,
+        lgeLayers,
+        lgrBitmap,
+        lgrWidth,
+        lgrHeight,
+        lgrLayers,
+        lgrSightX,
+        lgrSightY,
+        lgmWidth,
+        lgmHeight,
+        lgmCornerX,
+        lgmCornerY,
+        lgAzim,
+        lgElev,
+        lgRoll,
+        lgFocal,
+        lgPixel,
+        lgInter,
+        lg_Size_s( 1 )
+
+    ); }
+
+    lg_Void_t lg_ttg_genericp(
+
+        li_C8_t     const * const lgeBitmap,
+        lg_Size_t   const         lgeWidth,
+        lg_Size_t   const         lgeHeight,
+        lg_Size_t   const         lgeLayers,
+        li_C8_t           * const lgrBitmap,
+        lg_Size_t   const         lgrWidth,
+        lg_Size_t   const         lgrHeight,
+        lg_Size_t   const         lgrLayers,
+        lg_Real_t   const         lgrSightX,
+        lg_Real_t   const         lgrSightY,
+        lg_Size_t   const         lgmWidth,
+        lg_Size_t   const         lgmHeight,
+        lg_Size_t   const         lgmCornerX,
+        lg_Size_t   const         lgmCornerY,
+        lg_Real_t   const         lgAzim,
+        lg_Real_t   const         lgElev,
+        lg_Real_t   const         lgRoll,
+        lg_Real_t   const         lgFocal,
+        lg_Real_t   const         lgPixel,
+        li_Method_t const         lgInter,
+        lg_Size_t   const         lgThread
 
     ) {
 
@@ -222,6 +262,11 @@
         lg_algebra_r2erotation( lgMat, lgAzim, lgElev, lgRoll );
 
         /* Rectilinear pixels y-loop */
+        # ifdef __OPENMP__
+        # pragma omp parallel private(lgDX,lgDY,lgSX,lgSY,lgPvi,lgPvf,lgAlpha,lgWeiA,lgWeiB) firstprivate(lgeEdgeX,lgeEdgeY,lgmEdgeX,lgmEdgeY,lgrPad,lgMat) num_threads( lgThread )
+        {
+        # pragma omp for
+        # endif
         for ( lgDY = lg_Size_s( 0 ); lgDY < lgrHeight; lgDY ++ ) {
 
             /* Rectilinear pixels x-loop */
@@ -347,6 +392,10 @@
             }
 
         }
+
+        # ifdef __OPENMP__
+        }
+        # endif 
 
     }
 

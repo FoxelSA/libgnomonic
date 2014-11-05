@@ -61,16 +61,16 @@
 
     ) { lg_transform_rotatep(
 
-            lgiBitmap,
-            lgoBitmap,
-            lgeWidth,
-            lgeHeight,
-            lgeLayers,
-            lgAzim,
-            lgElev,
-            lgRoll,
-            lgInter,
-            lg_Size_s( 1 )
+        lgiBitmap,
+        lgoBitmap,
+        lgeWidth,
+        lgeHeight,
+        lgeLayers,
+        lgAzim,
+        lgElev,
+        lgRoll,
+        lgInter,
+        lg_Size_s( 1 )
 
     ); }
 

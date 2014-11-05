@@ -68,35 +68,30 @@
         lg_Real_t   const         lgPixel,
         li_Method_t const         lgInter
 
-    ) {
+    ) { lg_gtt_generic(
 
-        /* Generic method elphel-specific parameters */
-        lg_gtt_generic(
+        lgeBitmap,
+        lgeWidth,
+        lgeHeight,
+        lgeLayers,
+        lgrBitmap,
+        lgrWidth,
+        lgrHeight,
+        lgrLayers,
+        lg_Real_c( lgrWidth  ) / lg_Real_s( 2.0 ),
+        lg_Real_c( lgrHeight ) / lg_Real_s( 2.0 ),
+        lgmWidth,
+        lgmHeight,
+        lgmCornerX,
+        lgmCornerY,
+        lgAzim,
+        lgElev,
+        lgRoll,
+        lgFocal,
+        lgPixel,
+        lgInter
 
-            lgeBitmap,
-            lgeWidth,
-            lgeHeight,
-            lgeLayers,
-            lgrBitmap,
-            lgrWidth,
-            lgrHeight,
-            lgrLayers,
-            lg_Real_c( lgrWidth  ) / lg_Real_s( 2.0 ),
-            lg_Real_c( lgrHeight ) / lg_Real_s( 2.0 ),
-            lgmWidth,
-            lgmHeight,
-            lgmCornerX,
-            lgmCornerY,
-            lgAzim,
-            lgElev,
-            lgRoll,
-            lgFocal,
-            lgPixel,
-            lgInter
-
-        );
-
-    }
+    ); }
 
 /*
     Source - Rectilinear to equirectangular tile transform - Elphel-specific
@@ -126,10 +121,7 @@
         lg_Real_t   const         lgFocal,
         li_Method_t const         lgInter
 
-    ) {
-
-        /* Generic method elphel-specific parameters */
-        lg_gtt_generic(
+    ) { lg_gtt_generic(
 
             lgeBitmap,
             lgeWidth,
@@ -152,9 +144,7 @@
             lgPixel,
             lgInter
 
-        );
-
-    }
+    ); }
 
 /*
     Source - Rectilinear to equirectangular tile transform

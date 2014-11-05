@@ -87,13 +87,13 @@
     /*! \brief Rectilinear to equirectangular tile transform - Centered-specific
      *
      *  This function offers the inverted gnomonic projection provided by the
-     *  centered specific 'lg_ttg_center' function. Their parameters are the
-     *  same and have to be understood in the exact same way.
+     *  centered specific lg_ttg_center function. Their parameters are the same
+     *  and have to be understood in the exact same way.
      *
-     *  This function is then a front-end to the 'lg_gtt_generic' function in the
-     *  same way 'lg_ttg_center' is a front-end to the 'lg_ttg_generic' function.
+     *  This function is then a front-end to the lg_gtt_generic function in the
+     *  same way lg_ttg_center is a front-end to the lg_ttg_generic function.
      *
-     *  See 'lg_ttg_center' documentation for more information.
+     *  See lg_ttg_center documentation for more information.
      *
      *  \param lgeBitmap      Pointer to equirectangular tile bitmap
      *  \param lgeWidth       Width, in pixels, of the equirectangular tile
@@ -151,13 +151,13 @@
     /*! \brief Rectilinear to equirectangular tile transform - Elphel-specific
      *
      *  This function offers the inverted gnomonic projection provided by the
-     *  Elphel calibrated cameras specific 'lg_ttg_elphel' function. Their
+     *  Elphel calibrated cameras specific lg_ttg_elphel function. Their
      *  parameters are the same and have to be understood in the exact same way.
      *
-     *  This function is then a front-end to the 'lg_gtt_generic' function in the
-     *  same way 'lg_ttg_elphel' is a front-end to the 'lg_ttg_generic' function.
+     *  This function is then a front-end to the lg_gtt_generic function in the
+     *  same way lg_ttg_elphel is a front-end to the lg_ttg_generic function.
      *
-     *  See 'lg_ttg_elphel' documentation for more information.
+     *  See lg_ttg_elphel documentation for more information.
      *
      *  \param lgeBitmap      Pointer to equirectangular tile bitmap
      *  \param lgeWidth       Width, in pixels, of the equirectangular tile
@@ -223,8 +223,8 @@
     /*! \brief Rectilinear to equirectangular tile transform
      *
      *  This function offers the inverted gnomonic projection provided by the
-     *  generic function 'lg_ttg_generic'. Their parameters are the same and
-     *  have to be understood in the exact same way.
+     *  generic function lg_ttg_generic. Their parameters are the same and have
+     *  to be understood in the exact same way.
      *
      *  The input rectilinear bitmap has to be a three or four chromatic layers 
      *  bitmap and the output equirectangular bitmap has to be already allocated

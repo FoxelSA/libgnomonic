@@ -84,6 +84,24 @@
     Header - Function prototypes
  */
 
+    lg_Void_t lg_gte_apperture( 
+
+        li_C8_t           * const lgeBitmap,
+        lg_Size_t   const         lgeWidth,
+        lg_Size_t   const         lgeHeight,
+        lg_Size_t   const         lgeLayers,
+        li_C8_t     const * const lgrBitmap,
+        lg_Size_t   const         lgrWidth,
+        lg_Size_t   const         lgrHeight,
+        lg_Size_t   const         lgrLayers, 
+        lg_Real_t   const         lgAzim,
+        lg_Real_t   const         lgElev,
+        lg_Real_t   const         lgRoll,
+        lg_Real_t   const         lgApper,
+        li_Method_t const         lgInter
+
+    );
+
     /*! \brief Rectilinear to equirectangular transform
      *
      *  This function offers the inverted gnomonic projection provided by the
@@ -111,9 +129,10 @@
      *  \param lgApper        Horizontal apparture, in radians, of the gnomonic
      *                        projection.
      *  \param lgInter        Pointer to interpolation method function
+     *  \param lgThread       Thread number (OpenMP)
      */
 
-    lg_Void_t lg_gte_apperture( 
+    lg_Void_t lg_gte_apperturep( 
 
         li_C8_t           * const lgeBitmap,
         lg_Size_t   const         lgeWidth,
@@ -127,7 +146,8 @@
         lg_Real_t   const         lgElev,
         lg_Real_t   const         lgRoll,
         lg_Real_t   const         lgApper,
-        li_Method_t const         lgInter
+        li_Method_t const         lgInter,
+        lg_Size_t   const         lgThread
 
     );
 

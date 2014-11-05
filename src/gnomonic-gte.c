@@ -63,7 +63,43 @@
         lg_Real_t   const         lgApper,
         li_Method_t const         lgInter
 
-    ) { lg_gtt_generic(
+    ) { lg_gte_apperturep(
+
+        lgeBitmap,
+        lgeWidth,
+        lgeHeight,
+        lgeLayers,
+        lgrBitmap,
+        lgrWidth,
+        lgrHeight,
+        lgrLayers, 
+        lgAzim,
+        lgElev,
+        lgRoll,
+        lgApper,
+        lgInter,
+        lg_Size_s( 1 )
+
+    ); }
+
+    lg_Void_t lg_gte_apperturep( 
+
+        li_C8_t           * const lgeBitmap,
+        lg_Size_t   const         lgeWidth,
+        lg_Size_t   const         lgeHeight,
+        lg_Size_t   const         lgeLayers,
+        li_C8_t     const * const lgrBitmap,
+        lg_Size_t   const         lgrWidth,
+        lg_Size_t   const         lgrHeight,
+        lg_Size_t   const         lgrLayers, 
+        lg_Real_t   const         lgAzim,
+        lg_Real_t   const         lgElev,
+        lg_Real_t   const         lgRoll,
+        lg_Real_t   const         lgApper,
+        li_Method_t const         lgInter,
+        lg_Size_t   const         lgThread
+
+    ) { lg_gtt_genericp(
 
         lgeBitmap,
         lgeWidth,
@@ -84,7 +120,8 @@
         lgRoll,
         lg_Real_s( 1.0 ),
         lg_Real_s( 2.0 ) * tan( lgApper / lg_Real_s( 2.0 ) ) / lgrWidth,
-        lgInter
+        lgInter,
+        lgThread
 
     ); }
 

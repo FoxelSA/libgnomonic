@@ -173,6 +173,56 @@
         lg_Real_t   const         lgPixel,
         li_Method_t const         lgInter
 
+    ) { lg_gtt_genericp(
+
+        lgeBitmap,
+        lgeWidth,
+        lgeHeight,
+        lgeLayers,
+        lgrBitmap,
+        lgrWidth,
+        lgrHeight,
+        lgrLayers,
+        lgrSightX,
+        lgrSightY,
+        lgmWidth,
+        lgmHeight,
+        lgmCornerX,
+        lgmCornerY,
+        lgAzim,
+        lgElev,
+        lgRoll,
+        lgFocal,
+        lgPixel,
+        lgInter,
+        lg_Size_s( 1 )
+
+    ); }
+
+    lg_Void_t lg_gtt_genericp(
+
+        li_C8_t           * const lgeBitmap,
+        lg_Size_t   const         lgeWidth,
+        lg_Size_t   const         lgeHeight,
+        lg_Size_t   const         lgeLayers,
+        li_C8_t     const * const lgrBitmap,
+        lg_Size_t   const         lgrWidth,
+        lg_Size_t   const         lgrHeight,
+        lg_Size_t   const         lgrLayers,
+        lg_Real_t   const         lgrSightX,
+        lg_Real_t   const         lgrSightY,
+        lg_Size_t   const         lgmWidth,
+        lg_Size_t   const         lgmHeight,
+        lg_Size_t   const         lgmCornerX,
+        lg_Size_t   const         lgmCornerY,
+        lg_Real_t   const         lgAzim,
+        lg_Real_t   const         lgElev,
+        lg_Real_t   const         lgRoll,
+        lg_Real_t   const         lgFocal,
+        lg_Real_t   const         lgPixel,
+        li_Method_t const         lgInter,
+        lg_Size_t   const         lgThread
+
     ) {
 
         /* Coordinates variables */
@@ -208,6 +258,11 @@
         lg_algebra_e2rrotation( lgMat, lgAzim, lgElev, lgRoll );
 
         /* Rectilinear pixels y-loop */
+        # ifdef __OPENMP__
+        # pragma omp parallel private(lgDX,lgDY,lgSX,lgSY,lgPvi,lgPvf,lgAlpha,lgWeiA,lgWeiB) firstprivate(lgrEdgeX,lgrEdgeY,lgmEdgeX,lgmEdgeY,lgePad,lgMat) num_threads( lgThread )
+        {
+        # pragma omp for
+        # endif
         for ( lgDY = lg_Size_s( 0 ); lgDY < lgeHeight; lgDY ++ ) {
 
             /* Rectilinear pixels x-loop */
@@ -341,6 +396,10 @@
             }
 
         }
+
+        # ifdef __OPENMP__
+        }
+        # endif 
 
     }
 

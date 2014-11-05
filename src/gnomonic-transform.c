@@ -59,7 +59,7 @@
         lg_Real_t   const         lgRoll,
         li_Method_t const         lgInter
 
-    ) { return( lg_transform_rotatep(
+    ) { lg_transform_rotatep(
 
             lgiBitmap,
             lgoBitmap,
@@ -72,7 +72,7 @@
             lgInter,
             lg_Size_s( 1 )
 
-    ) ); }
+    ); }
 
     lg_Void_t lg_transform_rotatep( 
 
@@ -114,9 +114,9 @@
 
         /* Processing loop on y */
         # ifdef __OPENMP__
-        # pragma omp parallel private(lgSX,lgSY,lgDX,lgDY,lgPvi,lgPvf) num_threads( lgThread )
+        # pragma omp parallel private(lgSX,lgSY,lgDX,lgDY,lgPvi,lgPvf) firstprivate(lgeEdgeX,lgeEdgeY,lgePad,lgMat) num_threads( lgThread )
         {
-        # pragma omp for 
+        # pragma omp for
         # endif
         for ( lgSY = lg_Size_s( 0 ); lgSY < lgeHeight; lgSY ++ ) {
 

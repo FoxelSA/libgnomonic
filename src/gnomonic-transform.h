@@ -84,7 +84,40 @@
     Header - Function prototypes
  */
 
-    /*! \brief Equirectangular mapping rotation
+    /*! \brief Equirectangular mapping rotation (Mono-thread front-end)
+     *
+     *  This function is the mono-threaded front-end to the definition of the
+     *  lg_transform_rotatep.
+     *
+     *  See 'lg_transform_rotatep' documentation for more information.
+     *
+     *  \param lgiBitmap    Pointer to input equirectangular bitmap
+     *  \param lgoBitmap    Pointer to output equirectangular bitmap
+     *  \param lgeWidth     Width, in pixels, of input/output bitmaps
+     *  \param lgeHeight    Height, in pixels, of input/output bitmaps
+     *  \param lgeLayers    Depth, in chromatic layer count, of equirectangular 
+     *                      bitmaps
+     *  \param lgAzim       Azimuth angle, in radians
+     *  \param lgElev       Elevation angle, in radians
+     *  \param lgRoll       Roll angle, in radians
+     *  \param lgInter      Pointer to interpolation method function
+    */
+
+    lg_Void_t lg_transform_rotate( 
+
+        li_C8_t     const * const lgiBitmap,
+        li_C8_t           * const lgoBitmap,
+        lg_Size_t   const         lgeWidth,
+        lg_Size_t   const         lgeHeight,
+        lg_Size_t   const         lgeLayers,
+        lg_Real_t   const         lgAzim,
+        lg_Real_t   const         lgElev,
+        lg_Real_t   const         lgRoll,
+        li_Method_t const         lgInter
+
+    );
+
+    /*! \brief Equirectangular mapping rotation (Definition)
      *  
      *  This function allows to rotate the sphere mapped by the provided
      *  equirectangular mapping. The result is drawn in the output bitmap that
@@ -112,21 +145,8 @@
      *  \param lgElev       Elevation angle, in radians
      *  \param lgRoll       Roll angle, in radians
      *  \param lgInter      Pointer to interpolation method function
+     *  \param lgThread     Thread number (OpenMP)
      */
-
-    lg_Void_t lg_transform_rotate( 
-
-        li_C8_t     const * const lgiBitmap,
-        li_C8_t           * const lgoBitmap,
-        lg_Size_t   const         lgeWidth,
-        lg_Size_t   const         lgeHeight,
-        lg_Size_t   const         lgeLayers,
-        lg_Real_t   const         lgAzim,
-        lg_Real_t   const         lgElev,
-        lg_Real_t   const         lgRoll,
-        li_Method_t const         lgInter
-
-    );
 
     lg_Void_t lg_transform_rotatep( 
 

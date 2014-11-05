@@ -68,7 +68,53 @@
         lg_Real_t   const         lgPixel,
         li_Method_t const         lgInter
 
-    ) { lg_gtt_generic(
+    ) { lg_gtt_centerp(
+
+        lgeBitmap,
+        lgeWidth,
+        lgeHeight,
+        lgeLayers,
+        lgrBitmap,
+        lgrWidth,
+        lgrHeight,
+        lgrLayers,
+        lgmWidth,
+        lgmHeight,
+        lgmCornerX,
+        lgmCornerY,
+        lgAzim,
+        lgElev,
+        lgRoll,
+        lgFocal,
+        lgPixel,
+        lgInter,
+        lg_Size_s( 1 )
+
+    ); }
+
+    lg_Void_t lg_gtt_centerp(
+
+        li_C8_t           * const lgeBitmap,
+        lg_Size_t   const         lgeWidth,
+        lg_Size_t   const         lgeHeight,
+        lg_Size_t   const         lgeLayers,
+        li_C8_t     const * const lgrBitmap,
+        lg_Size_t   const         lgrWidth,
+        lg_Size_t   const         lgrHeight,
+        lg_Size_t   const         lgrLayers,
+        lg_Size_t   const         lgmWidth,
+        lg_Size_t   const         lgmHeight,
+        lg_Size_t   const         lgmCornerX,
+        lg_Size_t   const         lgmCornerY,
+        lg_Real_t   const         lgAzim,
+        lg_Real_t   const         lgElev,
+        lg_Real_t   const         lgRoll,
+        lg_Real_t   const         lgFocal,
+        lg_Real_t   const         lgPixel,
+        li_Method_t const         lgInter,
+        lg_Size_t   const         lgThread
+
+    ) { lg_gtt_genericp(
 
         lgeBitmap,
         lgeWidth,
@@ -89,7 +135,8 @@
         lgRoll,
         lgFocal,
         lgPixel,
-        lgInter
+        lgInter,
+        lgThread
 
     ); }
 
@@ -121,7 +168,59 @@
         lg_Real_t   const         lgFocal,
         li_Method_t const         lgInter
 
-    ) { lg_gtt_generic(
+    ) { lg_gtt_elphelp(
+
+        lgeBitmap,
+        lgeWidth,
+        lgeHeight,
+        lgeLayers,
+        lgrBitmap,
+        lgrWidth,
+        lgrHeight,
+        lgrLayers,
+        lgrSightX,
+        lgrSightY,
+        lgmWidth,
+        lgmHeight,
+        lgmCornerX,
+        lgmCornerY,
+        lgRoll,
+        lgAzim,
+        lgElev,
+        lgHead,
+        lgPixel,
+        lgFocal,
+        lgInter,
+        lg_Size_s( 1 )
+
+    ); }
+
+    lg_Void_t lg_gtt_elphelp(
+
+        li_C8_t           * const lgeBitmap,
+        lg_Size_t   const         lgeWidth,
+        lg_Size_t   const         lgeHeight,
+        lg_Size_t   const         lgeLayers,
+        li_C8_t     const * const lgrBitmap,
+        lg_Size_t   const         lgrWidth,
+        lg_Size_t   const         lgrHeight,
+        lg_Size_t   const         lgrLayers,
+        lg_Real_t   const         lgrSightX,
+        lg_Real_t   const         lgrSightY,
+        lg_Size_t   const         lgmWidth,
+        lg_Size_t   const         lgmHeight,
+        lg_Size_t   const         lgmCornerX,
+        lg_Size_t   const         lgmCornerY,
+        lg_Real_t   const         lgRoll,
+        lg_Real_t   const         lgAzim,
+        lg_Real_t   const         lgElev,
+        lg_Real_t   const         lgHead,
+        lg_Real_t   const         lgPixel,
+        lg_Real_t   const         lgFocal,
+        li_Method_t const         lgInter,
+        lg_Size_t   const         lgThread
+
+    ) { lg_gtt_genericp(
 
             lgeBitmap,
             lgeWidth,
@@ -142,7 +241,8 @@
             lgRoll,
             lgFocal,
             lgPixel,
-            lgInter
+            lgInter,
+            lgThread
 
     ); }
 

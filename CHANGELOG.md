@@ -20,6 +20,7 @@
 - `Added` : Function **lg\_ttg\_genericp** as parallelized fundamental gnomonic projection function from equirectangular tile
 - `Revised` : Function **lg\_transform\_rotate** as mono-threaded front-end to **lg\_transform\_rotatep**
 - `Added` : Function **lg\_transform\_rotatep** as parallelized equirectangular mappings rotation function
+- `Revised` : Bitmap management to take into account padding bytes for (width)[4]≠0 images
 - `Revised` : Library name prefixes
 - `Removed` : Function **gnomonic\_etg** for x,y-ratio discrepency
 - `Removed` : Function **gnomonic\_gte_blend** replaced by better alpha-channel management in implemented functions

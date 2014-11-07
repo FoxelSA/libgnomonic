@@ -5,7 +5,7 @@
 - `Added` : **lg\_gte\_apperture** function as mono-threaded front-end to **lg\_gte\_apperturep**
 - `Added` : **lg\_gte\_apperturep** function that invert processed induced by **lg\_etg\_apperturep**
 - `Added` : **lg\_etg\_apperture** function as mono-threaded front-end to **lg\_etg\_apperturep**
-- `Added` : **lg\_etg\_apperturep** function as parallelized gnomonic projections based on apperture angle and full mappings
+- `Added` : **lg\_etg\_apperturep** function as parallelized gnomonic projections based on apperture angle and entire equirectangular mappings
 - `Added` : **lg\_gtt\_center** function as mono-threaded front-end to **lg\_gtt\_centerp**
 - `Added` : **lg\_gtt\_centerp** function as front-end to **lg\_gtt\_genericp** inverting the process induced by **lg\_ttg\_centerp**
 - `Added` : **lg\_gtt\_elphel** function as mono-threaded front-end to **lg\_gtt\_elphelp**

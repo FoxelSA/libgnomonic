@@ -47,11 +47,12 @@
      *  \section libgnomonic
      *  \section _ Gnomonic projection algorithms library
      *  
-     *  This library is made to perform gnomonic projections from a entire
-     *  equirectangular panorama mapping to extract rectlinear mappings and the
-     *  inverted operation. It also ensure gnomonic reprojection of specific
-     *  tiles of the equirectangular mapping to retrieve rectilinear mapping of
-     *  the desired tile.
+     *  This library is developed to perform gnomonic projections from a entire
+     *  equirectangular mapping of spherical panoramas to extract rectilinear
+     *  mappings. It also ensure gnomonic projections of specific tiles of
+     *  equirectangular mappings to obtain rectilinear mappings from single
+     *  tiles. Each provided projection algorithm comes with an implementation
+     *  of its inverse operation.
      *
      *  \section Documentation
      *

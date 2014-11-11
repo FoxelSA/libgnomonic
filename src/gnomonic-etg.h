@@ -39,7 +39,7 @@
     /*! \file   gnomonic-etg.h
      *  \author Nils Hamel <n.hamel@foxel.ch>
      *
-     *  Equirectangular to rectilinear transformation
+     *  Equirectangular to rectilinear transforms
      */
 
 /*
@@ -89,13 +89,11 @@
      *  This function is the mono-threaded front-end to the definition of the
      *  lg_etg_apperturep.
      *
-     *  \param lgeBitmap      Pointer to equirectangular tile bitmap
-     *  \param lgeWidth       Width, in pixels, of the equirectangular tile
-     *                        bitmap
-     *  \param lgeHeight      Height, in pixels, of the equirectangular tile
-     *                        bitmap
+     *  \param lgeBitmap      Pointer to equirectangular bitmap
+     *  \param lgeWidth       Width, in pixels, of the equirectangular bitmap
+     *  \param lgeHeight      Height, in pixels, of the equirectangular bitmap
      *  \param lgeLayers      Depth, in chromatic layer count, of equirectangular 
-     *                        tile bitmap
+     *                        bitmap
      *  \param lgrBitmap      Pointer to rectilinear bitmap that recieve the 
      *                        gnomonic projection
      *  \param lgrWidth       Width, in pixels, of the rectilinear bitmap
@@ -104,8 +102,8 @@
      *                        bitmap
      *  \param lgAzim         Azimuth angle, in radians, of gnomonic center
      *  \param lgElev         Elevation angle, in radians, of gnomonic center
-     *  \param lgRoll         Roll angle, in radians, around gnomonic center
-     *  \param lgApper        Horizontal apparture, in radians, of the gnomonic
+     *  \param lgRoll         Roll angle, in radians, around gnomonic axis
+     *  \param lgApper        Horizontal apperture, in radians, of the gnomonic
      *                        projection.
      *  \param lgInter        Pointer to interpolation method function
      */
@@ -131,22 +129,19 @@
     /*! \brief Equirectangular to rectilinear transform
      *
      *  This function offers a front-end to the generic lg_ttg_generic function.
-     *  It waits a entire equirectangular mapping as input and compute a 
-     *  rectilinear image. The horizontal apperture corresponds to the 
-     *  equirectangular horizontal angle that is considered to fill the output
-     *  rectilinear bitmap.
+     *  It waits a entire equirectangular mapping as input and compute the
+     *  desired rectilinear image. The horizontal apperture corresponds to the 
+     *  equirectangular horizontal angle that rectilinear image field of view.
      *
      *  The focal length and pixel length are computed using the provided
      *  horizontal apperture of the gnomonic projection and the width/height
-     *  ratio of the rectilinear bitmap to fill.
+     *  ratio of the rectilinear bitmap to compute.
      *
-     *  \param lgeBitmap      Pointer to equirectangular tile bitmap
-     *  \param lgeWidth       Width, in pixels, of the equirectangular tile
-     *                        bitmap
-     *  \param lgeHeight      Height, in pixels, of the equirectangular tile
-     *                        bitmap
+     *  \param lgeBitmap      Pointer to equirectangular bitmap
+     *  \param lgeWidth       Width, in pixels, of the equirectangular bitmap
+     *  \param lgeHeight      Height, in pixels, of the equirectangular bitmap
      *  \param lgeLayers      Depth, in chromatic layer count, of equirectangular 
-     *                        tile bitmap
+     *                        bitmap
      *  \param lgrBitmap      Pointer to rectilinear bitmap that recieve the 
      *                        gnomonic projection
      *  \param lgrWidth       Width, in pixels, of the rectilinear bitmap
@@ -155,8 +150,8 @@
      *                        bitmap
      *  \param lgAzim         Azimuth angle, in radians, of gnomonic center
      *  \param lgElev         Elevation angle, in radians, of gnomonic center
-     *  \param lgRoll         Roll angle, in radians, around gnomonic center
-     *  \param lgApper        Horizontal apparture, in radians, of the gnomonic
+     *  \param lgRoll         Roll angle, in radians, around gnomonic axis
+     *  \param lgApper        Horizontal apperture, in radians, of the gnomonic
      *                        projection.
      *  \param lgInter        Pointer to interpolation method function
      *  \param lgThread       Thread number (OpenMP)

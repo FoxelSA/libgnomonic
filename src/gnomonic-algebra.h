@@ -88,12 +88,12 @@
      *  This function compute three angles defined rotation matrix. The matrix
      *  considers the three angles as follows :
      *
-     *      M = Rz(Azimuth)Ry(Elevation)Rx(Roll)
+     *      M = Ry(Elevation) Rz(Azimuth) Rx(Roll)
      *
      *  to compute the matrix entries.
      *
      *  \param lgMatrix Computed rotation matrix
-     *  \param lgAzim   Azimutal angle, in radians
+     *  \param lgAzim   Azimuth angle, in radians
      *  \param lgElev   Elevation angle, in radians
      *  \param lgRoll   Roll angle, in radians
      * 
@@ -115,7 +115,7 @@
      *  by the lg_algebra_r2erotation function.
      *
      *  \param lgMatrix Matrix to compute
-     *  \param lgAzim   Azimutal angle
+     *  \param lgAzim   Azimuth angle
      *  \param lgElev   Elevation angle
      *  \param lgRoll   Roll angle
      */

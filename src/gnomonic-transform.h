@@ -39,7 +39,7 @@
     /*! \file   gnomonic-transform.h
      *  \author Nils Hamel <n.hamel@foxel.ch>
      *
-     *  Equirectangular general transformation
+     *  Equirectangular transforms
      */
 
 /*
@@ -117,8 +117,8 @@
 
     /*! \brief Equirectangular mapping rotation
      *  
-     *  This function allows to rotate the sphere mapped by the provided
-     *  equirectangular mapping. The result is drawn in the output bitmap that
+     *  This function allows to rotate the equirectangular mapping keeping the
+     *  sphere it maps unchanged. The result is drawn in the output bitmap that
      *  has to be already allocated according to its parameters.
      *
      *  The rotation is performed considering the following frame : the x-axis
@@ -129,9 +129,9 @@
      *
      *  The three angles defined rotation matrix is built as follows :
      *
-     *      M = Rz(Azimuth)Ry(Elevation)Rx(Roll)
+     *      M = Ry(Elevation) Rz(Azimuth) Rx(Roll)
      *
-     *  and is then used to rotate the mapped sphere.
+     *  and is then used to rotate the mapping of the sphere.
      *  
      *  \param lgiBitmap    Pointer to input equirectangular bitmap
      *  \param lgoBitmap    Pointer to output equirectangular bitmap

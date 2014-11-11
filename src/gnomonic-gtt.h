@@ -39,7 +39,7 @@
     /*! \file   gnomonic-gtt.h
      *  \author Nils Hamel <n.hamel@foxel.ch>
      *
-     *  Rectilinear tile to equirectangular tile transform
+     *  Rectilinear tile to equirectangular tile transforms
      */
 
 /*
@@ -87,7 +87,7 @@
     /*! \brief Rectilinear to equirectangular tile transform - Centered-specific
      *
      *  This function is the mono-threaded front-end to the definition of the
-     *  lg_gtt_centerp.
+     *  lg_gtt_center.
      *
      *  \param lgeBitmap      Pointer to equirectangular tile bitmap
      *  \param lgeWidth       Width, in pixels, of the equirectangular tile
@@ -112,7 +112,7 @@
      *                        top-left corner in the entire mapping
      *  \param lgAzim         Azimuth angle, in radians, of gnomonic center
      *  \param lgElev         Elevation angle, in radians, of gnomonic center
-     *  \param lgRoll         Roll angle, in radians, around gnomonic center
+     *  \param lgRoll         Roll angle, in radians, around gnomonic axis
      *  \param lgFocal        Focal length, in mm, of the rectilinear image
      *  \param lgPixel        Length, in mm, of the pixels of the rectilinear
      *                        image virtual camera
@@ -145,11 +145,12 @@
     /*! \brief Rectilinear to equirectangular tile transform - Centered-specific
      *
      *  This function offers the inverted gnomonic projection provided by the
-     *  centered specific lg_ttg_center function. Their parameters are the same
-     *  and have to be understood in the exact same way.
+     *  centered specific lg_ttg_centerp function. Their parameters are the same
+     *  and have to be understood in the exact same way, swapping input and 
+     *  output role of the provided bitmaps.
      *
-     *  This function is then a front-end to the lg_gtt_generic function in the
-     *  same way lg_ttg_center is a front-end to the lg_ttg_generic function.
+     *  This function is then a front-end to the lg_gtt_genericp function in the
+     *  same way lg_ttg_centerp is a front-end to the lg_ttg_genericp function.
      *
      *  \param lgeBitmap      Pointer to equirectangular tile bitmap
      *  \param lgeWidth       Width, in pixels, of the equirectangular tile
@@ -174,7 +175,7 @@
      *                        top-left corner in the entire mapping
      *  \param lgAzim         Azimuth angle, in radians, of gnomonic center
      *  \param lgElev         Elevation angle, in radians, of gnomonic center
-     *  \param lgRoll         Roll angle, in radians, around gnomonic center
+     *  \param lgRoll         Roll angle, in radians, around gnomonic axis
      *  \param lgFocal        Focal length, in mm, of the rectilinear image
      *  \param lgPixel        Length, in mm, of the pixels of the rectilinear
      *                        image virtual camera
@@ -275,11 +276,12 @@
     /*! \brief Rectilinear to equirectangular tile transform - Elphel-specific
      *
      *  This function offers the inverted gnomonic projection provided by the
-     *  Elphel calibrated cameras specific lg_ttg_elphel function. Their
-     *  parameters are the same and have to be understood in the exact same way.
+     *  Elphel calibrated cameras specific lg_ttg_elphelp function. Their
+     *  parameters are the same and have to be understood in the exact same way,
+     *  swapping input and output role of the provided bitmaps.
      *
-     *  This function is then a front-end to the lg_gtt_generic function in the
-     *  same way lg_ttg_elphel is a front-end to the lg_ttg_generic function.
+     *  This function is then a front-end to the lg_gtt_genericp function in the
+     *  same way lg_ttg_elphelp is a front-end to the lg_ttg_genericp function.
      *
      *  \param lgeBitmap      Pointer to equirectangular tile bitmap
      *  \param lgeWidth       Width, in pixels, of the equirectangular tile
@@ -376,7 +378,7 @@
      *                        top-left corner in the entire mapping
      *  \param lgAzim         Azimuth angle, in radians, of gnomonic center
      *  \param lgElev         Elevation angle, in radians, of gnomonic center
-     *  \param lgRoll         Roll angle, in radians, around gnomonic center
+     *  \param lgRoll         Roll angle, in radians, around gnomonic axis
      *  \param lgFocal        Focal length, in mm, of the rectilinear image
      *  \param lgPixel        Length, in mm, of the pixels of the rectilinear
      *                        image virtual camera
@@ -411,8 +413,9 @@
     /*! \brief Rectilinear to equirectangular tile transform
      *
      *  This function offers the inverted gnomonic projection provided by the
-     *  generic function lg_ttg_generic. Their parameters are the same and have
-     *  to be understood in the exact same way.
+     *  generic function lg_ttg_genericp. Their parameters are the same and have
+     *  to be understood in the exact same way, swapping input and output role
+     *  of the provided bitmaps.
      *
      *  The input rectilinear bitmap has to be a three or four chromatic layers 
      *  bitmap and the output equirectangular bitmap has to be already allocated
@@ -423,7 +426,7 @@
      *  When input rectilinear bitmap comes with an alpha channel, it is used
      *  do define rectilinear pixels transparency. If the output equirectangular
      *  bitmap is allocated with an alpha channel, the de-projected alpha channel
-     *  of the rectilinear bitmap is stored in the equirectangular alpha channel.
+     *  of the rectilinear bitmap is written in the equirectangular alpha channel.
      *
      *  \param lgeBitmap      Pointer to equirectangular tile bitmap
      *  \param lgeWidth       Width, in pixels, of the equirectangular tile
@@ -452,7 +455,7 @@
      *                        top-left corner in the entire mapping
      *  \param lgAzim         Azimuth angle, in radians, of gnomonic center
      *  \param lgElev         Elevation angle, in radians, of gnomonic center
-     *  \param lgRoll         Roll angle, in radians, around gnomonic center
+     *  \param lgRoll         Roll angle, in radians, around gnomonic axis
      *  \param lgFocal        Focal length, in mm, of the rectilinear image
      *  \param lgPixel        Length, in mm, of the pixels of the rectilinear
      *                        image virtual camera

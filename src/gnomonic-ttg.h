@@ -43,7 +43,7 @@
     /*! \file   gnomonic-ttg.h
      *  \author Nils Hamel <n.hamel@foxel.ch>
      *
-     *  Equirectangular tile to rectilinear transform
+     *  Equirectangular tile to rectilinear transforms
      */
 
 /*
@@ -116,7 +116,7 @@
      *                        top-left corner in the entire mapping
      *  \param lgAzim         Azimuth angle, in radians, of gnomonic center
      *  \param lgElev         Elevation angle, in radians, of gnomonic center
-     *  \param lgRoll         Roll angle, in radians, around gnomonic center
+     *  \param lgRoll         Roll angle, in radians, around gnomonic axis
      *  \param lgFocal        Focal length, in mm, of the rectilinear image
      *  \param lgPixel        Length, in mm, of the pixels of the rectilinear
      *                        image virtual camera
@@ -149,7 +149,7 @@
     /*! \brief Equirectangular tile to rectilinear transform - Centered-specific
      *
      *  This function offers a front-end to the generic projection function
-     *  lg_ttg_generic. It simplifies the call of the generic function in case
+     *  lg_ttg_genericp. It simplifies the call of the generic function in case
      *  the gnomonic projection center match the center of the rectilinear image.
      *
      *  The lgrSightX and lgrSightY parameters passed to the generic function
@@ -184,7 +184,7 @@
      *                        top-left corner in the entire mapping
      *  \param lgAzim         Azimuth angle, in radians, of gnomonic center
      *  \param lgElev         Elevation angle, in radians, of gnomonic center
-     *  \param lgRoll         Roll angle, in radians, around gnomonic center
+     *  \param lgRoll         Roll angle, in radians, around gnomonic axis
      *  \param lgFocal        Focal length, in mm, of the rectilinear image
      *  \param lgPixel        Length, in mm, of the pixels of the rectilinear
      *                        image virtual camera
@@ -285,9 +285,8 @@
     /*! \brief Equirectangular tile to rectilinear transform - Elphel-specific
      *
      *  This function offers a front-end to the generic projection function
-     *  lg_ttg_generic. It simplifies the gnomonic projection call in case
-     *  where equirectangular tiles come from Elphel calibrated camera post
-     *  processing
+     *  lg_ttg_genericp. It simplifies the gnomonic projection call in case
+     *  equirectangular tiles come from Elphel calibrated camera post-processing.
      *
      *  The front-end function sends
      *
@@ -392,7 +391,7 @@
      *                        top-left corner in the entire mapping
      *  \param lgAzim         Azimuth angle, in radians, of gnomonic center
      *  \param lgElev         Elevation angle, in radians, of gnomonic center
-     *  \param lgRoll         Roll angle, in radians, around gnomonic center
+     *  \param lgRoll         Roll angle, in radians, around gnomonic axis
      *  \param lgFocal        Focal length, in mm, of the rectilinear image
      *  \param lgPixel        Length, in mm, of the pixels of the rectilinear
      *                        image virtual camera
@@ -426,11 +425,11 @@
 
     /*! \brief Equirectangular tile to rectilinear transform
      * 
-     *  This function performs a gnomonic reprojection of an equirectangular
-     *  tile extracted from an entire equirectangular mapping. The obtained
+     *  This function performs a gnomonic projection of an equirectangular tile
+     *  extracted from an entire equirectangular mapping. The obtained 
      *  rectilinear image can have an arbitrary size taking into account that
-     *  scaling of pixels is set through focal length and pixel length, assumed
-     *  to be identical in both direction.
+     *  scaling of pixels is set through focal and pixel length, assumed to be 
+     *  identical in both direction.
      *
      *  In order to perform the desired projection, the following 3d-frame is 
      *  attached to the entire equirectangular mapping from which the tile is 
@@ -443,7 +442,7 @@
      *  the image plane is orthogonal to this same x-axis. The rotation matrix,
      *  that ensure desired mapping part selection, is built as follows : 
      * 
-     *      M = Rz(Azimuth)Ry(Elevation)Rx(Roll)
+     *      M = Ry(Elevation) Rz(Azimuth) Rx(Roll)
      *
      *  and corresponds to the rotation that brings the rectilinear image pixels
      *  on the equirectangular mapping.
@@ -457,7 +456,7 @@
      *  When input equirectangular bitmap comes with an alpha channel, it is used
      *  do define pixels mapping transparency. If the output rectilinear bitmap
      *  is allocated with an alpha channel, the projected alpha channel of the
-     *  mapping is stored in the rectilinear alpha channel.
+     *  mapping is written in the rectilinear alpha channel.
      *
      *  \param lgeBitmap      Pointer to equirectangular tile bitmap
      *  \param lgeWidth       Width, in pixels, of the equirectangular tile
@@ -486,7 +485,7 @@
      *                        top-left corner in the entire mapping
      *  \param lgAzim         Azimuth angle, in radians, of gnomonic center
      *  \param lgElev         Elevation angle, in radians, of gnomonic center
-     *  \param lgRoll         Roll angle, in radians, around gnomonic center
+     *  \param lgRoll         Roll angle, in radians, around gnomonic axis
      *  \param lgFocal        Focal length, in mm, of the rectilinear image
      *  \param lgPixel        Length, in mm, of the pixels of the rectilinear
      *                        image virtual camera

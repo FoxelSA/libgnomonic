@@ -1,6 +1,6 @@
 ## Changelog
 
-### Beta 0.2 (master) (Release 0.2 scheduled on November 14, 2014)
+### Release 0.2 (November 11, 2014)
 
 - `Added` : **lg\_gte\_apperture** function as mono-threaded front-end to **lg\_gte\_apperturep**
 - `Added` : **lg\_gte\_apperturep** function that invert processed induced by **lg\_etg\_apperturep**

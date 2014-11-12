@@ -1,5 +1,9 @@
 ## Changelog
 
+### Release 0.2.1 (November 12, 2014)
+
+- `Fixed` : Alpha-channel management issue in **lg\_gtt\_genericp** function
+
 ### Release 0.2 (November 11, 2014)
 
 - `Added` : **lg\_gte\_apperture** function as mono-threaded front-end to **lg\_gte\_apperturep**

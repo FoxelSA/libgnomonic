@@ -395,7 +395,7 @@
                     if ( ( lgSX >= lg_Size_s( 0 ) ) && ( lgSY >= lg_Size_s( 0 ) ) && ( lgSX <= lgrEdgeX ) && ( lgSY <= lgrEdgeY ) ) {
 
                         /* Transparency management */
-                        if ( lgeLayers == lg_Size_s( 4 ) ) {
+                        if ( lgrLayers == lg_Size_s( 4 ) ) {
 
                             /* Obtain alpha value and compute direct transparency weight */
                             lgAlpha = lgInter( ( li_C8_t * ) lgrBitmap, lgrWidth, lgrHeight, lgrLayers, lg_Size_s( 3 ), lgSX, lgSY );

@@ -128,8 +128,9 @@
                 lgDY = ( ( lg_Real_c( lgSY ) / lgeEdgeY ) - lg_Real_s( 0.5 ) ) * LG_PI;
 
                 /* Compute pixel position in 3d-frame */
-                lgPvi[0] = cos( lgDY ) * cos( lgDX );
-                lgPvi[1] = cos( lgDY ) * sin( lgDX );
+                lgPvi[0] = cos( lgDY );
+                lgPvi[1] = lgPvi[0] * sin( lgDX );
+                lgPvi[0] = lgPvi[0] * cos( lgDX );
                 lgPvi[2] = sin( lgDY );
 
                 /* Compute rotated pixel position in 3d-frame */
@@ -142,9 +143,43 @@
                 lgDY = lgeEdgeY * ( ( LG_ASN( lgPvf[2] ) / LG_PI ) + lg_Real_s( 0.5 ) );
 
                 /* Assign interpolated pixel */
-                LG_B4( lgoBitmap, lgePad, lgeLayers, lgSX, lgSY, lg_Size_s( 0 ) ) = lgInter( ( li_C8_t * ) lgiBitmap, lgeWidth, lgeHeight, lgeLayers, lg_Size_s( 0 ), lgDX, lgDY );
-                LG_B4( lgoBitmap, lgePad, lgeLayers, lgSX, lgSY, lg_Size_s( 1 ) ) = lgInter( ( li_C8_t * ) lgiBitmap, lgeWidth, lgeHeight, lgeLayers, lg_Size_s( 1 ), lgDX, lgDY );
-                LG_B4( lgoBitmap, lgePad, lgeLayers, lgSX, lgSY, lg_Size_s( 2 ) ) = lgInter( ( li_C8_t * ) lgiBitmap, lgeWidth, lgeHeight, lgeLayers, lg_Size_s( 2 ), lgDX, lgDY );
+                LG_B4( lgoBitmap, lgePad, lgeLayers, lgSX, lgSY, lg_Size_s( 0 ) ) = lgInter( 
+
+                    ( li_C8_t * ) lgiBitmap, 
+                    lgeWidth, 
+                    lgeHeight, 
+                    lgeLayers, 
+                    lg_Size_s( 0 ), 
+                    lgDX, 
+                    lgDY 
+
+                );
+
+                /* Assign interpolated pixel */
+                LG_B4( lgoBitmap, lgePad, lgeLayers, lgSX, lgSY, lg_Size_s( 1 ) ) = lgInter( 
+
+                    ( li_C8_t * ) lgiBitmap, 
+                    lgeWidth, 
+                    lgeHeight, 
+                    lgeLayers, 
+                    lg_Size_s( 1 ), 
+                    lgDX, 
+                    lgDY
+
+                );
+
+                /* Assign interpolated pixel */
+                LG_B4( lgoBitmap, lgePad, lgeLayers, lgSX, lgSY, lg_Size_s( 2 ) ) = lgInter( 
+
+                    ( li_C8_t * ) lgiBitmap, 
+                    lgeWidth, 
+                    lgeHeight, 
+                    lgeLayers, 
+                    lg_Size_s( 2 ), 
+                    lgDX, 
+                    lgDY
+
+                );
 
             }
 

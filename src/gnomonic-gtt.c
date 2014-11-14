@@ -373,8 +373,9 @@
                 lgSY = + ( ( lg_Real_c( lgDY + lgmCornerY ) / lgmEdgeY ) - lg_Real_s( 0.5 ) ) * LG_PI;
 
                 /* Compute pixel position in 3d-frame */
-                lgPvi[0] = cos( lgSY ) * cos( lgSX );
-                lgPvi[1] = cos( lgSY ) * sin( lgSX );
+                lgPvi[0] = cos( lgSY );
+                lgPvi[1] = lgPvi[0] * sin( lgSX );
+                lgPvi[0] = lgPvi[0] * cos( lgSX );
                 lgPvi[2] = sin( lgSY );
 
                 /* Compute rotated pixel position in 3d-frame */

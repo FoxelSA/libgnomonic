@@ -1,142 +1,179 @@
 
 #
-#   make - Configuration - Bases
+#   make - Configuration
 #
 
-    MAKE_NAME:=libgnomonic
-    MAKE_CODE:=c
-    MAKE_TYPE:=libstatic
-
-#
-#   make - Configuration - Structures
-#
+    CONFIG_NAME:=libgnomonic
+    CONFIG_CODE:=c
+    CONFIG_TYPE:=libstatic
 
     MAKE_BINARY:=bin
     MAKE_DOCUME:=doc
     MAKE_LIBRAR:=lib
     MAKE_OBJECT:=obj
     MAKE_SOURCE:=src
+    MAKE_INPATH:=/usr/lib
+    MAKE_CMCOPY:=cp
+    MAKE_CMRMFL:=rm -f
+    MAKE_CMRMDR:=rm -rf
+    MAKE_CMMKDR:=mkdir -p
+    MAKE_CC_BLD:=gcc
+    MAKE_CPPBLD:=g++
+    MAKE_STABLD:=ar
+    MAKE_DOCBLD:=doxygen
+
+    BUILD_FLAGS:=-Wall -funsigned-char -O3
+    BUILD_LINKD:=-lm
+    BUILD_SUBMD:=$(MAKE_LIBRAR)/libinter
 
 #
-#   make - Configuration - Libraries
+#   make - Modules
 #
 
-    MAKE_LINKLIB:=
-    MAKE_INCLUDE:=$(MAKE_LIBRAR)/libinter
+    MAKE_MODULE:=$(foreach LIBS, $(BUILD_SUBMD), $(if $(findstring /lib/, $(LIBS) ), , $(LIBS) ) )
 
 #
-#   make - Configuration - Sources
+#   make - Auto-configuration
 #
 
-    MAKE_SRCFILE:=$(wildcard $(MAKE_SOURCE)/*.$(MAKE_CODE) )
-    MAKE_OBJFILE:=$(addprefix $(MAKE_OBJECT)/, $(addsuffix .o, $(notdir $(basename $(MAKE_SRCFILE) ) ) ) )
-
-#
-#   make - Configuration - Options
-#
-
-    MAKE_SRCOPMP:=-fopenmp -D __OPENMP__
-ifeq ($(OPENMP),false)
-    MAKE_SRCOPMP:=
-endif
-
-ifeq ($(MAKE_CODE),c)
-    MAKE_SRCCOMP:=gcc
+ifeq ($(CONFIG_TYPE),suite)
+    MAKE_LIBSWAP:=../../
 else
-ifeq ($(MAKE_CODE),cpp)
-    MAKE_SRCCOMP:=g++
-endif
-endif
-ifeq ($(MAKE_TYPE),suite)
+ifeq ($(CONFIG_TYPE),libcommon)
     MAKE_LIBSWAP:=../../
 else
     MAKE_LIBSWAP:=
 endif
-ifeq ($(MAKE_TYPE),application)
-    MAKE_OBJCOMP:=$(MAKE_SRCCOMP)
+endif
+ifeq ($(CONFIG_TYPE),libstatic)
+    MAKE_SUFFIX:=.a
 else
-ifeq ($(MAKE_TYPE),libstatic)
-    MAKE_OBJCOMP:=ar
-endif
-endif
-    MAKE_DOCCOMP:=doxygen
-    MAKE_GENOPTN:=-Wall -funsigned-char -O3 $(MAKE_SRCOPMP) $(addprefix -I./$(MAKE_LIBSWAP), $(addsuffix /src, $(MAKE_INCLUDE) ) )
-ifeq ($(MAKE_CODE),c)
-    MAKE_SRCOPTN:=-std=gnu99 $(MAKE_GENOPTN)
+ifeq ($(CONFIG_TYPE),libcommon)
+    MAKE_SUFFIX:=.a
 else
-ifeq ($(MAKE_CODE),cpp)
-    MAKE_SRCOPTN:=-std=c++11 $(MAKE_GENOPTN)
+    MAKE_SUFFIX:=
 endif
 endif
-    MAKE_OBJOPTN:=$(addprefix -l, $(subst lib, , $(notdir $(MAKE_INCLUDE) ) ) ) $(MAKE_LINKLIB) $(addprefix -L./, $(addsuffix /bin, $(MAKE_INCLUDE) ) )
-    MAKE_DEPENDS:=$(foreach LIB, $(MAKE_INCLUDE), $(if $(findstring /lib/, $(LIB) ), , $(LIB) ) )
-
-#
-#   make - Build - Default
-#
-
-    all:directories libraries $(MAKE_NAME)
-    build:directories $(MAKE_NAME)
-    modules:libraries
-
-#
-#   make - Build - Binaries
-#
-
-    $(MAKE_NAME):$(MAKE_OBJFILE)
-ifeq ($(MAKE_TYPE),application)
-	$(MAKE_OBJCOMP) -o $(MAKE_BINARY)/$(MAKE_NAME) $^ $(MAKE_OBJOPTN)
+ifeq ($(CONFIG_CODE),c)
+ifeq ($(CONFIG_TYPE),libstatic)
+    MAKE_LINKER:=$(MAKE_STABLD)
 else
-ifeq ($(MAKE_TYPE),libstatic)
-	$(MAKE_OBJCOMP) rcs $(MAKE_BINARY)/$(MAKE_NAME).a $^
+ifeq ($(CONFIG_TYPE),libcommon)
+    MAKE_LINKER:=$(MAKE_STABLD)
+else
+    MAKE_LINKER:=$(MAKE_CC_BLD)
+endif
+endif
+    MAKE_COMPIL:=$(MAKE_CC_BLD)
+endif
+ifeq ($(CONFIG_CODE),cpp)
+ifeq ($(CONFIG_TYPE),libstatic)
+    MAKE_LINKER:=$(MAKE_STABLD)
+else
+ifeq ($(CONFIG_TYPE),libcommon)
+    MAKE_LINKER:=$(MAKE_STABLD)
+else
+    MAKE_LINKER:=$(MAKE_CPPBLD)
+endif
+endif
+    MAKE_COMPIL:=$(MAKE_CPPBLD)
+endif
+    MAKE_OPTION:=$(BUILD_FLAGS) $(addprefix -I./$(MAKE_LIBSWAP), $(addsuffix /src, $(BUILD_SUBMD) ) )
+ifeq ($(CONFIG_CODE),c)
+    MAKE_OPTION:=$(MAKE_OPTION) -std=gnu99
+else
+ifeq ($(CONFIG_CODE),cpp)
+    MAKE_OPTION:=$(MAKE_OPTION) -std=c++11
+endif
+endif
+ifneq ($(OPENMP),false)
+    MAKE_OPTION:=$(MAKE_OPTION) -fopenmp -D __OPENMP__
+endif
+    MAKE_BUILDD:=$(addprefix -l, $(subst lib, , $(notdir $(BUILD_SUBMD) ) ) ) $(BUILD_LINKD) $(addprefix -L./$(MAKE_LIBSWAP), $(addsuffix /bin, $(BUILD_SUBMD) ) )
+
+#
+#   make - Enumeration
+#
+
+    MAKE_SRCFILE:=$(wildcard $(MAKE_SOURCE)/*.$(CONFIG_CODE) )
+    MAKE_OBJFILE:=$(addprefix $(MAKE_OBJECT)/, $(addsuffix .o, $(notdir $(basename $(MAKE_SRCFILE) ) ) ) )
+
+#
+#   make - Targets
+#
+
+ifeq ($(CONFIG_TYPE),suite)
+    all:make-directories $(CONFIG_NAME)
+    clean:make-clean
+else
+ifeq ($(CONFIG_TYPE),libcommon)
+    all:make-directories $(CONFIG_NAME)
+    clean:make-clean
+else
+    all:make-directories make-modules $(CONFIG_NAME)
+    build:make-directories $(CONFIG_NAME)
+    modules:make-modules
+    clean:make-clean
+    clean-all:make-clean make-clean-modules
+    clean-modules:make-clean-modules
+endif
+endif
+    documentation:make-directories make-documentation
+    clean-documentation:make-clean-documentation
+    install:make-install
+    uninstall:make-uninstall
+
+#
+#   make - Directives
+#
+
+    $(CONFIG_NAME):$(MAKE_OBJFILE)
+ifeq ($(CONFIG_TYPE),libstatic)
+	$(MAKE_LINKER) rcs $(MAKE_BINARY)/$(CONFIG_NAME)$(MAKE_SUFFIX) $^
+else
+ifeq ($(CONFIG_TYPE),libcommon)
+	$(MAKE_LINKER) rcs $(MAKE_BINARY)/$(CONFIG_NAME)$(MAKE_SUFFIX) $^
+else
+	$(MAKE_LINKER) -o $(MAKE_BINARY)/$(CONFIG_NAME)$(MAKE_SUFFIX) $^ $(MAKE_BUILDD)
 endif
 endif
 
-#
-#   make - Build - Objects
-#
+    $(MAKE_OBJECT)/%.o:$(MAKE_SOURCE)/%.$(CONFIG_CODE)
+	$(MAKE_COMPIL) -c -o $@ $< $(MAKE_OPTION)
 
-    $(MAKE_OBJECT)/%.o:$(MAKE_SOURCE)/%.$(MAKE_CODE)
-	$(MAKE_SRCCOMP) -c -o $@ $< $(MAKE_SRCOPTN)
+    make-modules:
+	@$(foreach LIB, $(MAKE_MODULE), $(MAKE) -C $(LIB) all OPENMP=$(OPENMP) && ) true
 
-#
-#   make - Build - Libraries
-#
-
-    libraries:
-	@$(foreach LIB, $(MAKE_DEPENDS), $(MAKE) -C $(LIB) clean && $(MAKE) -C $(LIB) all && ) true
+    make-documentation:make-directories
+	$(MAKE_DOCBLD)
 
 #
-#   make - Build - Documentation
+#   make - Cleaning
 #
 
-    documentation:directories
-	rm $(MAKE_DOCUME)/html -rf && $(MAKE_DOCCOMP)
+    make-clean:
+	$(MAKE_CMRMFL) $(MAKE_BINARY)/* $(MAKE_OBJECT)/*.o
+
+    make-clean-modules:
+	@$(foreach LIBS, $(MAKE_MODULE), $(MAKE) -C $(LIBS) clean && ) true
+
+    make-clean-documentation:
+	$(MAKE_CMRMDR) $(MAKE_DOCUME)/html
 
 #
-#   make - Management - Directories
+#   make - Implementation
 #
 
-    directories:
-	mkdir -p $(MAKE_BINARY)
-	mkdir -p $(MAKE_DOCUME)
-	mkdir -p $(MAKE_OBJECT)
+    make-install:
+	$(MAKE_CMCOPY) $(MAKE_BINARY)/$(CONFIG_NAME)$(MAKE_SUFFIX) $(MAKE_INPATH)/$(CONFIG_NAME)$(MAKE_SUFFIX)
+
+    make-uninstall:
+	$(MAKE_CMRMFL) $(MAKE_INPATH)/$(CONFIG_NAME)$(MAKE_SUFFIX)
 
 #
-#   make - Management - Cleaning
+#   make - Directories
 #
 
-    clean:
-	rm $(MAKE_BINARY)/* -f
-	rm $(MAKE_OBJECT)/*.o -f
-
-#
-#   make - Management - Implementation
-#
-
-    install:
-	cp $(MAKE_BINARY)/$(MAKE_NAME).a /usr/lib/$(MAKE_NAME).a
-
-    uninstall:
-	rm -f /usr/lib/$(MAKE_NAME).a
+    make-directories:
+	$(MAKE_CMMKDR) $(MAKE_BINARY) $(MAKE_DOCUME) $(MAKE_OBJECT)
 

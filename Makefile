@@ -88,6 +88,7 @@ endif
 endif
 ifneq ($(OPENMP),false)
     MAKE_OPTION:=$(MAKE_OPTION) -fopenmp -D __OPENMP__
+    BUILD_LINKD:=$(BUILD_LINKD) -lgomp
 endif
     MAKE_BUILDD:=$(addprefix -l, $(subst lib, , $(notdir $(BUILD_SUBMD) ) ) ) $(BUILD_LINKD) $(addprefix -L./$(MAKE_LIBSWAP), $(addsuffix /bin, $(BUILD_SUBMD) ) )
 

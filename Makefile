@@ -1,4 +1,6 @@
 
+    include Version
+
 #
 #   make - Configuration
 #
@@ -12,11 +14,13 @@
     MAKE_LIBRAR:=lib
     MAKE_OBJECT:=obj
     MAKE_SOURCE:=src
-    MAKE_INPATH:=/usr/lib
+    MAKE_BNPATH:=/usr/lib
+    MAKE_HDPATH:=/usr/include
     MAKE_CMCOPY:=cp
     MAKE_CMRMFL:=rm -f
-    MAKE_CMRMDR:=rm -rf
+    MAKE_CMRMRF:=rm -rf
     MAKE_CMMKDR:=mkdir -p
+    MAKE_CMRMDR:=rmdir -p --ignore-fail-on-non-empty
     MAKE_CC_BLD:=gcc
     MAKE_CPPBLD:=g++
     MAKE_STABLD:=ar
@@ -30,7 +34,7 @@
 #   make - Modules
 #
 
-    MAKE_MODULE:=$(foreach LIBS, $(BUILD_SUBMD), $(if $(findstring /lib/, $(LIBS) ), , $(LIBS) ) )
+    MAKE_MODULE:=$(foreach LIBS,$(BUILD_SUBMD),$(if $(findstring /lib/,$(LIBS)),,$(LIBS)))
 
 #
 #   make - Auto-configuration
@@ -46,7 +50,11 @@ else
 endif
 endif
 ifeq ($(CONFIG_TYPE),libstatic)
+ifeq ($(STATIC),true)
     MAKE_SUFFIX:=.a
+else
+    MAKE_SUFFIX:=.so
+endif
 else
 ifeq ($(CONFIG_TYPE),libcommon)
     MAKE_SUFFIX:=.a
@@ -56,7 +64,12 @@ endif
 endif
 ifeq ($(CONFIG_CODE),c)
 ifeq ($(CONFIG_TYPE),libstatic)
+ifeq ($(STATIC),true)
     MAKE_LINKER:=$(MAKE_STABLD)
+else
+    MAKE_LINKER:=$(MAKE_CC_BLD)
+    MAKE_OPTION:=$(MAKE_OPTION) -fpic
+endif
 else
 ifeq ($(CONFIG_TYPE),libcommon)
     MAKE_LINKER:=$(MAKE_STABLD)
@@ -64,11 +77,18 @@ else
     MAKE_LINKER:=$(MAKE_CC_BLD)
 endif
 endif
+    MAKE_HEADEX:=h
     MAKE_COMPIL:=$(MAKE_CC_BLD)
-endif
+    MAKE_OPTION:=$(MAKE_OPTION) -std=gnu99
+else
 ifeq ($(CONFIG_CODE),cpp)
 ifeq ($(CONFIG_TYPE),libstatic)
+ifeq ($(STATIC),true)
     MAKE_LINKER:=$(MAKE_STABLD)
+else
+    MAKE_LINKER:=$(MAKE_CPPBLD)
+    MAKE_OPTION:=$(MAKE_OPTION) -fpic
+endif
 else
 ifeq ($(CONFIG_TYPE),libcommon)
     MAKE_LINKER:=$(MAKE_STABLD)
@@ -76,13 +96,8 @@ else
     MAKE_LINKER:=$(MAKE_CPPBLD)
 endif
 endif
+    MAKE_HEADEX:=hpp
     MAKE_COMPIL:=$(MAKE_CPPBLD)
-endif
-    MAKE_OPTION:=$(BUILD_FLAGS) $(addprefix -I./$(MAKE_LIBSWAP), $(addsuffix /src, $(BUILD_SUBMD) ) )
-ifeq ($(CONFIG_CODE),c)
-    MAKE_OPTION:=$(MAKE_OPTION) -std=gnu99
-else
-ifeq ($(CONFIG_CODE),cpp)
     MAKE_OPTION:=$(MAKE_OPTION) -std=c++11
 endif
 endif
@@ -90,14 +105,20 @@ ifneq ($(OPENMP),false)
     MAKE_OPTION:=$(MAKE_OPTION) -fopenmp -D __OPENMP__
     BUILD_LINKD:=$(BUILD_LINKD) -lgomp
 endif
-    MAKE_BUILDD:=$(addprefix -l, $(subst lib, , $(notdir $(BUILD_SUBMD) ) ) ) $(BUILD_LINKD) $(addprefix -L./$(MAKE_LIBSWAP), $(addsuffix /bin, $(BUILD_SUBMD) ) )
+    MAKE_OPTION:=$(MAKE_OPTION) $(BUILD_FLAGS) $(addprefix -I./$(MAKE_LIBSWAP),$(addsuffix /src,$(BUILD_SUBMD)))
+    MAKE_BUILDD:=$(MAKE_BUILDD) $(addprefix -l,$(subst lib,,$(notdir $(BUILD_SUBMD)))) $(BUILD_LINKD) $(addprefix -L./$(MAKE_LIBSWAP),$(addsuffix /bin,$(BUILD_SUBMD)))
+
+ifeq ($(CONFIG_TYPE),libstatic)
+    MAKE_VERSIO:=$(VER_MAJ).$(VER_MIN)$(if $(filter $(VER_REV),0),,.$(VER_REV))
+    MAKE_HDPATH:=$(MAKE_HDPATH)/$(subst lib,,$(CONFIG_NAME))/$(MAKE_VERSIO)
+endif
 
 #
 #   make - Enumeration
 #
 
-    MAKE_SRCFILE:=$(wildcard $(MAKE_SOURCE)/*.$(CONFIG_CODE) )
-    MAKE_OBJFILE:=$(addprefix $(MAKE_OBJECT)/, $(addsuffix .o, $(notdir $(basename $(MAKE_SRCFILE) ) ) ) )
+    MAKE_SRCFILE:=$(wildcard $(MAKE_SOURCE)/*.$(CONFIG_CODE))
+    MAKE_OBJFILE:=$(addprefix $(MAKE_OBJECT)/,$(addsuffix .o,$(notdir $(basename $(MAKE_SRCFILE)))))
 
 #
 #   make - Targets
@@ -138,7 +159,11 @@ endif
 
     $(CONFIG_NAME):$(MAKE_OBJFILE)
 ifeq ($(CONFIG_TYPE),libstatic)
+ifneq ($(STATIC),false)
 	$(MAKE_LINKER) rcs $(MAKE_BINARY)/$(CONFIG_NAME)$(MAKE_SUFFIX) $^
+else
+	$(MAKE_LINKER) -shared -Wl,-soname,$(CONFIG_NAME)$(MAKE_SUFFIX).$(MAKE_VERSIO) -o $(MAKE_BINARY)/$(CONFIG_NAME)$(MAKE_SUFFIX) $^
+endif
 else
 ifeq ($(CONFIG_TYPE),libcommon)
 	$(MAKE_LINKER) rcs $(MAKE_BINARY)/$(CONFIG_NAME)$(MAKE_SUFFIX) $^
@@ -167,17 +192,29 @@ endif
 	@$(foreach LIBS, $(MAKE_MODULE), $(MAKE) -C $(LIBS) clean-all && ) true
 
     make-clean-documentation:
-	$(MAKE_CMRMDR) $(MAKE_DOCUME)/html
+	$(MAKE_CMRMRF) $(MAKE_DOCUME)/html
 
 #
 #   make - Implementation
 #
 
     make-install:
-	$(MAKE_CMCOPY) $(MAKE_BINARY)/$(CONFIG_NAME)$(MAKE_SUFFIX) $(MAKE_INPATH)/$(CONFIG_NAME)$(MAKE_SUFFIX)
+ifeq ($(CONFIG_TYPE),libstatic)
+	$(MAKE_CMCOPY) $(MAKE_BINARY)/$(CONFIG_NAME)$(MAKE_SUFFIX) $(MAKE_BNPATH)/$(CONFIG_NAME)$(MAKE_SUFFIX).$(MAKE_VERSIO)
+	$(MAKE_CMMKDR) $(MAKE_HDPATH)
+	$(MAKE_CMCOPY) $(addprefix $(MAKE_SOURCE)/,$(notdir $(wildcard $(MAKE_SOURCE)/*.$(MAKE_HEADEX)))) $(MAKE_HDPATH)
+else
+	$(MAKE_CMCOPY) $(MAKE_BINARY)/$(CONFIG_NAME)$(MAKE_SUFFIX) $(MAKE_BNPATH)/$(CONFIG_NAME)$(MAKE_SUFFIX)
+endif
 
     make-uninstall:
-	$(MAKE_CMRMFL) $(MAKE_INPATH)/$(CONFIG_NAME)$(MAKE_SUFFIX)
+ifeq ($(CONFIG_TYPE),libstatic)
+	$(MAKE_CMRMFL) $(addprefix $(MAKE_HDPATH)/,$(notdir $(wildcard $(MAKE_SOURCE)/*.$(MAKE_HEADEX))))
+	$(MAKE_CMRMDR) $(MAKE_HDPATH)
+	$(MAKE_CMRMFL) $(MAKE_BNPATH)/$(CONFIG_NAME)$(MAKE_SUFFIX).$(MAKE_VERSIO)
+else
+	$(MAKE_CMRMFL) $(MAKE_BNPATH)/$(CONFIG_NAME)$(MAKE_SUFFIX)
+endif
 
 #
 #   make - Directories

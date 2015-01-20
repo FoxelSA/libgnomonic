@@ -191,3 +191,135 @@
 
     }
 
+    lg_Void_t lg_transform_linear( 
+
+        li_C8_t     const *  const lgiBitmap,
+        li_C8_t           *  const lgoBitmap,
+        lg_Size_t   const          lgeWidth,
+        lg_Size_t   const          lgeHeight,
+        lg_Size_t   const          lgeLayers,
+        lg_Real_t                  lgMat[3][3],
+        li_Method_t const          lgInter
+
+    ) { lg_transform_linearp(
+
+        lgiBitmap,
+        lgoBitmap,
+        lgeWidth,
+        lgeHeight,
+        lgeLayers,
+        lgMat,
+        lgInter,
+        lg_Size_s( 1 )
+
+    ); }
+
+    lg_Void_t lg_transform_linearp( 
+
+        li_C8_t     const *  const lgiBitmap,
+        li_C8_t           *  const lgoBitmap,
+        lg_Size_t   const          lgeWidth,
+        lg_Size_t   const          lgeHeight,
+        lg_Size_t   const          lgeLayers,
+        lg_Real_t                  lgMat[3][3],
+        li_Method_t const          lgInter,
+        lg_Size_t   const          lgThread
+
+    ) {
+
+        /* Coordinates variables */
+        lg_Size_t lgSX = lg_Size_s( 0   );
+        lg_Size_t lgSY = lg_Size_s( 0   );
+        lg_Real_t lgDX = lg_Real_s( 0.0 );
+        lg_Real_t lgDY = lg_Real_s( 0.0 );
+
+        /* Optimization variables */
+        lg_Real_t lgeEdgeX = lgeWidth  - lg_Size_s( 1 );
+        lg_Real_t lgeEdgeY = lgeHeight - lg_Size_s( 1 );
+
+        /* Position vector variables */
+        lg_Real_t lgPvi[3] = { lg_Real_s( 0.0 ) };
+        lg_Real_t lgPvf[3] = { lg_Real_s( 0.0 ) };
+
+        /* Bitmap padding variable */
+        lg_Size_t lgePad = LG_B4PAD( lgeWidth * lgeLayers );
+
+        /* Processing loop on y */
+        # ifdef __OPENMP__
+        # pragma omp parallel private(lgSX,lgSY,lgDX,lgDY,lgPvi,lgPvf) firstprivate(lgeEdgeX,lgeEdgeY,lgePad,lgMat) num_threads( lgThread )
+        {
+        # pragma omp for
+        # endif
+        for ( lgSY = lg_Size_s( 0 ); lgSY < lgeHeight; lgSY ++ ) {
+
+            /* Processing loop on x */
+            for ( lgSX = lg_Size_s( 0 ); lgSX < lgeWidth; lgSX ++ ) {
+
+                /* Compute mapping pixel angular coordinates */
+                lgDX = ( ( lg_Real_c( lgSX ) / lgeEdgeX ) * lg_Real_s( 2.0 ) ) * LG_PI;
+                lgDY = ( ( lg_Real_c( lgSY ) / lgeEdgeY ) - lg_Real_s( 0.5 ) ) * LG_PI;
+
+                /* Compute pixel position in 3d-frame */
+                lgPvi[0] = cos( lgDY );
+                lgPvi[1] = lgPvi[0] * sin( lgDX );
+                lgPvi[0] = lgPvi[0] * cos( lgDX );
+                lgPvi[2] = sin( lgDY );
+
+                /* Compute rotated pixel position in 3d-frame */
+                lgPvf[0] = lgMat[0][0] * lgPvi[0] + lgMat[0][1] * lgPvi[1] + lgMat[0][2] * lgPvi[2];
+                lgPvf[1] = lgMat[1][0] * lgPvi[0] + lgMat[1][1] * lgPvi[1] + lgMat[1][2] * lgPvi[2];
+                lgPvf[2] = lgMat[2][0] * lgPvi[0] + lgMat[2][1] * lgPvi[1] + lgMat[2][2] * lgPvi[2];
+
+                /* Retrieve mapping pixel (x,y)-coordinates */
+                lgDX = lgeEdgeX * ( LG_ATN( lgPvf[0] , lgPvf[1] ) / LG_PI2 );
+                lgDY = lgeEdgeY * ( ( LG_ASN( lgPvf[2] ) / LG_PI ) + lg_Real_s( 0.5 ) );
+
+                /* Assign interpolated pixel */
+                LG_B4( lgoBitmap, lgePad, lgeLayers, lgSX, lgSY, lg_Size_s( 0 ) ) = lgInter( 
+
+                    ( li_C8_t * ) lgiBitmap, 
+                    lgeWidth, 
+                    lgeHeight, 
+                    lgeLayers, 
+                    lg_Size_s( 0 ), 
+                    lgDX, 
+                    lgDY 
+
+                );
+
+                /* Assign interpolated pixel */
+                LG_B4( lgoBitmap, lgePad, lgeLayers, lgSX, lgSY, lg_Size_s( 1 ) ) = lgInter( 
+
+                    ( li_C8_t * ) lgiBitmap, 
+                    lgeWidth, 
+                    lgeHeight, 
+                    lgeLayers, 
+                    lg_Size_s( 1 ), 
+                    lgDX, 
+                    lgDY
+
+                );
+
+                /* Assign interpolated pixel */
+                LG_B4( lgoBitmap, lgePad, lgeLayers, lgSX, lgSY, lg_Size_s( 2 ) ) = lgInter( 
+
+                    ( li_C8_t * ) lgiBitmap, 
+                    lgeWidth, 
+                    lgeHeight, 
+                    lgeLayers, 
+                    lg_Size_s( 2 ), 
+                    lgDX, 
+                    lgDY
+
+                );
+
+            }
+
+        }
+
+        # ifdef __OPENMP__
+        }
+        # endif 
+
+    }
+

@@ -161,6 +161,31 @@
 
     );
 
+    lg_Void_t lg_transform_linear( 
+
+        li_C8_t     const *  const lgiBitmap,
+        li_C8_t           *  const lgoBitmap,
+        lg_Size_t   const          lgeWidth,
+        lg_Size_t   const          lgeHeight,
+        lg_Size_t   const          lgeLayers,
+        lg_Real_t                  lgMat[3][3],
+        li_Method_t const          lgInter
+
+    );
+
+    lg_Void_t lg_transform_linearp( 
+
+        li_C8_t     const *  const lgiBitmap,
+        li_C8_t           *  const lgoBitmap,
+        lg_Size_t   const          lgeWidth,
+        lg_Size_t   const          lgeHeight,
+        lg_Size_t   const          lgeLayers,
+        lg_Real_t                  lgMat[3][3],
+        li_Method_t const          lgInter,
+        lg_Size_t   const          lgThread
+
+    );
+
 /*
     Header - C/C++ compatibility
  */

@@ -191,7 +191,7 @@
 
     }
 
-    lg_Void_t lg_transform_linear( 
+    lg_Void_t lg_transform_matrix( 
 
         li_C8_t     const *  const lgiBitmap,
         li_C8_t           *  const lgoBitmap,
@@ -201,7 +201,7 @@
         lg_Real_t                  lgMat[3][3],
         li_Method_t const          lgInter
 
-    ) { lg_transform_linearp(
+    ) { lg_transform_matrixp(
 
         lgiBitmap,
         lgoBitmap,
@@ -214,7 +214,7 @@
 
     ); }
 
-    lg_Void_t lg_transform_linearp( 
+    lg_Void_t lg_transform_matrixp( 
 
         li_C8_t     const *  const lgiBitmap,
         li_C8_t           *  const lgoBitmap,
@@ -261,8 +261,8 @@
 
                 /* Compute pixel position in 3d-frame */
                 lgPvi[0] = cos( lgDY );
-                lgPvi[1] = lgPvi[0] * sin( lgDX );
-                lgPvi[0] = lgPvi[0] * cos( lgDX );
+                lgPvi[1] = sin( lgDX ) * lgPvi[0];
+                lgPvi[0] = cos( lgDX ) * lgPvi[0];
                 lgPvi[2] = sin( lgDY );
 
                 /* Compute rotated pixel position in 3d-frame */

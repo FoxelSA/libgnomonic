@@ -161,7 +161,7 @@
 
     );
 
-    lg_Void_t lg_transform_linear( 
+    lg_Void_t lg_transform_matrix( 
 
         li_C8_t     const *  const lgiBitmap,
         li_C8_t           *  const lgoBitmap,
@@ -173,7 +173,7 @@
 
     );
 
-    lg_Void_t lg_transform_linearp( 
+    lg_Void_t lg_transform_matrixp( 
 
         li_C8_t     const *  const lgiBitmap,
         li_C8_t           *  const lgoBitmap,

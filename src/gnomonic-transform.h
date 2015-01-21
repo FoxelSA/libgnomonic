@@ -204,7 +204,8 @@
      *  that are mapped by the discret equirectangular mapping. Those points are
      *  then all elements of the mapped sphere. The matrix is used as provided
      *  without any verification of its content. The obtained set of points is
-     *  then used to compute the output equirectangular mapping.
+     *  then used to compute the output equirectangular mapping through spherical
+     *  deprojection, even the image set is not element of the initial sphere.
      *
      *  \param lgiBitmap    Pointer to input equirectangular bitmap
      *  \param lgoBitmap    Pointer to output equirectangular bitmap

@@ -112,7 +112,7 @@
     }
 
 /*
-    Source - Equirectangular mapping linear transform
+    Source - Equirectangular mapping linear transformation
  */
 
     lg_Void_t lg_transform_matrix( 

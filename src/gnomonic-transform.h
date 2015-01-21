@@ -161,6 +161,75 @@
 
     );
 
+    /*! \brief Equirectangular mapping linear transformation
+     *
+     *  This function is the mono-threaded front-end to the definition of the
+     *  lg_transform_matrixp.
+     *
+     *  \param lgiBitmap    Pointer to input equirectangular bitmap
+     *  \param lgoBitmap    Pointer to output equirectangular bitmap
+     *  \param lgeWidth     Width, in pixels, of input/output bitmaps
+     *  \param lgeHeight    Height, in pixels, of input/output bitmaps
+     *  \param lgeLayers    Depth, in chromatic layer count, of equirectangular 
+     *                      bitmaps
+     *  \param lgMat        Matrix containing the linear transformation
+     *  \param lgInter      Pointer to interpolation method function
+     */
+
+    lg_Void_t lg_transform_matrix( 
+
+        li_C8_t     const *  const lgiBitmap,
+        li_C8_t           *  const lgoBitmap,
+        lg_Size_t   const          lgeWidth,
+        lg_Size_t   const          lgeHeight,
+        lg_Size_t   const          lgeLayers,
+        lg_Real_t                  lgMat[3][3],
+        li_Method_t const          lgInter
+
+    );
+
+    /*! \brief Equirectangular mapping linear transformation
+     *
+     *  This function applies the linear transformation defined by the provided
+     *  matrix.The result is drawn in the output bitmap that has to be already 
+     *  allocated according to its parameters.
+     * 
+     *  The linear transformation is performed considering the following frame :
+     *  the x-axis points the left edge of the mapping at half height. The 
+     *  y-axis points at third fourth of the mapping width and at half of its 
+     *  height. The z-axis is obtained using a cross-product, inducing a direct 
+     *  frame in which the mapped sphere is considered.
+     *
+     *  The linear transformation is applied to the three-dimensional points
+     *  that are mapped by the discret equirectangular mapping. Those points are
+     *  then all elements of the mapped sphere. The matrix is used as provided
+     *  without any verification of its content. The obtained set of points is
+     *  then used to compute the output equirectangular mapping.
+     *
+     *  \param lgiBitmap    Pointer to input equirectangular bitmap
+     *  \param lgoBitmap    Pointer to output equirectangular bitmap
+     *  \param lgeWidth     Width, in pixels, of input/output bitmaps
+     *  \param lgeHeight    Height, in pixels, of input/output bitmaps
+     *  \param lgeLayers    Depth, in chromatic layer count, of equirectangular 
+     *                      bitmaps
+     *  \param lgMat        Matrix containing the linear transformation
+     *  \param lgInter      Pointer to interpolation method function
+     *  \param lgThread     Thread number (OpenMP)
+     */
+
+    lg_Void_t lg_transform_matrixp( 
+
+        li_C8_t     const *  const lgiBitmap,
+        li_C8_t           *  const lgoBitmap,
+        lg_Size_t   const          lgeWidth,
+        lg_Size_t   const          lgeHeight,
+        lg_Size_t   const          lgeLayers,
+        lg_Real_t                  lgMat[3][3],
+        li_Method_t const          lgInter,
+        lg_Size_t   const          lgThread
+
+    );
+
 /*
     Header - C/C++ compatibility
  */

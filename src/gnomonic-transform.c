@@ -89,6 +89,68 @@
 
     ) {
 
+        /* Rotation matrix variables */
+        lg_Real_t lgMat[3][3] = { { lg_Real_s( 0.0 ) } };
+
+        /* Compute rotation matrix */
+        lg_algebra_r2erotation( lgMat, lgAzim, lgElev, lgRoll );
+
+        /* Matrix tranformation function */
+        lg_transform_matrixp(
+
+            lgiBitmap,
+            lgoBitmap,
+            lgeWidth,
+            lgeHeight,
+            lgeLayers,
+            lgMat,
+            lgInter,
+            lgThread
+
+        );
+
+    }
+
+/*
+    Source - Equirectangular mapping linear transformation
+ */
+
+    lg_Void_t lg_transform_matrix( 
+
+        li_C8_t     const *  const lgiBitmap,
+        li_C8_t           *  const lgoBitmap,
+        lg_Size_t   const          lgeWidth,
+        lg_Size_t   const          lgeHeight,
+        lg_Size_t   const          lgeLayers,
+        lg_Real_t                  lgMat[3][3],
+        li_Method_t const          lgInter
+
+    ) { lg_transform_matrixp(
+
+        lgiBitmap,
+        lgoBitmap,
+        lgeWidth,
+        lgeHeight,
+        lgeLayers,
+        lgMat,
+        lgInter,
+        lg_Size_s( 1 )
+
+    ); }
+
+    lg_Void_t lg_transform_matrixp( 
+
+        li_C8_t     const *  const lgiBitmap,
+        li_C8_t           *  const lgoBitmap,
+        lg_Size_t   const          lgeWidth,
+        lg_Size_t   const          lgeHeight,
+        lg_Size_t   const          lgeLayers,
+        lg_Real_t                  lgMat[3][3],
+        li_Method_t const          lgInter,
+        lg_Size_t   const          lgThread
+
+    ) {
+
         /* Coordinates variables */
         lg_Size_t lgSX = lg_Size_s( 0   );
         lg_Size_t lgSY = lg_Size_s( 0   );
@@ -103,14 +165,8 @@
         lg_Real_t lgPvi[3] = { lg_Real_s( 0.0 ) };
         lg_Real_t lgPvf[3] = { lg_Real_s( 0.0 ) };
 
-        /* Rotation matrix variables */
-        lg_Real_t lgMat[3][3] = { { lg_Real_s( 0.0 ) } };
-
         /* Bitmap padding variable */
         lg_Size_t lgePad = LG_B4PAD( lgeWidth * lgeLayers );
-
-        /* Compute rotation matrix */
-        lg_algebra_r2erotation( lgMat, lgAzim, lgElev, lgRoll );
 
         /* Processing loop on y */
         # ifdef __OPENMP__
@@ -129,8 +185,8 @@
 
                 /* Compute pixel position in 3d-frame */
                 lgPvi[0] = cos( lgDY );
-                lgPvi[1] = lgPvi[0] * sin( lgDX );
-                lgPvi[0] = lgPvi[0] * cos( lgDX );
+                lgPvi[1] = sin( lgDX ) * lgPvi[0];
+                lgPvi[0] = cos( lgDX ) * lgPvi[0];
                 lgPvi[2] = sin( lgDY );
 
                 /* Compute rotated pixel position in 3d-frame */

@@ -50,9 +50,10 @@
      *  This library is developed to perform gnomonic projections from a entire
      *  equirectangular mapping of spherical panoramas to extract rectilinear
      *  mappings. It also ensure gnomonic projections of specific tiles of
-     *  equirectangular mappings to obtain rectilinear mappings from single
+     *  equirectangular mappings to obtain rectilinear mappings from single 
      *  tiles. Each provided projection algorithm comes with an implementation
-     *  of its inverse operation.
+     *  of its inverse operation. The library also provides equirectangular 
+     *  transformation algorithms.
      *
      *  \section Documentation
      *

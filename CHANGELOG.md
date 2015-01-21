@@ -1,5 +1,10 @@
 ## Changelog
 
+### Release 0.3 (January 21, 2015)
+
+- `Added` : Equirectangular mapping transformation through linear operators
+- `Revised` : **lg\_transform\_rotatep** as **lg\_transform\_matrixp** front-end
+
 ### Release 0.2.1 (November 12, 2014)
 
 - `Fixed` : Alpha-channel management issue in **lg\_gtt\_genericp** function

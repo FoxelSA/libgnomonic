@@ -343,8 +343,6 @@
         lg_Real_t lgMat[3][3] = { { lg_Real_s( 0.0 ) } };
 
         /* Optimization variables */
-        lg_Size_t lgeEdgeX = lgeWidth  - lg_Size_s( 1 );
-        lg_Size_t lgeEdgeY = lgeHeight - lg_Size_s( 1 );
         lg_Size_t lgmEdgeX = lgmWidth  - lg_Size_s( 1 );
         lg_Size_t lgmEdgeY = lgmHeight - lg_Size_s( 1 );
 
@@ -363,7 +361,7 @@
 
         /* Rectilinear pixels y-loop */
         # ifdef __OPENMP__
-        # pragma omp parallel private(lgDX,lgDY,lgSX,lgSY,lgPvi,lgPvf,lgAlpha,lgWeiA,lgWeiB) firstprivate(lgeEdgeX,lgeEdgeY,lgmEdgeX,lgmEdgeY,lgrPad,lgMat) num_threads( lgThread )
+        # pragma omp parallel private(lgDX,lgDY,lgSX,lgSY,lgPvi,lgPvf,lgAlpha,lgWeiA,lgWeiB) firstprivate(lgmEdgeX,lgmEdgeY,lgrPad,lgMat) num_threads( lgThread )
         {
         # pragma omp for
         # endif
@@ -389,103 +387,98 @@
                 /* Mapping boundary conditions management */
                 lgSX = ( lgSX < lg_Size_s( 0 ) ) ? lgSX + lgmWidth : lgSX;
 
-                /* Verify mapping pixel (x,y)-coordinates */
-                if ( ( lgSX >= lg_Size_s( 0 ) ) && ( lgSY >= lg_Size_s( 0 ) ) && ( lgSX <= lgeEdgeX ) && ( lgSY <= lgeEdgeY ) ) {
+                /* Transparency management */
+                if ( lgeLayers == lg_Size_s( 4 ) ) {
 
-                    /* Transparency management */
-                    if ( lgeLayers == lg_Size_s( 4 ) ) {
+                    /* Obtain alpha value and compute direct transparency weight */
+                    lgAlpha = lgInter( ( li_C8_t * ) lgeBitmap, lgeWidth, lgeHeight, lgeLayers, lg_Size_s( 3 ), lgSX, lgSY );
 
-                        /* Obtain alpha value and compute direct transparency weight */
-                        lgAlpha = lgInter( ( li_C8_t * ) lgeBitmap, lgeWidth, lgeHeight, lgeLayers, lg_Size_s( 3 ), lgSX, lgSY );
+                    /* Compute transparency weights */
+                    lgWeiA = lg_Real_c( lgAlpha ) / lg_Real_s( 255.0 );
+                    lgWeiB = lg_Real_s( 1.0 ) - lgWeiA;
 
-                        /* Compute transparency weights */
-                        lgWeiA = lg_Real_c( lgAlpha ) / lg_Real_s( 255.0 );
-                        lgWeiB = lg_Real_s( 1.0 ) - lgWeiA;
+                    /* Assign interpolated pixel */
+                    LG_B4( lgrBitmap, lgrPad, lgrLayers, lgDX, lgDY, lg_Size_s( 0 ) ) = lgInter( 
 
-                        /* Assign interpolated pixel */
-                        LG_B4( lgrBitmap, lgrPad, lgrLayers, lgDX, lgDY, lg_Size_s( 0 ) ) = lgInter( 
+                        ( li_C8_t * ) lgeBitmap, 
+                        lgeWidth, 
+                        lgeHeight, 
+                        lgeLayers, 
+                        lg_Size_s( 0 ), 
+                        lgSX,
+                        lgSY
 
-                            ( li_C8_t * ) lgeBitmap, 
-                            lgeWidth, 
-                            lgeHeight, 
-                            lgeLayers, 
-                            lg_Size_s( 0 ), 
-                            lgSX,
-                            lgSY
+                    ) * lgWeiA + LG_B4( lgrBitmap, lgrPad, lgrLayers, lgDX, lgDY, lg_Size_s( 0 ) ) * lgWeiB;
 
-                        ) * lgWeiA + LG_B4( lgrBitmap, lgrPad, lgrLayers, lgDX, lgDY, lg_Size_s( 0 ) ) * lgWeiB;
+                    /* Assign interpolated pixel */
+                    LG_B4( lgrBitmap, lgrPad, lgrLayers, lgDX, lgDY, lg_Size_s( 1 ) ) = lgInter( 
 
-                        /* Assign interpolated pixel */
-                        LG_B4( lgrBitmap, lgrPad, lgrLayers, lgDX, lgDY, lg_Size_s( 1 ) ) = lgInter( 
+                        ( li_C8_t * ) lgeBitmap,
+                        lgeWidth, 
+                        lgeHeight, 
+                        lgeLayers, 
+                        lg_Size_s( 1 ), 
+                        lgSX, 
+                        lgSY
 
-                            ( li_C8_t * ) lgeBitmap,
-                            lgeWidth, 
-                            lgeHeight, 
-                            lgeLayers, 
-                            lg_Size_s( 1 ), 
-                            lgSX, 
-                            lgSY
+                    ) * lgWeiA + LG_B4( lgrBitmap, lgrPad, lgrLayers, lgDX, lgDY, lg_Size_s( 1 ) ) * lgWeiB;;
 
-                        ) * lgWeiA + LG_B4( lgrBitmap, lgrPad, lgrLayers, lgDX, lgDY, lg_Size_s( 1 ) ) * lgWeiB;;
+                    /* Assign interpolated pixel */
+                    LG_B4( lgrBitmap, lgrPad, lgrLayers, lgDX, lgDY, lg_Size_s( 2 ) ) = lgInter( 
 
-                        /* Assign interpolated pixel */
-                        LG_B4( lgrBitmap, lgrPad, lgrLayers, lgDX, lgDY, lg_Size_s( 2 ) ) = lgInter( 
+                        ( li_C8_t * ) lgeBitmap, 
+                        lgeWidth, 
+                        lgeHeight, 
+                        lgeLayers, 
+                        lg_Size_s( 2 ), 
+                        lgSX, 
+                        lgSY
 
-                            ( li_C8_t * ) lgeBitmap, 
-                            lgeWidth, 
-                            lgeHeight, 
-                            lgeLayers, 
-                            lg_Size_s( 2 ), 
-                            lgSX, 
-                            lgSY
+                    ) * lgWeiA + LG_B4( lgrBitmap, lgrPad, lgrLayers, lgDX, lgDY, lg_Size_s( 2 ) ) * lgWeiB;;
 
-                        ) * lgWeiA + LG_B4( lgrBitmap, lgrPad, lgrLayers, lgDX, lgDY, lg_Size_s( 2 ) ) * lgWeiB;;
+                    /* Assign transparency pixel */
+                    if ( lgrLayers == 4 ) LG_B4( lgrBitmap, lgrPad, lgrLayers, lgDX, lgDY, lg_Size_s( 3 ) ) = lgAlpha;
 
-                        /* Assign transparency pixel */
-                        if ( lgrLayers == 4 ) LG_B4( lgrBitmap, lgrPad, lgrLayers, lgDX, lgDY, lg_Size_s( 3 ) ) = lgAlpha;
+                } else {
 
-                    } else {
+                    /* Assign interpolated pixel */
+                    LG_B4( lgrBitmap, lgrPad, lgrLayers, lgDX, lgDY, lg_Size_s( 0 ) ) = lgInter( 
 
-                        /* Assign interpolated pixel */
-                        LG_B4( lgrBitmap, lgrPad, lgrLayers, lgDX, lgDY, lg_Size_s( 0 ) ) = lgInter( 
+                        ( li_C8_t * ) lgeBitmap, 
+                        lgeWidth, 
+                        lgeHeight, 
+                        lgeLayers, 
+                        lg_Size_s( 0 ), 
+                        lgSX,
+                        lgSY
 
-                            ( li_C8_t * ) lgeBitmap, 
-                            lgeWidth, 
-                            lgeHeight, 
-                            lgeLayers, 
-                            lg_Size_s( 0 ), 
-                            lgSX,
-                            lgSY
+                    );
 
-                        );
+                    /* Assign interpolated pixel */
+                    LG_B4( lgrBitmap, lgrPad, lgrLayers, lgDX, lgDY, lg_Size_s( 1 ) ) = lgInter( 
 
-                        /* Assign interpolated pixel */
-                        LG_B4( lgrBitmap, lgrPad, lgrLayers, lgDX, lgDY, lg_Size_s( 1 ) ) = lgInter( 
+                        ( li_C8_t * ) lgeBitmap,
+                        lgeWidth, 
+                        lgeHeight, 
+                        lgeLayers, 
+                        lg_Size_s( 1 ), 
+                        lgSX, 
+                        lgSY
 
-                            ( li_C8_t * ) lgeBitmap,
-                            lgeWidth, 
-                            lgeHeight, 
-                            lgeLayers, 
-                            lg_Size_s( 1 ), 
-                            lgSX, 
-                            lgSY
+                    );
 
-                        );
+                    /* Assign interpolated pixel */
+                    LG_B4( lgrBitmap, lgrPad, lgrLayers, lgDX, lgDY, lg_Size_s( 2 ) ) = lgInter( 
 
-                        /* Assign interpolated pixel */
-                        LG_B4( lgrBitmap, lgrPad, lgrLayers, lgDX, lgDY, lg_Size_s( 2 ) ) = lgInter( 
+                        ( li_C8_t * ) lgeBitmap, 
+                        lgeWidth, 
+                        lgeHeight, 
+                        lgeLayers, 
+                        lg_Size_s( 2 ), 
+                        lgSX, 
+                        lgSY
 
-                            ( li_C8_t * ) lgeBitmap, 
-                            lgeWidth, 
-                            lgeHeight, 
-                            lgeLayers, 
-                            lg_Size_s( 2 ), 
-                            lgSX, 
-                            lgSY
-
-                        );
-
-                    }
+                    );
 
                 }
 

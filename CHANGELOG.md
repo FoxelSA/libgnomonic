@@ -1,5 +1,9 @@
 ## Changelog
 
+### Release 0.3.1 (January 23, 2015)
+
+- `Fixed` : Removed edge detection in projection algorithms supported by _libinter 0.3_
+
 ### Release 0.3 (January 21, 2015)
 
 - `Added` : Equirectangular mapping transformation through linear operators

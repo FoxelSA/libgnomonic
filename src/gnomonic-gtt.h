@@ -492,7 +492,7 @@
     /*! \brief Rectilinear to equirectangular tile transform
      * 
      *  This function offers the inverted coordinates convertion provided by the
-     *  generic function lg_gtt_generic_point. Their parameters are the same and
+     *  generic function lg_ttg_generic_point. Their parameters are the same and
      *  have to be understood in the exact same way, swapping input and output
      *  role of the provided points coordinates.
      *

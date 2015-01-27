@@ -172,6 +172,45 @@
 
     );
 
+    /*! \brief Rectilinear to equirectangular transform
+     *
+     *  This function offers the inverted coordinates convertion provided by the
+     *  generic function lg_etg_apperture_point. Their parameters are the same
+     *  and have to be understood in the exact same way, swapping input and
+     *  output role of the provided points coordinates.
+     *
+     *  \param lgePointX      X-coordinate of point in equirectangular mapping
+     *  \param lgePointY      Y-coordinate of point in equirectangular mapping
+     *  \param lgeWidth       Width, in pixels, of the equirectangular bitmap
+     *  \param lgeHeight      Height, in pixels, of the equirectangular bitmap
+     *  \param lgrPointX      X-coordinate of point in rectilinear mapping
+     *  \param lgrPointY      Y-coordinate of point in rectilinear mapping
+     *  \param lgrWidth       Width, in pixels, of the rectilinear bitmap
+     *  \param lgrHeight      Height, in pixels, of the rectilinear bitmap
+     *  \param lgAzim         Azimuth angle, in radians, of gnomonic center
+     *  \param lgElev         Elevation angle, in radians, of gnomonic center
+     *  \param lgRoll         Roll angle, in radians, around gnomonic axis
+     *  \param lgApper        Horizontal apperture, in radians, of the gnomonic
+     *                        projection.
+     */
+
+    lg_Void_t lg_gte_apperture_point( 
+
+        lg_Real_t         * const lgePointX,
+        lg_Real_t         * const lgePointY,
+        lg_Size_t   const         lgeWidth,
+        lg_Size_t   const         lgeHeight,
+        lg_Real_t   const         lgrPointX,
+        lg_Real_t   const         lgrPointY,
+        lg_Size_t   const         lgrWidth,
+        lg_Size_t   const         lgrHeight,
+        lg_Real_t   const         lgAzim,
+        lg_Real_t   const         lgElev,
+        lg_Real_t   const         lgRoll,
+        lg_Real_t   const         lgApper
+
+    );
+
 /*
     Header - C/C++ compatibility
  */

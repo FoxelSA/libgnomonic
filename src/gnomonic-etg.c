@@ -125,3 +125,38 @@
 
     ); }
 
+    lg_Void_t lg_etg_apperture_point( 
+
+        lg_Real_t   const         lgePointX,
+        lg_Real_t   const         lgePointY,
+        lg_Size_t   const         lgeWidth,
+        lg_Size_t   const         lgeHeight,
+        lg_Real_t         * const lgrPointX,
+        lg_Real_t         * const lgrPointY,
+        lg_Size_t   const         lgrWidth,
+        lg_Size_t   const         lgrHeight,
+        lg_Real_t   const         lgAzim,
+        lg_Real_t   const         lgElev,
+        lg_Real_t   const         lgRoll,
+        lg_Real_t   const         lgApper
+
+    ) { lg_ttg_generic_point(
+
+        lgePointX,
+        lgePointY,
+        lgrPointX,
+        lgrPointY,
+        lg_Real_c( lgrWidth  ) / lg_Real_s( 2.0 ),
+        lg_Real_c( lgrHeight ) / lg_Real_s( 2.0 ),
+        lgeWidth,
+        lgeHeight,
+        lg_Real_s( 0.0 ),
+        lg_Real_s( 0.0 ),
+        lgAzim,
+        lgElev,
+        lgRoll,
+        lg_Real_s( 1.0 ),
+        lg_Real_s( 2.0 ) * tan( lgApper / lg_Real_s( 2.0 ) ) / lgrWidth
+
+    ); }
+

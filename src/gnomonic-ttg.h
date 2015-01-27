@@ -521,24 +521,9 @@
 
     /*! \brief Equirectangular tile to rectilinear transform
      * 
-     *  This function performs an equirectangular to rectilinear coordinates
-     *  transformation of a provided two-dimensional point.
-     *
-     *  In order to perform the desired transformation, the following 3d-frame
-     *  is  attached to the entire equirectangular mapping from which the tile
-     *  is  extracted : the x-axis points the left edge of the mapping at half
-     *  height. The y-axis points at third fourth of the mapping width and at
-     *  half of its height. The z-axis is obtained using a cross-product, 
-     *  inducing a direct frame in which the mapped sphere is considered.
-     *
-     *  The computed rectilinear image has its center attached to the x-axis and
-     *  the image plane is orthogonal to this same x-axis. The rotation matrix,
-     *  that ensure desired mapping part selection, is built as follows : 
-     * 
-     *      M = Ry(Elevation) Rz(Azimuth) Rx(Roll)
-     *
-     *  and corresponds to the rotation that brings the rectilinear image pixels
-     *  on the equirectangular mapping.
+     *  This function computes the coordinates of a point defined on an tile of
+     *  an equirectangular mapping on the recilinear mapping obtained using the
+     *  lg_ttg_genericp gnomonic projection definition.
      *
      *  \param lgePointX      X-coordinate of point in equirectangular mapping
      *  \param lgePointY      Y-coordinate of point in equirectangular mapping

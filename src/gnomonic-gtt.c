@@ -140,6 +140,44 @@
 
     ); }
 
+    lg_Void_t lg_gtt_center_point(
+
+        lg_Real_t       * const lgePointX,
+        lg_Real_t       * const lgePointY,
+        lg_Real_t const         lgrPointX,
+        lg_Real_t const         lgrPointY,
+        lg_Size_t const         lgrWidth,
+        lg_Size_t const         lgrHeight,
+        lg_Size_t const         lgmWidth,
+        lg_Size_t const         lgmHeight,
+        lg_Size_t const         lgmCornerX,
+        lg_Size_t const         lgmCornerY,
+        lg_Real_t const         lgAzim,
+        lg_Real_t const         lgElev,
+        lg_Real_t const         lgRoll,
+        lg_Real_t const         lgFocal,
+        lg_Real_t const         lgPixel
+
+    ) { lg_gtt_generic_point(
+
+        lgePointX,
+        lgePointY,
+        lgrPointX,
+        lgrPointY,
+        lg_Real_c( lgrWidth  ) / lg_Real_s( 2.0 ),
+        lg_Real_c( lgrHeight ) / lg_Real_s( 2.0 ),
+        lgmWidth,
+        lgmHeight,
+        lgmCornerX,
+        lgmCornerY,
+        lgAzim,
+        lgElev,
+        lgRoll,
+        lgFocal,
+        lgPixel
+
+    ); }
+
 /*
     Source - Rectilinear to equirectangular tile transform - Elphel-specific
  */
@@ -222,27 +260,66 @@
 
     ) { lg_gtt_genericp(
 
-            lgeBitmap,
-            lgeWidth,
-            lgeHeight,
-            lgeLayers,
-            lgrBitmap,
-            lgrWidth,
-            lgrHeight,
-            lgrLayers,
-            lgrSightX,
-            lgrSightY,
-            lgmWidth,
-            lgmHeight,
-            lgmCornerX,
-            lgmCornerY,
-            lgAzim + lgHead + LG_PI,
-            lgElev,
-            lgRoll,
-            lgFocal,
-            lgPixel,
-            lgInter,
-            lgThread
+        lgeBitmap,
+        lgeWidth,
+        lgeHeight,
+        lgeLayers,
+        lgrBitmap,
+        lgrWidth,
+        lgrHeight,
+        lgrLayers,
+        lgrSightX,
+        lgrSightY,
+        lgmWidth,
+        lgmHeight,
+        lgmCornerX,
+        lgmCornerY,
+        lgAzim + lgHead + LG_PI,
+        lgElev,
+        lgRoll,
+        lgFocal,
+        lgPixel,
+        lgInter,
+        lgThread
+
+    ); }
+
+    lg_Void_t lg_gtt_elphel_point(
+
+        lg_Real_t       * const lgePointX,
+        lg_Real_t       * const lgePointY,
+        lg_Real_t const         lgrPointX,
+        lg_Real_t const         lgrPointY,
+        lg_Real_t const         lgrSightX,
+        lg_Real_t const         lgrSightY,
+        lg_Size_t const         lgmWidth,
+        lg_Size_t const         lgmHeight,
+        lg_Size_t const         lgmCornerX,
+        lg_Size_t const         lgmCornerY,
+        lg_Real_t const         lgRoll,
+        lg_Real_t const         lgAzim,
+        lg_Real_t const         lgElev,
+        lg_Real_t const         lgHead,
+        lg_Real_t const         lgPixel,
+        lg_Real_t const         lgFocal
+
+    ) { lg_gtt_generic_point(
+
+        lgePointX,
+        lgePointY,
+        lgrPointX,
+        lgrPointY,
+        lgrSightX,
+        lgrSightY,
+        lgmWidth,
+        lgmHeight,
+        lgmCornerX,
+        lgmCornerY,
+        lgAzim + lgHead + LG_PI,
+        lgElev,
+        lgRoll,
+        lgFocal,
+        lgPixel
 
     ); }
 

@@ -499,30 +499,30 @@
 
     lg_Void_t lg_gtt_generic_point(
 
-        lg_Real_t         * const lgePointX,
-        lg_Real_t         * const lgePointY,
-        lg_Real_t   const         lgrPointX,
-        lg_Real_t   const         lgrPointY,
-        lg_Real_t   const         lgrSightX,
-        lg_Real_t   const         lgrSightY,
-        lg_Size_t   const         lgmWidth,
-        lg_Size_t   const         lgmHeight,
-        lg_Size_t   const         lgmCornerX,
-        lg_Size_t   const         lgmCornerY,
-        lg_Real_t   const         lgAzim,
-        lg_Real_t   const         lgElev,
-        lg_Real_t   const         lgRoll,
-        lg_Real_t   const         lgFocal,
-        lg_Real_t   const         lgPixel
+        lg_Real_t       * const lgePointX,
+        lg_Real_t       * const lgePointY,
+        lg_Real_t const         lgrPointX,
+        lg_Real_t const         lgrPointY,
+        lg_Real_t const         lgrSightX,
+        lg_Real_t const         lgrSightY,
+        lg_Size_t const         lgmWidth,
+        lg_Size_t const         lgmHeight,
+        lg_Size_t const         lgmCornerX,
+        lg_Size_t const         lgmCornerY,
+        lg_Real_t const         lgAzim,
+        lg_Real_t const         lgElev,
+        lg_Real_t const         lgRoll,
+        lg_Real_t const         lgFocal,
+        lg_Real_t const         lgPixel
 
     ) {
 
-         /* Matrix array */
-        static lg_Real_t lgMat[3][3] = { { 0.0 } };
+         /* Matrix array variables */
+        static lg_Real_t lgMat[3][3] = { { lg_Real_s( 0.0 ) } };
 
-        /* Position arrays */
-        static lg_Real_t lgPvi[3] = { 0.0 };
-        static lg_Real_t lgPvf[3] = { 0.0 };
+        /* Position arrays variables */
+        static lg_Real_t lgPvi[3] = { lg_Real_s( 0.0 ) };
+        static lg_Real_t lgPvf[3] = { lg_Real_s( 0.0 ) };
 
         /* Compute rotation matrix */
         lg_algebra_r2erotation( lgMat, lgAzim, lgElev, lgRoll );

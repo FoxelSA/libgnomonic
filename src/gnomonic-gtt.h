@@ -489,6 +489,57 @@
 
     );
 
+    /*! \brief Rectilinear to equirectangular tile transform
+     * 
+     *  This function offers the inverted coordinates convertion provided by the
+     *  generic function lg_gtt_generic_point. Their parameters are the same and
+     *  have to be understood in the exact same way, swapping input and output
+     *  role of the provided points coordinates.
+     *
+     *  \param lgePointX      X-coordinate of point in equirectangular mapping
+     *  \param lgePointY      Y-coordinate of point in equirectangular mapping
+     *  \param lgrPointX      X-coordinate of point in rectilinear mapping
+     *  \param lgrPointY      Y-coordinate of point in rectilinear mapping
+     *  \param lgrSightX      Position X, in pixels on rectilinear image,of the
+     *                        gnomonic projection center
+     *  \param lgrSightY      Position Y, in pixels on rectilinear image,of the
+     *                        gnomonic projection center
+     *  \param lgmWidth       Width, in pixels, of the entire equirectangular 
+     *                        mapping from which the tile is extracted
+     *  \param lgmHeight      Height, in pixels, of the entire equirectangular 
+     *                        mapping from which the tile is extracted
+     *  \param lgmCornerX     Position X, in pixels, of the equirectangular tile
+     *                        top-left corner in the entire mapping
+     *  \param lgmCornerY     Position Y, in pixels, of the equirectangular tile
+     *                        top-left corner in the entire mapping
+     *  \param lgAzim         Azimuth angle, in radians, of gnomonic center
+     *  \param lgElev         Elevation angle, in radians, of gnomonic center
+     *  \param lgRoll         Roll angle, in radians, around gnomonic axis
+     *  \param lgFocal        Focal length, in mm, of the rectilinear image
+     *  \param lgPixel        Length, in mm, of the pixels of the rectilinear
+     *                        image virtual camera
+     */
+
+    lg_Void_t lg_gtt_generic_point(
+
+        lg_Real_t       * const lgePointX,
+        lg_Real_t       * const lgePointY,
+        lg_Real_t const         lgrPointX,
+        lg_Real_t const         lgrPointY,
+        lg_Real_t const         lgrSightX,
+        lg_Real_t const         lgrSightY,
+        lg_Size_t const         lgmWidth,
+        lg_Size_t const         lgmHeight,
+        lg_Size_t const         lgmCornerX,
+        lg_Size_t const         lgmCornerY,
+        lg_Real_t const         lgAzim,
+        lg_Real_t const         lgElev,
+        lg_Real_t const         lgRoll,
+        lg_Real_t const         lgFocal,
+        lg_Real_t const         lgPixel
+
+    );
+
 /*
     Header - C/C++ compatibility
  */

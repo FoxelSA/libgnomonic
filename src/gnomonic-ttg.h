@@ -216,7 +216,7 @@
 
     );
 
-    /*! \brief Equirectangular tile to rectilinear transform - Elphel-specific
+    /*! \brief Equirectangular tile to rectilinear transform - Centered-specific
      *
      *  This function offers a front-end to the generic lg_ttg_generic_point
      *  function. It compute the coordinates of a point defined on a tile of an

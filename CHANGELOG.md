@@ -1,5 +1,9 @@
 ## Changelog
 
+### Release 0.4 (January 27, 2015)
+
+- `Added` : Adding coordinates conversion algorithms for each implemented projection functions
+
 ### Release 0.3.1 (January 23, 2015)
 
 - `Fixed` : Removed edge detection in projection algorithms supported by _libinter 0.3_

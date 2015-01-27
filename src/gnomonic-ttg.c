@@ -590,20 +590,20 @@
     ) {
 
          /* Matrix array variables */
-        static lg_Real_t lgMat[3][3] = { { lg_Real_s( 0.0 ) } };
+        lg_Real_t lgMat[3][3] = { { lg_Real_s( 0.0 ) } };
 
         /* Position arrays variables */
-        static lg_Real_t lgPvi[3] = { lg_Real_s( 0.0 ) };
-        static lg_Real_t lgPvf[3] = { lg_Real_s( 0.0 ) };
+        lg_Real_t lgPvi[3] = { lg_Real_s( 0.0 ) };
+        lg_Real_t lgPvf[3] = { lg_Real_s( 0.0 ) };
 
         /* Angular position variables */
-        static lg_Real_t lgAngleX = lg_Real_s( 0.0 );
-        static lg_Real_t lgAngleY = lg_Real_s( 0.0 );
+        lg_Real_t lgAngleX = lg_Real_s( 0.0 );
+        lg_Real_t lgAngleY = lg_Real_s( 0.0 );
 
         /* Compute rotation matrix */
         lg_algebra_e2rrotation( lgMat, lgAzim, lgElev, lgRoll );
 
-        /* Compute mapping pixel angular coordinates */
+        /* Compute mapping angular coordinates */
         lgAngleX = + ( ( ( lgePointX + lg_Real_c( lgmCornerX ) ) / lg_Real_c( lgmWidth  - lg_Size_s( 1 ) ) ) * LG_PI2 );
         lgAngleY = + ( ( ( lgePointY + lg_Real_c( lgmCornerY ) ) / lg_Real_c( lgmHeight - lg_Size_s( 1 ) ) ) - lg_Real_s( 0.5 ) ) * LG_PI;
 
@@ -619,8 +619,8 @@
         lgPvf[2] = lgMat[2][0] * lgPvi[0] + lgMat[2][1] * lgPvi[1] + lgMat[2][2] * lgPvi[2];
 
         /* Retrieve rectilinear (x,y)-coordinates */
-        * lgrPointX = + ( ( lgPvf[1] / lgPvf[0] ) * lgFocal ) / lgPixel + lgrSightX;
-        * lgrPointY = + ( ( lgPvf[2] / lgPvf[0] ) * lgFocal ) / lgPixel + lgrSightY;
+        ( * lgrPointX ) = + ( ( lgPvf[1] / lgPvf[0] ) * lgFocal ) / lgPixel + lgrSightX;
+        ( * lgrPointY ) = + ( ( lgPvf[2] / lgPvf[0] ) * lgFocal ) / lgPixel + lgrSightY;
 
     }
 

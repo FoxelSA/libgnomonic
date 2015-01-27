@@ -527,8 +527,8 @@
         lg_algebra_e2rrotation( lgMat, lgAzim, lgElev, lgRoll );
 
         /* Compute mapping pixel angular coordinates */
-        lgAngleX = + ( ( lgePointX + lg_Real_c( lgmCornerX ) / ( lgmWidth  - lg_Size_s( 1 ) ) ) * LG_PI2 );
-        lgAngleY = + ( ( lgePointY + lg_Real_c( lgmCornerY ) / ( lgmHeight - lg_Size_s( 1 ) ) ) - lg_Real_s( 0.5 ) ) * LG_PI;
+        lgAngleX = + ( ( ( lgePointX + lg_Real_c( lgmCornerX ) ) / lg_Real_c( lgmWidth  - lg_Size_s( 1 ) ) ) * LG_PI2 );
+        lgAngleY = + ( ( ( lgePointY + lg_Real_c( lgmCornerY ) ) / lg_Real_c( lgmHeight - lg_Size_s( 1 ) ) ) - lg_Real_s( 0.5 ) ) * LG_PI;
 
         /* Compute pixel position in 3d-frame */
         lgPvi[0] = cos( lgAngleY );

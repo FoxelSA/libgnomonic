@@ -497,3 +497,49 @@
 
     }
 
+    lg_Void_t lg_gtt_generic_point(
+
+        lg_Real_t         * const lgePointX,
+        lg_Real_t         * const lgePointY,
+        lg_Real_t   const         lgrPointX,
+        lg_Real_t   const         lgrPointY,
+        lg_Real_t   const         lgrSightX,
+        lg_Real_t   const         lgrSightY,
+        lg_Size_t   const         lgmWidth,
+        lg_Size_t   const         lgmHeight,
+        lg_Size_t   const         lgmCornerX,
+        lg_Size_t   const         lgmCornerY,
+        lg_Real_t   const         lgAzim,
+        lg_Real_t   const         lgElev,
+        lg_Real_t   const         lgRoll,
+        lg_Real_t   const         lgFocal,
+        lg_Real_t   const         lgPixel
+
+    ) {
+
+         /* Matrix array */
+        static lg_Real_t lgMat[3][3] = { { 0.0 } };
+
+        /* Position arrays */
+        static lg_Real_t lgPvi[3] = { 0.0 };
+        static lg_Real_t lgPvf[3] = { 0.0 };
+
+        /* Compute rotation matrix */
+        lg_algebra_r2erotation( lgMat, lgAzim, lgElev, lgRoll );
+
+        /* Compute pixel position in 3d-frame */
+        lgPvi[0] = lgFocal;
+        lgPvi[1] = lgPixel * ( lgrPointX - lgrSightX );
+        lgPvi[2] = lgPixel * ( lgrPointY - lgrSightY );
+
+        /* Compute rotated pixel position in 3d-frame */
+        lgPvf[0] = lgMat[0][0] * lgPvi[0] + lgMat[0][1] * lgPvi[1] + lgMat[0][2] * lgPvi[2];
+        lgPvf[1] = lgMat[1][0] * lgPvi[0] + lgMat[1][1] * lgPvi[1] + lgMat[1][2] * lgPvi[2];
+        lgPvf[2] = lgMat[2][0] * lgPvi[0] + lgMat[2][1] * lgPvi[1] + lgMat[2][2] * lgPvi[2];
+
+        /* Retrieve mapping pixel (x,y)-coordinates */
+        * lgePointX = - lgmCornerX + ( lgmWidth  - lg_Size_s( 1 ) ) * ( LG_ATN( lgPvf[0], lgPvf[1] ) / LG_PI2 ) ;
+        * lgePointY = - lgmCornerY + ( lgmHeight - lg_Size_s( 1 ) ) * ( LG_ASN( lgPvf[2] / LG_EUCLR3( lgPvf ) ) / LG_PI + lg_Real_s( 0.5 ) );
+
+    }
+

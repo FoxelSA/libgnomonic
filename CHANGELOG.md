@@ -1,5 +1,9 @@
 ## Changelog
 
+### Beta 0.4.1
+
+- `Fixed` : Setting again edge detection in projection algorithms for rare side effect management
+
 ### Release 0.4 (January 27, 2015)
 
 - `Added` : Adding coordinates conversion algorithms for each implemented projection functions

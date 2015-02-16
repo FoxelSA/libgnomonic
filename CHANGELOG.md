@@ -1,6 +1,6 @@
 ## Changelog
 
-### Beta 0.4.1
+### Release 0.4.1 (February 16, 2015)
 
 - `Fixed` : Setting again edge detection in projection algorithms for rare side effect management
 

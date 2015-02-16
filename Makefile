@@ -180,6 +180,7 @@ endif
 
     make-documentation:make-directories
 	$(MAKE_DOCBLD)
+	@$(foreach LIB, $(MAKE_MODULE), $(MAKE) -C $(LIB) documentation && ) true
 
 #
 #   make - Cleaning
@@ -193,6 +194,7 @@ endif
 
     make-clean-documentation:
 	$(MAKE_CMRMRF) $(MAKE_DOCUME)/html
+	@$(foreach LIB, $(MAKE_MODULE), $(MAKE) -C $(LIB) clean-documentation && ) true
 
 #
 #   make - Implementation
